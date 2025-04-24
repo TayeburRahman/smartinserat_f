@@ -1,12 +1,7 @@
 import { Button, Input, Label } from "@windmill/react-ui";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
-import { config } from "../assets/config/config";
-import CreateUserModal from "../components/Modals/CreateUserModal";
-import DeleteUserModal from "../components/Modals/DeleteUserModal";
-import UpdatePasswordModal from "../components/Modals/UpdatePasswordModal";
-import UpdateUserModal from "../components/Modals/UpdateUserModal";
-import UserTable from "../components/Tables/UserTable";
+import { config } from "../assets/config/config"; 
 import ThemedSuspense from "../components/ThemedSuspense";
 import PageTitle from "../components/Typography/PageTitle";
 import { AuthContext } from "../context/AuthContext";
