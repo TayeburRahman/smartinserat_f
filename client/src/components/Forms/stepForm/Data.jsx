@@ -114,7 +114,7 @@ export const Data = ({ formData, setForm, navigation,
               <EuroIcon className="w-4 h-4" aria-hidden="true" />
             </div>
             <Input
-              className="mb-4 mt-1 p-2 pl-3 border border-solid border-gray-300 focus-within:text-gray-700"
+              className="mb-4 mt-1 p-2 pl-3 border border-solid border-gray-300 focus-within:text-gray-700 background_white"
               label="Rent Price"
               placeholder={dictionary["createAds"][languageReducer]["data"]["enterRentPrice"]}
               name="rentPrice"
