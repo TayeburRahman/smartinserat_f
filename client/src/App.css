@@ -57,6 +57,9 @@ p {
 li {
   color: #121212;
 }
+.background_white{
+  background: white !important;
+}
 @keyframes l32-1 {
   0%,
   80% {
