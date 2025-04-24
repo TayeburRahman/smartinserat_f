@@ -38,7 +38,7 @@ const navigate = useNavigate();
           if (error.response) {
             if (
               error.response.data.message ===
-              "Please activate your account then try to login"
+              "Please activate your account then try to login!"
             ) {
               localStorage.setItem("active_email", email);
               navigate("/auth/active-account");  

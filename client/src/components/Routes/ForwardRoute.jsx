@@ -5,5 +5,13 @@ import { AuthContext } from "../../context/AuthContext";
 export default function ForwardRoute({ element }) {
   const { user } = useContext(AuthContext);
 
-  return user ? <Navigate to="/app" /> : element;
+  if (user) {
+    const route =
+      user?.authId?.role === "ADMIN"
+        ? "/app/admin_dashboard"
+        : "/app/user_dashboard";
+    return <Navigate to={route} />;
+  }
+
+  return element;
 }
