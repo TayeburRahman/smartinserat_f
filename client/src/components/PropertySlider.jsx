@@ -96,7 +96,7 @@ const PropertySlider = ({ title, topMargin = false }) => {
         }`}
       >
         <div className="w-full flex flex-row justify-between text-center items-center pb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-700 text-center md:px-5">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-700 text-center">
             {title}
           </h1>
         </div>
