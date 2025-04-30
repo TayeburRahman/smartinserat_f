@@ -226,18 +226,18 @@ const activateAccount = async (payload) => {
 
   let result = {}
   if (existUser.role === ENUM_USER_ROLE.USER) {
-    result = await User.findOne({ authId: existUser._id }).populate("authId");
+    result = await User.findOne({ authId: existUser?._id }).populate("authId");
   } else if (existUser.role === ENUM_USER_ROLE.ADMIN || ENUM_USER_ROLE.SUPER_ADMIN) {
-    result = await Admin.findOne({ authId: existUser._id }).populate("authId");
+    result = await Admin.findOne({ authId: existUser?._id }).populate("authId");
   } else {
     throw new ApiError(400, "Invalid role provided!");
   }
 
   const accessToken = jwtHelpers.createToken(
     {
-      authId: existUser._id,
-      role: existUser.role,
-      userId: result._id,
+      authId: existUser?._id,
+      role: existUser?.role,
+      userId: result?._id,
     },
     config.jwt.secret,
     config.jwt.expires_in
@@ -245,7 +245,7 @@ const activateAccount = async (payload) => {
 
   // Create refresh token
   const refreshToken = jwtHelpers.createToken(
-    { authId: existUser._id, userId: result._id, role: existUser.role },
+    { authId: existUser?._id, userId: result?._id, role: existUser?.role },
     config.jwt.refresh_secret,
     config.jwt.refresh_expires_in
   );
