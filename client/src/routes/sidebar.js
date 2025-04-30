@@ -6,11 +6,7 @@
  * `routes/index.js`
  */
 const routes = [
-  {
-    path: "/app/profile",
-    icon: "OutlinePersonIcon",
-    name: "Profile",
-  },
+ 
   {
     path: "/app/users",
     icon: "PeopleIcon",
@@ -45,6 +41,11 @@ const routes = [
     path: "/app/imprint",
     icon: "FormsIcon",
     name: "Imprint",
+  }, 
+  {
+    path: "/app/profile",
+    icon: "OutlinePersonIcon",
+    name: "Profile",
   },
   {
     path: "/app/logout",

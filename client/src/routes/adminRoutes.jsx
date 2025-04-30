@@ -20,8 +20,7 @@ const Tables = lazy(() => import('../pages/Tables'));
 const Page404 = lazy(() => import('../pages/404'));
 const Blank = lazy(() => import('../pages/Blank'));
 
-const adminRoutes = [
-  { path: '/profile', element: Profile },
+const adminRoutes = [ 
   { path: '/users', element: Users },
   { path: '/user-list-management', element: UserListManagement },
   { path: '/package-management', element: PackageManagement },
@@ -38,6 +37,7 @@ const adminRoutes = [
   { path: '/tables', element: Tables },
   { path: '/404', element: Page404 },
   { path: '/blank', element: Blank },
+  { path: '/profile', element: Profile },
 ];
 
 export default adminRoutes;
