@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import '../utils/demo/chartSetup'
 
-import InfoCard from '../components/Cards/InfoCard'
-import ChartCard from '../components/Chart/ChartCard'
-import { Doughnut, Line } from 'react-chartjs-2'
-import ChartLegend from '../components/Chart/ChartLegend'
+import InfoCard from '../components/Cards/InfoCard' 
 import PageTitle from '../components/Typography/PageTitle'
 import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
@@ -27,6 +25,8 @@ import {
   doughnutLegends,
   lineLegends,
 } from '../utils/demo/chartsData'
+import { Link } from 'react-router-dom'
+import GrowthCharts from '../components/Chart/ChartCard'
 
 function Dashboard() {
   const [page, setPage] = useState(1)
@@ -34,17 +34,13 @@ function Dashboard() {
 
   // pagination setup
   const resultsPerPage = 10
-  const totalResults = response.length
 
-  // pagination change control
-  function onPageChange(p) {
-    setPage(p)
-  }
+
 
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
+    setData(response)
   }, [page])
 
   return (
@@ -64,6 +60,15 @@ function Dashboard() {
 
         <InfoCard title="Account balance" value="$ 46,760.89">
           <RoundIcon
+            icon={CartIcon}
+            iconColorClass="text-blue-500 dark:text-blue-100"
+            bgColorClass="bg-blue-100 dark:bg-blue-500"
+            className="mr-4 "
+          />
+        </InfoCard>
+
+        <InfoCard title="User Listing" value="376">
+          <RoundIcon
             icon={MoneyIcon}
             iconColorClass="text-blue-500 dark:text-blue-100"
             bgColorClass="bg-blue-100 dark:bg-blue-500"
@@ -71,16 +76,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="New sales" value="376">
-          <RoundIcon
-            icon={CartIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="Pending contacts" value="35">
+        <InfoCard title="Pending Message" value="35">
           <RoundIcon
             icon={ChatIcon}
             iconColorClass="text-teal-500 dark:text-teal-100"
@@ -90,10 +86,16 @@ function Dashboard() {
         </InfoCard>
       </div>
 
+      <PageTitle>Charts</PageTitle>
+
+      <GrowthCharts />
+
+      <PageTitle>New Transactions</PageTitle>
       <TableContainer>
         <Table>
           <TableHeader>
             <tr>
+              <TableCell>Id</TableCell>
               <TableCell>Client</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Status</TableCell>
@@ -101,56 +103,50 @@ function Dashboard() {
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((user, i) => (
+            {data.slice(1, 9).map((user, i) => (
               <TableRow key={i}>
                 <TableCell>
+                  <span className="text-sm">Id</span>
+                </TableCell>
+                <TableCell>
                   <div className="flex items-center text-sm">
-                    <Avatar className="hidden mr-3 md:block" src={user.avatar} alt="User image" />
+                    <Avatar className="hidden mr-3 md:block" src='' alt="USER image" />
                     <div>
-                      <p className="font-semibold">{user.name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{user.job}</p>
+                      <p className="font-semibold">Full Name</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">User Email</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">$ {user.amount}</span>
+                  <span className="text-sm">$ 1230</span>
                 </TableCell>
                 <TableCell>
-                  <Badge type={user.status}>{user.status}</Badge>
+                  <Badge type='success'>success</Badge>
                 </TableCell>
+
                 <TableCell>
-                  <span className="text-sm">{new Date(user.date).toLocaleDateString()}</span>
+                  <span className="text-sm">{new Date('11/29/2019').toLocaleDateString()}</span>
                 </TableCell>
               </TableRow>
             ))}
+
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={5}>
+                <div className="w-full flex justify-start">
+                  <Link
+                    to="/app/transactions"
+                    className="text-sm font-medium text-purple-600 hover:underline"
+                  >
+                    See more →
+                  </Link>
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
-        <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            label="Table navigation"
-            onChange={onPageChange}
-          />
-        </TableFooter>
       </TableContainer>
-
-      <PageTitle>Charts</PageTitle>
-      <div className="grid gap-6 mb-8 md:grid-cols-2">
-        <ChartCard title="Revenue">
-          <div className="flex justify-center w-full">
-            <div className="w-1/2">
-              <Doughnut {...doughnutOptions} />
-            </div>
-          </div>
-          <ChartLegend legends={doughnutLegends} />
-        </ChartCard>
-
-        <ChartCard title="Traffic">
-          <Line {...lineOptions} />
-          <ChartLegend legends={lineLegends} />
-        </ChartCard>
-      </div>
     </>
   )
 }

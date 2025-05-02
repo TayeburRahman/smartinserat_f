@@ -1,12 +1,8 @@
 import { Button, Input, Label } from "@windmill/react-ui";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { config } from "../assets/config/config";
-import CreateUserModal from "../components/Modals/CreateUserModal";
 import DeleteUserModal from "../components/Modals/DeleteUserModal";
-import UpdatePasswordModal from "../components/Modals/UpdatePasswordModal";
-import UpdateUserModal from "../components/Modals/UpdateUserModal";
-import UserTable from "../components/Tables/UserTable";
 import ThemedSuspense from "../components/ThemedSuspense";
 import PageTitle from "../components/Typography/PageTitle";
 import { AuthContext } from "../context/AuthContext";
@@ -14,40 +10,34 @@ import { SnackbarContext } from "../context/SnackbarContext";
 import { SearchIcon } from "../icons/index.js";
 import PageError from "./Error";
 import axios from "axios";
-import MessageTable from "../components/Tables/MessageTable.js";
-import { messageService } from "../services/message.service.js";
-import MessageModal from "../components/Modals/MessageModal.js";
+import MessageTable from "../components/Tables/MessageTable.jsx";
+import { messageService } from "../services/message.service.jsx";
+import MessageModal from "../components/Modals/MessageModal.jsx";
 
 function Messages() {
   const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
   const { logout } = useContext(AuthContext);
-  const [isLoaded, setIsLoaded] = useState(false);
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [activeMessage, setActiveMessage] = useState(null);
-  const [messages, setMessages] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [error, setError] = useState(null);
-  const [resfreshing, setRefreshing] = useState(false);
-  const [searchMessages, setSearchMessages] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchMessages, setSearchMessages] = useState([]);
   const [value, setValue] = useState(false);
-  const apiUrl = config.api.url;
   const [messageLists, setMessageLists] = useState([]);
-
-  console.log('messageLists', messageLists)
   const [noData, setNoData] = useState(false);
 
+  const apiUrl = config.api.url;
+
   useEffect(() => {
-    if (resfreshing) {
-      openSnackbar("Refresing messages..");
-    } else {
-      closeSnackbar();
-    }
-  }, [resfreshing, openSnackbar, closeSnackbar]);
-
-
+    if (refreshing) openSnackbar("Refreshing messages...");
+    else closeSnackbar();
+  }, [refreshing, openSnackbar, closeSnackbar]);
 
   const refreshMessages = useCallback(() => {
     setRefreshing(true);
@@ -67,46 +57,31 @@ function Messages() {
   }, [currentPage]);
 
   useEffect(() => {
-    refreshMessages().then(() => {
-      setIsLoaded(true);
-    });
+    refreshMessages().then(() => setIsLoaded(true));
   }, [refreshMessages]);
-
-  const handleAction = (user, type) => {
-    setActiveMessage(user);
-    switch (type) {
-      case "viewMessage":
-        setShowMessageModal(true);
-        break;
-      case "deleteMessage":
-        setShowDeleteModal(true);
-        break;
-      default:
-        setActiveMessage(null);
-        break;
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
-
       try {
         const response = await axios.get(`${apiUrl}/message/all`);
-
-        console.log("messages", response.data)
         if (response.data.statusCode === 200) {
-          setMessageLists(response?.data?.data);
+          setMessageLists(response.data.data);
         } else {
           setNoData(true);
         }
       } catch (error) {
         console.log(error);
       }
-    }
+    };
+    fetchData();
+  }, [apiUrl]);
 
-    fetchData()
-  }, []);
-
+  const handleAction = (message, type) => {
+    setActiveMessage(message);
+    if (type === "viewMessage") setShowMessageModal(true);
+    else if (type === "deleteMessage") setShowDeleteModal(true);
+    else setActiveMessage(null);
+  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -114,92 +89,56 @@ function Messages() {
 
   const onModalClose = (type) => {
     setActiveMessage(null);
-    switch (type) {
-      case "viewMessage":
-        setShowMessageModal(false);
-        break;
-      case "deleteMessage":
-        setShowDeleteModal(false);
-        break;
-      default:
-        break;
-    }
+    if (type === "viewMessage") setShowMessageModal(false);
+    else if (type === "deleteMessage") setShowDeleteModal(false);
   };
 
   const onModalAction = (type) => {
     setActiveMessage(null);
-    switch (type) {
-      case "viewMessage":
-        setShowMessageModal(false);
-        break;
-      case "deleteMessage":
-        setShowDeleteModal(false);
-        refreshMessages();
-        break;
-      default:
-        break;
+    if (type === "viewMessage") setShowMessageModal(false);
+    else if (type === "deleteMessage") {
+      setShowDeleteModal(false);
+      refreshMessages();
     }
   };
-
-  if (!isLoaded) {
-    return <ThemedSuspense />;
-  }
-
-  if (error) {
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-          logout();
-          return <Redirect to="/auth" />;
-        case 403:
-          return (
-            <PageError message="Unauthorized : Only admin can view/update all messages." />
-          );
-        default:
-          return <PageError message="Some error occured : please try again." />;
-      }
-    } else {
-      return <PageError message="Some error occured : please try again." />;
-    }
-  }
 
   const escapeRegExp = (string) => {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   };
-
 
   const handleSearch = (event) => {
-    if (event.target.value === "") {
-      setSearchMessages("");
+    const input = event.target.value;
+    if (!input) {
+      setSearchMessages([]);
       setValue(false);
-    } else {
-      setValue(true);
-      const searchText = event?.target.value;
-
-
-      console.log("Search text: ", searchText);
-      console.log("messageLists:", messageLists)
-
-      // Escaping special characters in the search text
-      const escapedSearchText = escapeRegExp(searchText);
-
-      // Creating a case-insensitive regular expression from the escaped search text
-      const regex = new RegExp(escapedSearchText, "i");
-
-      const matchedMessages = messageLists?.filter((user) => {
-        // Checking if any of the fields match the regular expression
-        return (
-          regex.test(user?.email) ||
-          regex.test(user?.name) ||
-          regex.test(user?.uniqId) ||
-          regex.test(user?.telephone)
-        );
-      });
-
-      console.log("matchedUers", matchedMessages)
-      setSearchMessages(matchedMessages);
+      return;
     }
+
+    const regex = new RegExp(escapeRegExp(input), "i");
+    const matchedMessages = messageLists.filter(
+      (msg) =>
+        regex.test(msg?.email) ||
+        regex.test(msg?.name) ||
+        regex.test(msg?.uniqId) ||
+        regex.test(msg?.telephone)
+    );
+
+    setSearchMessages(matchedMessages);
+    setValue(true);
   };
+
+  if (!isLoaded) return <ThemedSuspense />;
+
+  if (error) {
+    const status = error?.response?.status;
+    if (status === 401) {
+      logout();
+      return <Navigate to="/auth" />;
+    }
+    if (status === 403)
+      return <PageError message="Unauthorized: Only admin can view/update all messages." />;
+    return <PageError message="Some error occurred: please try again." />;
+  }
 
   return (
     <>
@@ -214,26 +153,15 @@ function Messages() {
               <Input
                 className="p-2 pl-3 border border-solid border-gray-300 focus-within:text-gray-700"
                 placeholder="Search for messages..."
-                component="form"
                 onChange={handleSearch}
               />
             </div>
           </Label>
         </div>
-
-        {/* <div className="my-6">
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              handleAction(null, "createUser");
-            }}
-          >
-            Create User
-          </Button>
-        </div> */}
       </div>
+
       <MessageTable
-        messages={messages}
+        messages={value ? searchMessages : messages}
         resultsPerPage={config.users.resultsPerPage}
         totalResults={totalResults}
         onAction={handleAction}
@@ -241,6 +169,7 @@ function Messages() {
         value={value}
         searchMessages={searchMessages}
       />
+
       <MessageModal
         isOpen={showMessageModal}
         onClose={onModalClose}
@@ -250,6 +179,7 @@ function Messages() {
 
       <DeleteUserModal
         isOpen={showDeleteModal}
+        types="message"
         onClose={onModalClose}
         onAction={onModalAction}
         m_user={activeMessage}

@@ -3,7 +3,7 @@ import SimpleModal from "./SimpleModal.jsx"
 import { userService } from "../../services"
 import { HelperText } from '@windmill/react-ui'
 
-export default function DeleteUserModal({isOpen, onClose, onAction, m_user}) {
+export default function DeleteUserModal({isOpen, onClose, onAction, m_user, types}) {
   const [error, setError] = React.useState(null);
   const [enabled, setEnabled] = React.useState(true);
 
@@ -11,24 +11,30 @@ export default function DeleteUserModal({isOpen, onClose, onAction, m_user}) {
     setEnabled(true)
     setError(null)
     onClose('deleteUser')
+    if(types==="message"){
+      onClose('deleteMessage')
+    }
   }
 
   const handleModalAction = () => {
-    setEnabled(false)
-    userService.deleteUser(m_user._id)
-    .then(() => {
-      setEnabled(true)
-      setError(null)
-      onAction('deleteUser')
-    })
-    .catch(err => {
-      setEnabled(true)
-      if(err.response) {
-        setError(err.response.data.message);
-      } else {
-        setError('Some error occured.');
-      }
-    })
+    // setEnabled(false)
+    // userService.deleteUser(m_user._id)
+    // .then(() => {
+    //   setEnabled(true)
+    //   setError(null)
+    //   onAction('deleteUser')
+    //   if(types==="message"){
+    //     onAction('deleteMessage')
+    //   }
+    // })
+    // .catch(err => {
+    //   setEnabled(true)
+    //   if(err.response) {
+    //     setError(err.response.data.message);
+    //   } else {
+    //     setError('Some error occured.');
+    //   }
+    // })
   }
 
   return (

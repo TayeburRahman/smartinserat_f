@@ -25,28 +25,16 @@ function Users() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
   const [activeUser, setActiveUser] = useState(null);
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [error, setError] = useState(null);
-  const [resfreshing, setRefreshing] = useState(false);
-  const [searchUsers, setSearchUsers] = useState("");
-  const [value, setValue] = useState(false);
-  const apiUrl = config.api.url;
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [userLists, setUserLists] = useState([]);
-
-  console.log('userLists', userLists)
   const [noData, setNoData] = useState(false);
 
-  useEffect(() => {
-    if (resfreshing) {
-      openSnackbar("Refresing users..");
-    } else {
-      closeSnackbar();
-    }
-  }, [resfreshing, openSnackbar, closeSnackbar]);
-
-
+  const apiUrl = config.api.url;
 
   const refreshUsers = useCallback(() => {
     setRefreshing(true);
@@ -56,20 +44,42 @@ function Users() {
         setRefreshing(false);
         setUsers(data.data.results);
         setTotalResults(data.data.totalResults);
-        return null;
       })
       .catch((err) => {
         setRefreshing(false);
         setError(err);
-        return null;
       });
   }, [currentPage]);
 
   useEffect(() => {
-    refreshUsers().then(() => {
-      setIsLoaded(true);
-    });
+    refreshUsers().then(() => setIsLoaded(true));
   }, [refreshUsers]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/admin/users`);
+        if (response.data.statusCode === 200) {
+          setUserLists(response.data.data.results);
+        } else {
+          setNoData(true);
+        }
+      } catch (error) {
+        console.log(error);
+        setNoData(true);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (refreshing) {
+      openSnackbar("Refreshing users...");
+    } else {
+      closeSnackbar();
+    }
+  }, [refreshing, openSnackbar, closeSnackbar]);
 
   const handleAction = (user, type) => {
     setActiveUser(user);
@@ -92,38 +102,19 @@ function Users() {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-
-      try {
-        const response = await axios.get(`${apiUrl}/admin/users`);
-
-        console.log("userLists", response.data)
-        if (response.data.statusCode === 200) {
-          setUserLists(response?.data?.data?.results);
-        } else {
-          setNoData(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchData()
-  }, []);
-
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
+ 
+
   const onModalClose = (type) => {
     setActiveUser(null);
     switch (type) {
-      case "createUser":
+      case "createUser": 
         setShowCreateModal(false);
         break;
-      case "updateUser":
+      case "updateUser":  
         setShowUpdateModal(false);
         break;
       case "updatePassword":
@@ -136,28 +127,47 @@ function Users() {
         break;
     }
   };
-
+  console.log("==jshowUpdateModal", showUpdateModal)
   const onModalAction = (type) => {
     setActiveUser(null);
     switch (type) {
       case "createUser":
-        setShowCreateModal(false);
-        refreshUsers();
-        break;
       case "updateUser":
+      case "deleteUser":
+        setShowCreateModal(false);
         setShowUpdateModal(false);
+        setShowDeleteModal(false);
         refreshUsers();
         break;
       case "updatePassword":
         setShowUpdatePasswordModal(false);
         break;
-      case "deleteUser":
-        setShowDeleteModal(false);
-        refreshUsers();
-        break;
       default:
         break;
     }
+  };
+
+  const handleSearch = (event) => {
+    const searchText = event.target.value;
+    setSearchQuery(searchText);
+
+    if (searchText === "") {
+      setSearchQuery("");
+    } else {
+      const regex = new RegExp(escapeRegExp(searchText), "i");
+
+      const matchedUsers = userLists.filter((user) =>
+        [user?.email, user?.name, user?.lastname, user?.phone_number, user?.authId?.role].some((field) =>
+          regex.test(field)
+        )
+      );
+
+      setUsers(matchedUsers);
+    }
+  };
+
+  const escapeRegExp = (string) => {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   };
 
   if (!isLoaded) {
@@ -171,54 +181,14 @@ function Users() {
           logout();
           return <Navigate to="/auth/login" />;
         case 403:
-          return (
-            <PageError message="Unauthorized : Only admin can view/update all users." />
-          );
+          return <PageError message="Unauthorized: Only admin can view/update all users." />;
         default:
-          return <PageError message="Some error occured : please try again." />;
+          return <PageError message="An error occurred. Please try again." />;
       }
     } else {
-      return <PageError message="Some error occured : please try again." />;
+      return <PageError message="An error occurred. Please try again." />;
     }
   }
-
-  const escapeRegExp = (string) => {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters
-  };
-
-  const handleSearch = (event) => {
-    if (event.target.value === "") {
-      setSearchUsers("");
-      setValue(false);
-    } else {
-      setValue(true);
-      const searchText = event?.target.value;
-
-
-      console.log("Search text: ", searchText);
-      console.log("userLists:", userLists)
-
-      // Escaping special characters in the search text
-      const escapedSearchText = escapeRegExp(searchText);
-
-      // Creating a case-insensitive regular expression from the escaped search text
-      const regex = new RegExp(escapedSearchText, "i");
-
-      const matchedUsers = userLists?.filter((user) => {
-        // Checking if any of the fields match the regular expression
-        return (
-          regex.test(user?.email) ||
-          regex.test(user?.name) ||
-          regex.test(user?.lastname) ||
-          regex.test(user?.phone_number) ||
-          regex.test(user?.authId?.role)
-        );
-      });
-
-      console.log("matchedUers", matchedUsers)
-      setSearchUsers(matchedUsers);
-    }
-  };
 
   return (
     <>
@@ -235,54 +205,34 @@ function Users() {
                 placeholder="Search for users..."
                 component="form"
                 onChange={handleSearch}
+                value={searchQuery}
               />
             </div>
           </Label>
         </div>
 
         <div className="my-6">
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              handleAction(null, "createUser");
-            }}
-          >
+          <Button onClick={(e) => {
+            e.preventDefault();
+            handleAction(null, "createUser");
+          }}>
             Create User
           </Button>
         </div>
       </div>
+
       <UserTable
         users={users}
         resultsPerPage={config.users.resultsPerPage}
         totalResults={totalResults}
         onAction={handleAction}
         onPageChange={handlePageChange}
-        value={value}
-        searchUsers={searchUsers}
       />
-      <CreateUserModal
-        isOpen={showCreateModal}
-        onClose={onModalClose}
-        onAction={onModalAction}
-      />
-      <UpdateUserModal
-        isOpen={showUpdateModal}
-        onClose={onModalClose}
-        onAction={onModalAction}
-        m_user={activeUser}
-      />
-      <UpdatePasswordModal
-        isOpen={showUpdatePasswordModal}
-        onClose={onModalClose}
-        onAction={onModalAction}
-        m_user={activeUser}
-      />
-      <DeleteUserModal
-        isOpen={showDeleteModal}
-        onClose={onModalClose}
-        onAction={onModalAction}
-        m_user={activeUser}
-      />
+
+      <CreateUserModal isOpen={showCreateModal} onClose={onModalClose} onAction={onModalAction} />
+      <UpdateUserModal isOpen={showUpdateModal} onClose={onModalClose} onAction={onModalAction} m_user={activeUser} />
+      <UpdatePasswordModal isOpen={showUpdatePasswordModal} onClose={onModalClose} onAction={onModalAction} m_user={activeUser} />
+      <DeleteUserModal isOpen={showDeleteModal} onClose={onModalClose} onAction={onModalAction} m_user={activeUser} />
     </>
   );
 }

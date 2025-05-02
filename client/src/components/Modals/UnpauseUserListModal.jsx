@@ -1,6 +1,6 @@
 import React from "react"
-import SimpleModal from "./SimpleModal.js"
-import { userListService, userService } from "../../services/index.js"
+import SimpleModal from "./SimpleModal.jsx"
+import { userListService, userService } from "../../services/index.jsx"
 import { HelperText } from '@windmill/react-ui'
 
 export default function UnpauseUserListModal({isOpen, onClose, onAction, m_list}) {

@@ -1,5 +1,5 @@
 import React from "react"
-import SimpleModal from "./SimpleModal.js"
+import SimpleModal from "./SimpleModal.jsx"
 import { userListService, userService } from "../../services"
 import { HelperText } from '@windmill/react-ui'
 

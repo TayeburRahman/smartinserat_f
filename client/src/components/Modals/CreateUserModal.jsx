@@ -11,13 +11,13 @@ export default function CreateUserModal({isOpen, onClose, onAction}) {
   }
 
   const handleModalAction = () => {
-    if (formRef.current) {
-      formRef.current.validateForm()
-      .then(() => {
-        setEnabled(!formRef.current.isValid)
-        formRef.current.handleSubmit()
-      })
-    }
+    // if (formRef.current) {
+    //   formRef.current.validateForm()
+    //   .then(() => {
+    //     setEnabled(!formRef.current.isValid)
+    //     formRef.current.handleSubmit()
+    //   })
+    // }
   }
 
   const formSubmitCallback = (val) => {
@@ -29,7 +29,7 @@ export default function CreateUserModal({isOpen, onClose, onAction}) {
     <SimpleModal isOpen={isOpen}
       title="Create User"
       neg_text="Cancel" 
-      pos_text="Confirm"
+      // pos_text="Confirm"
       onClose={handleModalClose}
       onAction={handleModalAction}
       enabled={enabled}

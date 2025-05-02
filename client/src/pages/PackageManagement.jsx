@@ -1,6 +1,6 @@
 import { Button, Input, Label } from "@windmill/react-ui";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { config } from "../assets/config/config"; 
 import ThemedSuspense from "../components/ThemedSuspense";
 import PageTitle from "../components/Typography/PageTitle";
@@ -10,10 +10,10 @@ import { SearchIcon } from "../icons/index.js";
 import { packageService, userService } from "../services";
 import PageError from "./Error";
 import axios from "axios";
-import PackagesTable from "../components/Tables/PackagesTable.js";
-import DeletePackageModal from "../components/Modals/DeletePackageModal.js";
-import UpdatePackageModal from "../components/Modals/UpdatePackageModal.js";
-import CreatePackageModal from "../components/Modals/CreatePackageModal.js";
+import PackagesTable from "../components/Tables/PackagesTable.jsx";
+import DeletePackageModal from "../components/Modals/DeletePackageModal.jsx";
+import UpdatePackageModal from "../components/Modals/UpdatePackageModal.jsx";
+import CreatePackageModal from "../components/Modals/CreatePackageModal.jsx";
 
 function PackageManagement() {
   const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
@@ -171,7 +171,7 @@ function PackageManagement() {
       switch (error.response.status) {
         case 401:
           logout();
-          return <Redirect to="/auth" />;
+          return <Navigate to="/auth" />;
         case 403:
           return (
             <PageError message="Unauthorized : Only admin can view/update all packages." />

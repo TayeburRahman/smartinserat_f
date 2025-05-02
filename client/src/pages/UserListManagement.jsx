@@ -1,12 +1,12 @@
 import { Button, Input, Label } from "@windmill/react-ui";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { config } from "../assets/config/config";
 // import CreateUserModal from "../components/Modals/CreateUserModal";
 // import DeleteUserModal from "../components/Modals/DeleteUserModal";
 // import UpdatePasswordModal from "../components/Modals/UpdatePasswordModal";
 // import UpdateUserModal from "../components/Modals/UpdateUserModal";
-import UserListTable from "../components/Tables/UserListTable.js";
+import UserListTable from "../components/Tables/UserListTable.jsx";
 import ThemedSuspense from "../components/ThemedSuspense";
 import PageTitle from "../components/Typography/PageTitle";
 import { AuthContext } from "../context/AuthContext";
@@ -14,10 +14,10 @@ import { SnackbarContext } from "../context/SnackbarContext";
 import { SearchIcon } from "../icons/index.js";
 import PageError from "./Error";
 import axios from "axios";
-import { userListService } from "../services/userList.service.js";
-import DeleteUserListModal from "../components/Modals/DeleteUserListModal.js";
-import PauseUserListModal from "../components/Modals/PauseUserListModal.js";
-import UnpauseUserListModal from "../components/Modals/UnpauseUserListModal.js";
+import { userListService } from "../services/userList.service.jsx";
+import DeleteUserListModal from "../components/Modals/DeleteUserListModal.jsx";
+import PauseUserListModal from "../components/Modals/PauseUserListModal.jsx";
+import UnpauseUserListModal from "../components/Modals/UnpauseUserListModal.jsx";
 
 function UserListManagement() {
   const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
@@ -163,7 +163,7 @@ function UserListManagement() {
       switch (error.response.status) {
         case 401:
           logout();
-          return <Redirect to="/auth" />;
+          return <Navigate to="/auth" />;
         case 403:
           return (
             <PageError message="Unauthorized : Only admin can view/update all UserLists." />

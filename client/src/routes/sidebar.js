@@ -8,6 +8,11 @@
 const routes = [
  
   {
+    path: "/app/admin_dashboard",
+    icon: "HomeIcon",
+    name: "Dashboard",
+  },
+  {
     path: "/app/users",
     icon: "PeopleIcon",
     name: "Users",
@@ -22,6 +27,11 @@ const routes = [
     icon: "CardsIcon",
     name: "Packages",
   },
+  {
+    path: "/app/transactions",
+    icon: "CardsIcon",
+    name: "Transactions",
+  },  
   {
     path: "/app/messages",
     icon: "ChatIcon",

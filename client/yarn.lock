@@ -522,6 +522,11 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@heroicons/react@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.2.0.tgz#0c05124af50434a800773abec8d3af6a297d904b"
+  integrity sha512-LMcepvRaS9LYHJGsF0zzmgKCUim/X3N/DQKc4jepAXJ7l8QxJ1PmxJzqplF2Z3FE4PqBAIGyJAQ/w4B5dsqbtQ==
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"
@@ -1547,7 +1552,7 @@ classnames@^2.5.1:
     autoprefixer "^9.8.6"
     axios "^1.8.4"
     chart.js "^4.4.9"
-    client "file:../../../../.cache/yarn/v6/npm-client-0.0.0-b7bc061b-afbc-489e-96b1-5bd498795dce-1746031315079/node_modules/client"
+    client "file:../../../../../.cache/yarn/v6/npm-client-0.0.0-26ec2fb2-cab2-40e4-998d-fbadaf4aa2a3-1746219392849/node_modules/client"
     dotenv "^16.4.7"
     formik "^2.4.6"
     i18next "^24.2.3"
@@ -2384,9 +2389,9 @@ image-to-blob@^0.2.0:
   dependencies:
     image-to-data-uri jcblw/image-to-data-uri.js
 
-"image-to-data-uri@git+https://github.com/jcblw/image-to-data-uri.js":
+image-to-data-uri@jcblw/image-to-data-uri.js:
   version "0.0.1"
-  resolved "git+https://github.com/jcblw/image-to-data-uri.js#bcd2218a4fe1531080fd2fdb81e96b0c7d8909a6"
+  resolved "https://codeload.github.com/jcblw/image-to-data-uri.js/tar.gz/bcd2218a4fe1531080fd2fdb81e96b0c7d8909a6"
 
 import-fresh@^3.2.1, import-fresh@^3.3.0:
   version "3.3.1"

@@ -7,6 +7,7 @@ function SimpleModal({ title, pos_text, neg_text, body, isOpen, onClose, onActio
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalHeader>{title}</ModalHeader>
+        
         <ModalBody>
           {body}
         </ModalBody>

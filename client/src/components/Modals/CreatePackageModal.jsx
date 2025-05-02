@@ -1,6 +1,6 @@
 import React from "react"
-import SimpleModal from './SimpleModal.js'
-import CreatePackageForm from '../Forms/CreatePackageForm.js'
+import SimpleModal from './SimpleModal.jsx'
+import CreatePackageForm from '../Forms/CreatePackageForm.jsx'
 
 export default function CreatePackageModal({isOpen, onClose, onAction}) {
   const [enabled, setEnabled] = React.useState(true)

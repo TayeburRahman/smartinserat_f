@@ -68,26 +68,13 @@ function Body({ dataTable, onAction }) {
                     <TableCell>
                         <span className="text-sm">{truncateMessage(message?.message, 5)}</span>
                     </TableCell>
-                    {/* <TableCell>
-            <Badge type={message?.authId?.role === "ADMIN" ? "primary" : "neutral"}>{message?.authId?.role}</Badge>
-          </TableCell> */}
+                   
                     <TableCell>
                         <div className="flex items-center space-x-4">
                             <Button layout="link" size="icon" aria-label="Edit" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'viewMessage') } }} >
                                 <ChatIcon className="w-5 h-5" aria-hidden="true" />
                             </Button>
-                            {/* <Button layout="link" size="icon" aria-label="Edit" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'updateMessage') } }} >
-                                <OutlinePersonIcon className="w-5 h-5" aria-hidden="true" />
-                            </Button>
-
-                            <Button layout="link" size="icon" aria-label="Edit" onClick={(e) => { handleSendEmail(message) }} >
-                                <MailIcon className="w-5 h-5" aria-hidden="true" />
-                            </Button> */}
-
-                            {/* 
-              <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'updatePassword') } }}>
-                <EditIcon className="w-5 h-5" aria-hidden="true" />
-              </Button> */}
+                            
                             <Button layout="link" size="icon" aria-label="Delete" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'deleteMessage') } }}>
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                             </Button>
@@ -152,19 +139,7 @@ function SearchMessages({ searchTable, onAction }) {
                         <div className="flex items-center space-x-4">
                             <Button layout="link" size="icon" aria-label="Edit" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'viewMessage') } }} >
                                 <ChatIcon className="w-5 h-5" aria-hidden="true" />
-                            </Button>
-                            {/* <Button layout="link" size="icon" aria-label="Edit" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'updateMessage') } }} >
-                                <OutlinePersonIcon className="w-5 h-5" aria-hidden="true" />
-                            </Button> */}
-
-                            {/* <Button layout="link" size="icon" aria-label="Edit" onClick={(e) => { handleSendEmail(message) }} >
-                                <MailIcon className="w-5 h-5" aria-hidden="true" />
-                            </Button> */}
-
-                            {/* 
-              <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'updatePassword') } }}>
-                <EditIcon className="w-5 h-5" aria-hidden="true" />
-              </Button> */}
+                            </Button> 
                             <Button layout="link" size="icon" aria-label="Delete" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(message, 'deleteMessage') } }}>
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                             </Button>
