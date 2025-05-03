@@ -6,10 +6,10 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [react(), svgr()],
   server: {
-    host: '10.0.60.118',
+    host: '64.23.243.67',
     port: 3000, 
   },
 });
 
-// office 10.0.60.118
+// local 10.0.60.118
 //server 64.23.243.67
