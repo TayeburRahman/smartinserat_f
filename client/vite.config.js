@@ -6,7 +6,7 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [react(), svgr()],
   server: {
-    // host: '10.0.60.118',
+    host: '10.0.60.118',
     port: 3000, 
   },
 });
