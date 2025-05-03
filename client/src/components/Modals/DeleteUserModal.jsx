@@ -17,24 +17,24 @@ export default function DeleteUserModal({isOpen, onClose, onAction, m_user, type
   }
 
   const handleModalAction = () => {
-    // setEnabled(false)
-    // userService.deleteUser(m_user._id)
-    // .then(() => {
-    //   setEnabled(true)
-    //   setError(null)
-    //   onAction('deleteUser')
-    //   if(types==="message"){
-    //     onAction('deleteMessage')
-    //   }
-    // })
-    // .catch(err => {
-    //   setEnabled(true)
-    //   if(err.response) {
-    //     setError(err.response.data.message);
-    //   } else {
-    //     setError('Some error occured.');
-    //   }
-    // })
+    setEnabled(false)
+    userService.deleteUser(m_user._id)
+    .then(() => {
+      setEnabled(true)
+      setError(null)
+      onAction('deleteUser')
+      if(types==="message"){
+        onAction('deleteMessage')
+      }
+    })
+    .catch(err => {
+      setEnabled(true)
+      if(err.response) {
+        setError(err.response.data.message);
+      } else {
+        setError('Some error occured.');
+      }
+    })
   }
 
   return (
