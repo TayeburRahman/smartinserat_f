@@ -16,15 +16,15 @@ export const Description = ({
   const { description, features, location, additionalDescription } = formData;
   const { t } = useTranslation();
   const allDescription = [
-    {value: description, text: 'description'},
-    {value: features, text: 'features'},
-    {value: location, text: 'location'},
-    {value: additionalDescription, text: 'additionalDescription'} ];
+    {value: description, text: 'description',grm: "Beschreibung"},
+    {value: features, text: 'features',grm: "Besonderheiten der Immobilie"},
+    {value: location, text: 'location',grm: "Lage der Immobilie"},
+    {value: additionalDescription, text: 'additionalDescription', grm: "Zusätzliche Beschreibung"} ];
   return (
     <div className="container mx-auto px-4">
       {allDescription.map((a,i) => (
         <Label className="mt-4" key={i}>
-          <span>{t(a.text)}</span>
+          <span>{t(a.grm)}</span>
           <LimitedTextarea
             rows="3"
             limit={3800}

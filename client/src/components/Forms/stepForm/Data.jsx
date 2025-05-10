@@ -73,11 +73,11 @@ export const Data = ({ formData, setForm, navigation,
           autoComplete="off"
           fullwidth='true'
         >
-          <option value="House">{t("house")}</option>
-          <option value="Flat">{t("flat")}</option>
+          <option value="House">{t("Haus")}</option>
+          <option value="Flat">{t("Wohnung")}</option>
           <option value="Land">{t("land")}</option>
-          <option value="Commercial">{t("commercial")}</option>
-          <option value="Investment">{t("investment")}</option>
+          <option value="Commercial">{t("Gewerblich")}</option>
+          <option value="Investment">{t("Investition")}</option>
         </Select>
       </Label>
       {listingType === "For Sale" && (
