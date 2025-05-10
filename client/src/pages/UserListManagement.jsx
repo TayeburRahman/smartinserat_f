@@ -49,8 +49,6 @@ function UserListManagement() {
     }
   }, [resfreshing, openSnackbar, closeSnackbar]);
 
-
-
   const refreshUserLists = useCallback(() => {
     setRefreshing(true);
     return userListService
@@ -175,10 +173,10 @@ function UserListManagement() {
       return <PageError message="Some error occured : please try again." />;
     }
   }
+
   const escapeRegExp = (string) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters
   };
-
 
   const handleSearch = (event) => {
     if (event.target.value === "") {
@@ -187,7 +185,6 @@ function UserListManagement() {
     } else {
       setValue(true);
       const searchText = event?.target.value;
-
 
       console.log("Search text: ", searchText);
       console.log("userListings:", userListings)
@@ -218,9 +215,9 @@ function UserListManagement() {
 
   return (
     <>
-      <div className="flex justify-between items-center gap-16">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-16">
         <PageTitle>All User Listing</PageTitle>
-        <div className="w-96">
+        <div className="w-full sm:w-96">
           <Label>
             <div className="relative w-full focus-within:text-blue-400">
               <div className="absolute inset-y-0 right-0 flex items-center pr-3">

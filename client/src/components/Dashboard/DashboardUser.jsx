@@ -138,7 +138,7 @@ function Dashboard() {
                       <div className="text-gray-600 dark:text-gray-400 pt-4">
                         <div>
                           <p className="mb-6 font-semibold text-gray-600 dark:text-gray-300">
-                            Hey {user?.name} 👋, {t("welcome greeting")}
+                            Hey {user?.name} 👋, {t("Herzlich willkommen!")}
                           </p>{" "}
                           {dictionary["userDashboard"][languageReducer]["noListingMessage"]}{" "}
                         </div>

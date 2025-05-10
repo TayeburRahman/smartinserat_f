@@ -18,7 +18,7 @@ export const LimitedTextarea = ({ value, limit, setForm, t, name }) => {
           value={content}
           onInput={setForm}
           name={name}
-          placeholder={t("enter description of the property")}
+          placeholder={t("Gib die Beschreibung der Immobilie ein")}
         />
         <p className="text-right">
           {content.length}/{limit}
@@ -42,7 +42,7 @@ export const LimitedInput = ({ value, limit, setForm, t }) => {
           className="mb-2 mt-1"
           required={true}
           label="Listing Title"
-          placeholder={t("enter your listing title")}
+          placeholder={t("Gib deinen Angebotstitel ein")}
           name="listingTitle"
           value={content}
           onInput={setForm}

@@ -31,6 +31,8 @@
     "i18next-http-backend": "^3.0.2",
     "image-to-blob": "^0.2.0",
     "joi": "^17.13.3",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.509.0",
     "piexifjs": "^1.0.6",
     "postcss": "^8.4.21",
     "react": "18",

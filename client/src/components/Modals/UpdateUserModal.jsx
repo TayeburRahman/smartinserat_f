@@ -12,13 +12,13 @@ export default function UpdateUserModal({isOpen, onClose, onAction, m_user}) {
   }
 
   const handleModalAction = () => {
-    // if (formRef.current) {
-    //   formRef.current.validateForm()
-    //   .then(() => {
-    //     setEnabled(!formRef.current.isValid)
-    //     formRef.current.handleSubmit()
-    //   })
-    // }
+    if (formRef.current) {
+      formRef.current.validateForm()
+      .then(() => {
+        setEnabled(!formRef.current.isValid)
+        formRef.current.handleSubmit()
+      })
+    }
   }
 
   const formSubmitCallback = (val) => {

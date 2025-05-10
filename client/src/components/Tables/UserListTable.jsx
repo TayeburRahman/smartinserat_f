@@ -1,27 +1,7 @@
-import { Box } from '@mui/material';
-
-import {
-    Badge,
-    Button, Pagination, Table, TableBody, TableCell, TableContainer, TableFooter, TableHeader, TableRow
-} from '@windmill/react-ui';
-import React, { useState } from 'react';
+import { Box, useMediaQuery } from '@mui/material';
+import { Badge, Button, Pagination, Table, TableBody, TableCell, TableContainer, TableFooter, TableHeader, TableRow } from '@windmill/react-ui';
+import React from 'react';
 import { TrashIcon, PlayIcon, PauseIcon } from '../../icons';
-
-
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: "inherit",
-//   "& .MuiInputBase-input": {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create("width"),
-//     width: "100%",
-//     [theme.breakpoints.up("md")]: {
-//       width: "20ch",
-//     },
-//   },
-// }));
 
 function Header() {
     return (
@@ -38,21 +18,10 @@ function Header() {
                 <TableCell>Actions</TableCell>
             </tr>
         </TableHeader>
-    )
+    );
 }
 
 function Body({ dataTable, onAction }) {
-
-    // const [open, setOpen] = useState(false);
-    // const [userData, setUser] = useState('');
-
-    // const handleSendEmail = (data) => {
-    //     setOpen(true)
-    //     setUser(data)
-    // }
-
-
-
     return (
         <TableBody>
             {dataTable?.map((userList, i) => (
@@ -70,7 +39,6 @@ function Body({ dataTable, onAction }) {
                     <TableCell>
                         <span className="text-sm">{userList.email}</span>
                     </TableCell>
-
                     <TableCell>
                         <span className="text-sm">{userList.listingType}</span>
                     </TableCell>
@@ -80,53 +48,72 @@ function Body({ dataTable, onAction }) {
                     <TableCell>
                         <span className="text-sm">{userList.city}</span>
                     </TableCell>
-
                     <TableCell>
-                        <Badge type={userList?.subscription?.type === "PREMIUM" ? "warning" : userList?.subscription?.type === "MEDIUM" ? "primary" : "neutral"}>{userList?.subscription?.type}</Badge>
+                        <Badge type={userList?.subscription?.type === "PREMIUM" ? "warning" : userList?.subscription?.type === "MEDIUM" ? "primary" : "neutral"}>
+                            {userList?.subscription?.type}
+                        </Badge>
                     </TableCell>
                     <TableCell>
-                        <Badge type={!userList?.subscriptionPause ? "primary" : "danger"}>{userList?.subscriptionPause ? "Unpublished" : "Published"}</Badge>
+                        <Badge type={!userList?.subscriptionPause ? "primary" : "danger"}>
+                            {userList?.subscriptionPause ? "Unpublished" : "Published"}
+                        </Badge>
                     </TableCell>
                     <TableCell>
                         <div className="flex items-center space-x-4">
-                            {
-                                userList.subscriptionPause ? (
-                                    <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(userList, 'unpauseListing') } }}>
-                                        <PlayIcon className="w-5 h-5" aria-hidden="true" />
-                                    </Button>
-                                ) : (
-                                    <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(userList, 'pauseListing') } }}>
-                                        <PauseIcon className="w-5 h-5" aria-hidden="true" />
-                                    </Button>
-
-                                )
-                            }
-                            <Button layout="link" size="icon" aria-label="Delete" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(userList, 'deleteListing') } }}>
+                            {userList.subscriptionPause ? (
+                                <Button
+                                    layout="link"
+                                    size="icon"
+                                    aria-label="Play"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (onAction) {
+                                            onAction(userList, 'unpauseListing');
+                                        }
+                                    }}
+                                >
+                                    <PlayIcon className="w-5 h-5" aria-hidden="true" />
+                                </Button>
+                            ) : (
+                                <Button
+                                    layout="link"
+                                    size="icon"
+                                    aria-label="Pause"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (onAction) {
+                                            onAction(userList, 'pauseListing');
+                                        }
+                                    }}
+                                >
+                                    <PauseIcon className="w-5 h-5" aria-hidden="true" />
+                                </Button>
+                            )}
+                            <Button
+                                layout="link"
+                                size="icon"
+                                aria-label="Delete"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (onAction) {
+                                        onAction(userList, 'deleteListing');
+                                    }
+                                }}
+                            >
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                             </Button>
                         </div>
-
                     </TableCell>
                 </TableRow>
             ))}
         </TableBody>
-    )
+    );
 }
 
-
 function SearchUserLists({ searchTable, onAction }) {
-
-    // const [open, setOpen] = useState(false);
-    // const [userData, setUser] = useState('');
-
-    // const handleSendEmail = (data) => {
-    //     setOpen(true)
-    //     setUser(data)
-    // }
     return (
         <TableBody>
             {searchTable?.map((userList, i) => (
-
                 <TableRow key={i}>
                     <TableCell>
                         <span className="text-sm">{userList.uniqId}</span>
@@ -141,7 +128,6 @@ function SearchUserLists({ searchTable, onAction }) {
                     <TableCell>
                         <span className="text-sm">{userList.email}</span>
                     </TableCell>
-
                     <TableCell>
                         <span className="text-sm">{userList.listingType}</span>
                     </TableCell>
@@ -151,60 +137,85 @@ function SearchUserLists({ searchTable, onAction }) {
                     <TableCell>
                         <span className="text-sm">{userList.city}</span>
                     </TableCell>
-
                     <TableCell>
-                        <Badge type={userList?.subscription?.type === "PREMIUM" ? "warning" : userList?.subscription?.type === "MEDIUM" ? "primary" : "neutral"}>{userList?.subscription?.type}</Badge>
+                        <Badge type={userList?.subscription?.type === "PREMIUM" ? "warning" : userList?.subscription?.type === "MEDIUM" ? "primary" : "neutral"}>
+                            {userList?.subscription?.type}
+                        </Badge>
                     </TableCell>
                     <TableCell>
-
-                        <Badge type={!userList?.subscriptionPause ? "primary" : "danger"}>{userList?.subscriptionPause ? "Unpublished" : "Published"}</Badge>
+                        <Badge type={!userList?.subscriptionPause ? "primary" : "danger"}>
+                            {userList?.subscriptionPause ? "Unpublished" : "Published"}
+                        </Badge>
                     </TableCell>
                     <TableCell>
                         <div className="flex items-center space-x-4">
-                            {
-                                userList.subscriptionPause ? (
-                                    <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(userList, 'unpauseListing') } }}>
-                                        <PlayIcon className="w-5 h-5" aria-hidden="true" />
-                                    </Button>
-                                ) : (
-                                    <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(userList, 'pauseListing') } }}>
-                                        <PauseIcon className="w-5 h-5" aria-hidden="true" />
-                                    </Button>
-
-                                )
-                            }
-                            <Button layout="link" size="icon" aria-label="Delete" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(userList, 'deleteListing') } }}>
+                            {userList.subscriptionPause ? (
+                                <Button
+                                    layout="link"
+                                    size="icon"
+                                    aria-label="Play"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (onAction) {
+                                            onAction(userList, 'unpauseListing');
+                                        }
+                                    }}
+                                >
+                                    <PlayIcon className="w-5 h-5" aria-hidden="true" />
+                                </Button>
+                            ) : (
+                                <Button
+                                    layout="link"
+                                    size="icon"
+                                    aria-label="Pause"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (onAction) {
+                                            onAction(userList, 'pauseListing');
+                                        }
+                                    }}
+                                >
+                                    <PauseIcon className="w-5 h-5" aria-hidden="true" />
+                                </Button>
+                            )}
+                            <Button
+                                layout="link"
+                                size="icon"
+                                aria-label="Delete"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (onAction) {
+                                        onAction(userList, 'deleteListing');
+                                    }
+                                }}
+                            >
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                             </Button>
                         </div>
                     </TableCell>
                 </TableRow>
-
             ))}
         </TableBody>
-    )
+    );
 }
 
 export default function UserListTable({ userLists, resultsPerPage, totalResults, onAction, onPageChange, searchUserLists, value }) {
-
-
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     return (
-        <Box>
-
-
+        <Box className="overflow-x-auto custom-scrollbar">
             <Box>
                 <TableContainer className="mb-8">
-                    <Table>
+                    <Table className={`min-w-full ${isSmallScreen ? 'table-auto' : ''}`}>
                         <Header />
-                        {value ? <SearchUserLists searchTable={searchUserLists} onAction={onAction} />
-                            :
+                        {value ? (
+                            <SearchUserLists searchTable={searchUserLists} onAction={onAction} />
+                        ) : (
                             <Body dataTable={userLists} onAction={onAction} />
-                        }
-
+                        )}
                     </Table>
-                    {
-                        !value && <TableFooter>
+                    {!value && (
+                        <TableFooter>
                             <Pagination
                                 totalResults={totalResults}
                                 resultsPerPage={resultsPerPage}
@@ -212,9 +223,9 @@ export default function UserListTable({ userLists, resultsPerPage, totalResults,
                                 label="Table navigation"
                             />
                         </TableFooter>
-                    }
+                    )}
                 </TableContainer>
             </Box>
         </Box>
-    )
+    );
 }

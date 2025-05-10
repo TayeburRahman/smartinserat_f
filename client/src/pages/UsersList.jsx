@@ -89,7 +89,7 @@ export default function UserList() {
     <div>
       <div className="flex gap-4 items-center">
         <SetTitleTag />
-        <PageTitle>{t("my listings")}</PageTitle>
+        <PageTitle>{t("Meine Inserate")}</PageTitle>
         <div>
           <Button
             layout="outline"

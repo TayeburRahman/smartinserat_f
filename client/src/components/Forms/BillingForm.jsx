@@ -163,13 +163,13 @@ function BillingForm({ callback, uniqId, value, type, paypalId }) {
 
                 <>
                   <Label className='mt-4'>
-                    <span>{t('Your Name')}:</span>
+                    <span>{t('Dein Name')}:</span>
                     <Field
                       className='mt-1'
                       as={Input}
                       name='username'
                       type='text'
-                      placeholder={t('enter your name')}
+                      placeholder={t('Gib deinen Namen ein')}
                     />
                     {errors.username && touched.username ? (
                       <HelperText valid={false}>{errors.username}</HelperText>
@@ -177,13 +177,13 @@ function BillingForm({ callback, uniqId, value, type, paypalId }) {
                   </Label>
 
                   <Label className='mt-4'>
-                    <span>{t('Billing Address')}:</span>
+                    <span>{t('Rechnungsadresse')}:</span>
                     <Field
                       className='mt-1'
                       as={Textarea}
                       rows='3'
                       name='address'
-                      placeholder={t('Enter Billing Address')}
+                      placeholder={t('Geben Sie Ihre Rechnungsadresse ein')}
                     />
                     {errors.address && touched.address ? (
                       <HelperText valid={false}>{errors.address}</HelperText>
@@ -191,7 +191,7 @@ function BillingForm({ callback, uniqId, value, type, paypalId }) {
                   </Label>
 
                   <Label className='mt-4'>
-                    <span>{t('Card Details')}:</span>
+                    <span>{t('Kreditkartendaten')}:</span>
                     <CardElement
                       onChange={(res) => {
                         setCardError(res.error);
@@ -237,7 +237,7 @@ function BillingForm({ callback, uniqId, value, type, paypalId }) {
                     value='submit'
                     disabled={!stripe || isSubmitting}
                   >
-                    {t('Complete Payment')}
+                    {t('Zahlung abschließen')}
                   </Button>
                 </>
               

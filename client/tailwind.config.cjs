@@ -25,7 +25,10 @@ module.exports = windmill({
     },
   },
   variants: {
-    extend: {},
+    extend: { extend: {
+      ringWidth: ['focus'],
+      outline: ['focus'],
+    },},
   },
   plugins: [],
 });

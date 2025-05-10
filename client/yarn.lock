@@ -1542,6 +1542,7 @@ classnames@^2.5.1:
   dependencies:
     "@emotion/react" "^11.14.0"
     "@emotion/styled" "^11.14.0"
+    "@heroicons/react" "^2.2.0"
     "@lottiefiles/lottie-player" "^2.0.12"
     "@mui/icons-material" "^7.0.0"
     "@mui/material" "^7.0.0"
@@ -1552,7 +1553,7 @@ classnames@^2.5.1:
     autoprefixer "^9.8.6"
     axios "^1.8.4"
     chart.js "^4.4.9"
-    client "file:../../../../../.cache/yarn/v6/npm-client-0.0.0-26ec2fb2-cab2-40e4-998d-fbadaf4aa2a3-1746219392849/node_modules/client"
+    client "file:../../../../../.cache/yarn/v6/npm-client-0.0.0-fb56399a-9fb7-41a8-ada5-0ca3b0a84d7a-1746794096982/node_modules/client"
     dotenv "^16.4.7"
     formik "^2.4.6"
     i18next "^24.2.3"
@@ -1560,6 +1561,7 @@ classnames@^2.5.1:
     i18next-http-backend "^3.0.2"
     image-to-blob "^0.2.0"
     joi "^17.13.3"
+    lodash "^4.17.21"
     piexifjs "^1.0.6"
     postcss "^8.4.21"
     react "18"
@@ -2679,6 +2681,11 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
+
+lucide-react@^0.509.0:
+  version "0.509.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.509.0.tgz#faf65740f603708fd09d21fabf88950d362dbf8c"
+  integrity sha512-xCJHn6Uh5qF6PGml25vveCTrHJZcqS1G1MVzWZK54ZQsOiCVJk4fwY3oyo5EXS2S+aqvTpWYIfJN+PesJ0quxg==
 
 math-intrinsics@^1.1.0:
   version "1.1.0"

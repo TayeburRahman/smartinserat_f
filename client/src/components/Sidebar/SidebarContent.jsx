@@ -47,8 +47,10 @@ function SidebarContent() {
                 <NavLink
                   to={route.path}
                   className={({ isActive }) =>
-                    `inline-flex items-center w-full text-sm font-semibold transition-colors duration-150  ${
-                      isActive ? 'text-gray-800 dark:text-gray-100' : 'hover:text-gray-800 dark:hover:text-gray-200'
+                    `inline-flex items-center w-full text-sm font-semibold transition-colors duration-200 ease-in-out rounded-lg ${
+                      isActive
+                        ? 'text-gray-800 dark:text-gray-100'
+                        : 'hover:text-gray-800 dark:hover:text-gray-200 hover:bg-[#fbf1ff]'
                     }`
                   }
                 >

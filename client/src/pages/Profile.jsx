@@ -37,7 +37,7 @@ function Profile() {
     
 
       <div className="w-full md:w-5/12 p-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-      <SectionTitle>{t("change password")}</SectionTitle>
+      <SectionTitle>{t("Passwort ändern")}</SectionTitle>
         <UpdatePasswordForm m_user={user}/>
       </div>
       </div>

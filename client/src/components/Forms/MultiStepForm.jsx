@@ -300,7 +300,7 @@ export const MultiStepForm = () => {
 
   return (
     <div className='grid'>
-      <StyledSwiper className='text-xs h-10 overflow-x-auto content-center mx-1 font-semibold tracking-wide text-left text-gray-500 uppercase justify-start gap-24 mt-2 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800'>
+      <StyledSwiper className='text-xs h-10 overflow-x-auto content-center mx-1 font-semibold tracking-wide text-left text-gray-500 uppercase justify-start gap-24 mt-2 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800 custom-scrollbar'>
         <Swiper
           navigation={true}
           simulateTouch={false}
@@ -329,7 +329,7 @@ export const MultiStepForm = () => {
                 onClick={() => go('data')}
                 style={step.id === 'data' ? stepColor : null}
               >
-                {t('Data')}
+                {t('Allgemein')}
               </SwiperSlide>
               <SwiperSlide
                 className='menu-item cursor-pointer mySwiper-item'
@@ -345,7 +345,7 @@ export const MultiStepForm = () => {
                 onClick={() => go('description')}
                 style={step.id === 'description' ? stepColor : null}
               >
-                {t('Description')}
+                {t('Beschreibung')}
               </SwiperSlide>
 
               <SwiperSlide
@@ -354,7 +354,7 @@ export const MultiStepForm = () => {
                 onClick={() => go('contact')}
                 style={step.id === 'contact' ? stepColor : null}
               >
-                {t('Contact')}
+                {t('Ansprechpartner')}
               </SwiperSlide>
               <SwiperSlide
                 className='menu-item cursor-pointer mySwiper-item'

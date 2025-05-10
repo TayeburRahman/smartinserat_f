@@ -245,11 +245,11 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         </Select>
       </Label>
       <Label className="mt-4">
-        <span>{t("Number of Parking Spaces")}:</span>
+        <span>{t("Anzahl der Stellplätze:")}:</span>
         <Input
           className="mb-4 mt-1"
           label="Number Of Parking Spaces"
-          placeholder={t("Number of Parking Spaces...")}
+          placeholder={t("Anzahl der Stellplätze...")}
           name="numberOfParkingSpaces"
           value={numberOfParkingSpaces}
           onChange={setForm}

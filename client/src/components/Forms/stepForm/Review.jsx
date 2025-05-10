@@ -314,7 +314,7 @@ export const Review = (props) => {
                 {buildingType === 'House' && (
                   <div>
                     <li className=''>
-                      {t('Specific House Type')}:{' '}
+                      {t('Haustyp')}:{' '}
                       {t(
                         (() => {
                           let info;
