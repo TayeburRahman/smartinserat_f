@@ -8,7 +8,7 @@ import { Label, Input, HelperText, Button } from "@windmill/react-ui";
 import { dictionary } from "../../resources/multiLanguages";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
-// import { OAuthContext } from "../../Firebase/FirebaseProvider";
+import { OAuthContext } from "../../Firebase/FirebaseProvider";
 
 function LoginForm() {
   const { login } = useContext(AuthContext);
@@ -16,7 +16,7 @@ function LoginForm() {
   const languageReducer = "de";
 const navigate = useNavigate();
 
-  // const { signImWithGoogle } = useContext(OAuthContext);
+const { signInWithGoogle } = useContext(OAuthContext);
   return (
     <Formik
       initialValues={{
@@ -101,7 +101,7 @@ const navigate = useNavigate();
             className="mt-4"
             block
             disabled={isSubmitting}
-            // onClick={signImWithGoogle}
+            onClick={signInWithGoogle}
           >
             <GoogleIcon className="mr-2 " /> Google Login
           </Button>
