@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
 import { MenuIcon } from "../../../icons";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "../../../assets/images/logo.png";
 import { HashLink } from "react-router-hash-link";
+import { AuthContext } from "../../../context/AuthContext";
 
 function NavbarContent({ handleClose }) {
-  const user = null;
+   const { user, logout } = useContext(AuthContext); 
+   const role = user?.authId.role
   return (
     <div className="fixed w-full inset-0 bg-white bg-opacity-95 p-10 pt-14 z-50 flex flex-col items-center space-y-6 lg:hidden">
       <div className="w-full flex items-center justify-between">
@@ -74,7 +76,7 @@ function NavbarContent({ handleClose }) {
           </Link>
         </div>
       ) : (
-        <Link to="/app">
+        <Link to={`${role === "ADMIN" ? "/app/admin_dashboard": "/app/user_dashboard"}`}>
           <Button className="text-sm px-10 py-3">Dashboard</Button>
         </Link>
       )}
@@ -84,6 +86,8 @@ function NavbarContent({ handleClose }) {
 
 const HomeNavbar = () => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
+  const { user, logout } = useContext(AuthContext); 
+  const role = user?.authId.role
   const toggleNavbar = () => {
     setNavbarOpen(!isNavbarOpen);
   };
@@ -146,14 +150,41 @@ const HomeNavbar = () => {
           </li>
         </ul>
 
-        <div className="hidden lg:flex gap-4">
+        
+        {!user ? (
+           <div className="hidden lg:flex gap-4">
           <Link to="/auth/login">
             <Button layout="outline">Login</Button>
           </Link>
           <Link to="/auth/create-account">
             <Button>Registrieren</Button>
+          </Link> 
+          </div>
+            ) : (
+              <div className="hidden lg:flex gap-4">
+              <Link to={`${role === "ADMIN" ? "/app/admin_dashboard": "/app/user_dashboard"}`}>
+                <Button className="text-sm px-10 py-2">Dashboard</Button>
+              </Link>
+               </div>
+            )}
+            
+          {/* {!user ? (
+        <div className="flex flex-col space-y-3 w-full">
+          <Link to="/auth/login" className="w-full">
+            <Button layout="outline" className="w-full">
+              Login
+            </Button>
+          </Link>
+          <Link to="/auth/create-account" className="w-full">
+            <Button className="w-full">Registrieren</Button>
           </Link>
         </div>
+      ) : (
+        <Link to={`${role === "ADMIN" ? "/app/admin_dashboard": "/app/user_dashboard"}`}>
+          <Button className="text-sm px-10 py-3">Dashboard</Button>
+        </Link>
+      )} */}
+        
 
         <Button
           size="small"

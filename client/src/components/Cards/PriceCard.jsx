@@ -37,9 +37,10 @@ const PriceCard = ({
             </p>
           </div>
           <ul className="text-sm mx-auto w-3/4 md:w-full md:ml-3 mt-4 h-auto mb-4">
-            {options.map((option) => (
+            {options.map((option, index) => (
               <li
-                className={`flex   items-center ml-0 leading-tight mb-1 ${
+                key={index}
+                className={`flex items-center ml-0 leading-tight mb-1 ${
                   option.available ? "text-gray-900" : "text-gray-400"
                 }`}
               >
@@ -52,12 +53,8 @@ const PriceCard = ({
           </ul>
           <div className="flex justify-center">
             <Link
-              className="hover:text-white bg-royalPurple text-white text-sm font-bold px-6 py-2 rounded-lg uppercase"
-              style={
-                {
-                  // fontFamily: 'Filicudi Solid',
-                }
-              }
+              className="hover:text-white bg-royalPurple text-white text-sm font-bold px-6 py-2 rounded-lg uppercase" 
+              to="/app/create_ads"
             >
               IMMOBILIE INSERIEREN
             </Link>

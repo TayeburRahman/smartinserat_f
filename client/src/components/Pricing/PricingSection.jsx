@@ -39,8 +39,8 @@ const PricingSection = () => {
         </div>
         <Tabs className="w-full py-12 p-2">
           <TabList className="flex justify-center gap-0 mb-5">
-            {listingTypes.map((listingType) => (
-             <Tab className="cursor-pointer w-48 bg-purple-100 text-gray-700 px-5 h-10 py-2 rounded-l-lg text-xs sm:text-sm md:text-base font-bold flex items-center justify-center">
+            {listingTypes.map((listingType, index) => (
+             <Tab className="cursor-pointer w-48 bg-purple-100 text-gray-700 px-5 h-10 py-2 rounded-l-lg text-xs sm:text-sm md:text-base font-bold flex items-center justify-center" key={index}>
              {listingType === "rent"
                ? dictionary["prices"][languageReducer].rent
                : dictionary["prices"][languageReducer].sale}
@@ -53,8 +53,8 @@ const PricingSection = () => {
             <TabPanel>
               <Tabs>
                 <TabList className="flex justify-center gap-0 mb-16">
-                  {subscriptionDurations.map((subscriptionDuration) => (
-                  <Tab className="cursor-pointer bg-purple-100 w-32 h-10 flex items-center justify-center bg-gray-100 text-gray-700 px-5 py-2 rounded-l-lg text-xs sm:text-sm md:text-base font-bold">
+                  {subscriptionDurations.map((subscriptionDuration, index) => (
+                  <Tab className="cursor-pointer bg-purple-100 w-32 h-10 flex items-center justify-center bg-gray-100 text-gray-700 px-5 py-2 rounded-l-lg text-xs sm:text-sm md:text-base font-bold"   key={index}>
                   <h6 className="text-xs sm:text-sm md:text-base font-bold">
                     {
                       dictionary["prices"][languageReducer][
@@ -65,8 +65,8 @@ const PricingSection = () => {
                 
                   ))}
                 </TabList>
-                {subscriptionDurations.map((subscriptionDuration) => (
-                  <TabPanel>
+                {subscriptionDurations && subscriptionDurations.map((subscriptionDuration, index) => (
+                  <TabPanel key={index}>
                     <PricingCards
                       listingType={listingType}
                       subscriptionDuration={subscriptionDuration}

@@ -271,13 +271,13 @@ export const Review = (props) => {
     <div className='container mt-4 mx-auto px-4'>
       <>
         <h2 className='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>
-          {t('Please check your entries')}
+          {t('Bitte überprüfen Sie Ihre Eingaben')}
         </h2>
         <div className='block mb-4'>
           <RenderAccordion
             setReviewMode={setReviewMode}
             serial='1'
-            summary='Data'
+            summary='Allgemein'
             go={go}
             details={[
               { 'Listing Title': listingTitle ? listingTitle : '' },
@@ -1284,7 +1284,7 @@ export const Review = (props) => {
           <RenderAccordion
             setReviewMode={setReviewMode}
             serial='3'
-            summary='Description'
+            summary='Beschreibung'
             go={go}
             details={[
               { Description: description },
@@ -1301,7 +1301,7 @@ export const Review = (props) => {
             size='large'
             onClick={() => setAccordionTwo(!accordionTwo)}
           >
-            <span>4 .</span> {t('Images')}
+            <span>4 .</span> {t('Bilder')}
             <DropdownIcon className='w-4' />
           </Button>
           {accordionTwo && (
@@ -1338,7 +1338,7 @@ export const Review = (props) => {
           <RenderAccordion
             setReviewMode={setReviewMode}
             serial='5'
-            summary='Contact'
+            summary='Ansprechpartner'
             go={go}
             details={[
               { 'Contact Name': contactName },
@@ -1353,7 +1353,7 @@ export const Review = (props) => {
           <RenderAccordion
             setReviewMode={setReviewMode}
             serial='6'
-            summary='Address'
+            summary='Adresse'
             go={go}
             details={[
               { Address: address },

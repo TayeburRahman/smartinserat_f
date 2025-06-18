@@ -136,7 +136,7 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
         </div>
       </Label>
       <Label className="mt-4">
-        <span>{t("phone number")}:</span>
+        <span>{t("Telefonnummer")}:</span>
         {fRequired && <span style={{ color: "red" }}>{dictionary["createAds"][languageReducer]["contact"]["pleaseProvideValidPhone"]}</span>}
         <div>
           <PhoneInput

@@ -10,6 +10,7 @@ import AccessibleNavigationAnnouncer from "./components/AccessibleNavigationAnno
 import ProtectedRoute from "./components/Routes/ProtectedRoute";
 import ForwardRoute from "./components/Routes/ForwardRoute";
 import Login from "./pages/Login";  
+import FirebaseProvider from "./Firebase/FirebaseProvider";
 
 const Layout = lazy(() => import("./containers/Layout"));
 const Auth = lazy(() => import("./containers/Auth"));
@@ -28,6 +29,7 @@ const AdDetailsPage = lazy(() => import("./pages/AdDetailsPage/AdDetailsPage"));
 function App() {
   return (
     <Router>
+        <FirebaseProvider> 
       <AccessibleNavigationAnnouncer />
       <Routes>
          <Route path="/auth/*" element={<ForwardRoute element={<Auth />} />} />
@@ -50,8 +52,12 @@ function App() {
         {/* Redirect */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      </FirebaseProvider>
     </Router>
   );
 }
 
 export default App;
+
+// Review.jsx
+// flowfact.service.jsx publishImagesToFlowFact

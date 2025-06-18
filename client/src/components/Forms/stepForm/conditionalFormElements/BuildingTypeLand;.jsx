@@ -23,21 +23,21 @@ const BuildingTypeLand = ({ formData, setForm }) => {
           autoComplete="off"
           fullwidth="true"
         >
-          <option value="">{t("Choose an option")}</option>
-          <option value="0">{t("Building Land")}</option>
-          <option value="1">{t("Acre Land")}</option>
-          <option value="2">{t("Forrest")}</option>
+          <option value="">{t("Wähle eine Option")}</option>
+          <option value="0">{t("Bauland")}</option>
+          <option value="1">{t("Land in Acres")}</option>
+          <option value="2">{t("Forstland")}</option>
         </Select>
       </Label>
       <Label className="mt-4">
         <span>
-          {t("Plot Area")} (m<sup>2</sup>):
+          {t("Grundstücksfläche")} (m<sup>2</sup>):
           <span style={{ color: "red" }}>*</span>
         </span>
         <Input
           className="mb-4 mt-1"
           label="Plot Area"
-          placeholder={t("Plot Area...")}
+          placeholder={t("Grundstücksfläche...")}
           name="plotArea"
           value={plotArea}
           onChange={setForm}
@@ -49,11 +49,11 @@ const BuildingTypeLand = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("State of Development")}:</span>
+        <span>{t("Erschließungszustand")}:</span>
         <Select
           className="mb-4 mt-1"
           label="Sate of Development"
-          placeholder={t("State of Development...")}
+          placeholder={t("Erschließungszustand...")}
           name="stateOfDevelopment"
           value={stateOfDevelopment}
           onChange={setForm}
@@ -62,10 +62,10 @@ const BuildingTypeLand = ({ formData, setForm }) => {
           autoComplete="off"
           fullwidth="true"
         >
-          <option value="">{t("Choose an option")}</option>
-          <option value="NE">{t("Not developed")}</option>
-          <option value="TE">{t("Partially developed")}</option>
-          <option value="VE">{t("Fully developed")}</option>
+          <option value="">{t("Wählen Sie eine Option")}</option>
+          <option value="NE">{t("Nicht erschlossen")}</option>
+          <option value="TE">{t("Teilweise erschlossen")}</option>
+          <option value="VE">{t("Voll erschlossen")}</option>
         </Select>
       </Label>
     </div>

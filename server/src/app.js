@@ -12,6 +12,7 @@ app.use(
     origin: [
       'https://321-maklerfrei.vercel.app', 
       "http://localhost:3000",
+      "http://10.0.60.118:3000",
       "http://localhost*", 
       "http://smartinserat.de", 
       "https://smartinserat.de", 

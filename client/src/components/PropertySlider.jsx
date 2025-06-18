@@ -139,7 +139,7 @@ const PropertySlider = ({ title, topMargin = false }) => {
           </Swiper>
         )}
 
-        <div class="flex justify-center items-center pt-7">
+        <div className="flex justify-center items-center pt-7">
           <Link
             to="/ads"
             className="bg-royalPurple text-white text-center text-base sm:text-lg py-3 px-10 rounded-lg w-full sm:w-auto hover:text-white font-bold font-extrabold uppercase"

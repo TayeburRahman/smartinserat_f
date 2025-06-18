@@ -362,7 +362,7 @@ export const MultiStepForm = () => {
                 onClick={() => go('address')}
                 style={step.id === 'address' ? stepColor : null}
               >
-                {t('Address')}
+                {t('Adresse')}
               </SwiperSlide>
               <SwiperSlide
                 className='menu-item cursor-pointer mySwiper-item'
@@ -370,7 +370,7 @@ export const MultiStepForm = () => {
                 onClick={() => go('images')}
                 style={step.id === 'images' ? stepColor : null}
               >
-                {t('Images')}
+                {t('Bilder')}
               </SwiperSlide>
               <SwiperSlide
                 className='menu-item cursor-pointer mySwiper-item'
@@ -378,7 +378,7 @@ export const MultiStepForm = () => {
                 onClick={() => go('review')}
                 style={step.id === 'review' ? stepColor : null}
               >
-                {t('Review')}
+                {t('Bewertung')}
               </SwiperSlide>
               <SwiperSlide
                 className='menu-item cursor-pointer mySwiper-item'
@@ -386,7 +386,7 @@ export const MultiStepForm = () => {
                 onClick={() => go('submit')}
                 style={step.id === 'submit' ? stepColor : null}
               >
-                {t('Submit')}
+                {t('Einreichen')}
               </SwiperSlide>
             </>
           )}

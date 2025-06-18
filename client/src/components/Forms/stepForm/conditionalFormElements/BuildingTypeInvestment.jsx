@@ -22,7 +22,7 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
     <div>
       <Label className="mt-4">
         <span>
-          {t("Estate Type")}:<span style={{ color: "red" }}>*</span>
+          {t("Immobilientyp")}:<span style={{ color: "red" }}>*</span>
         </span>
         <Select
           className="mb-4 mt-1"
@@ -34,7 +34,7 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
           autoComplete="off"
           fullwidth="true"
         >
-          <option value="">{t("Choose an option")}</option>
+          <option value="">{t("Wählen Sie eine Option")}</option>
           <option value="04">{t("Anlage-/Investmentobjekte")}</option>
           <option value="04SIB">{t("Betreutes Wohnen (Invest.)")}</option>
           <option value="04GWB">{t("Bürogebäude (Invest.)")}</option>
@@ -72,11 +72,11 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         </Select>
       </Label>
       <Label radio>
-        <span>{t("Special Features")}: </span>
+        <span>{t("Besondere Merkmale")}: </span>
         <div className="block md:flex ml-3">
           <div className="block md:flex items-center">
             <Input type="checkbox" name="newBuilding" onChange={setForm} />
-            <span className="ml-2 mr-3">{t("New Building")}</span>
+            <span className="ml-2 mr-3">{t("Neubau")}</span>
           </div>
           <div className="block md:flex items-center">
             <Input
@@ -84,17 +84,17 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
               name="monumentProtection"
               onChange={setForm}
             />
-            <span className="ml-2">{t("Monument Protection")}</span>
+            <span className="ml-2">{t("Denkmalschutz")}</span>
           </div>
         </div>
       </Label>
       <Label className="mt-4">
         <span>
-          {t("Leasable Area")}:<span style={{ color: "red" }}>*</span>
+          {t("Vermietbare Fläche")}:<span style={{ color: "red" }}>*</span>
         </span>
         <Input
           className="mb-4 mt-1"
-          placeholder={t("Enter Leasable Area")}
+          placeholder={t("Geben Sie die vermietbare Fläche ein")}
           name="leasablearea"
           value={leasablearea}
           onChange={setForm}
@@ -106,11 +106,11 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("Number of Floors")}:</span>
+        <span>{t("Anzahl der Etagen")}:</span>
         <Input
           className="mb-4 mt-1"
           label="Number Of Floors"
-          placeholder={t("Number of Floors...")}
+          placeholder={t("Anzahl der Etagen...")}
           name="numberOfFloors"
           value={numberOfFloors}
           onChange={setForm}
@@ -122,11 +122,11 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("Number of Rooms")}:</span>
+        <span>{t("Anzahl der Zimmer")}:</span>
         <Input
           className="mb-4 mt-1"
           label="Number Of Rooms"
-          placeholder={t("Number of Rooms...")}
+          placeholder={t("Anzahl der Zimmer...")}
           name="numberOfRooms"
           value={numberOfRooms}
           onChange={setForm}
@@ -138,11 +138,11 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("Number of Bedrooms")}:</span>
+        <span>{t("Anzahl der Schlafzimmer")}:</span>
         <Input
           className="mb-4 mt-1"
           label="Number Of Bedrooms"
-          placeholder={t("Number of Bedrooms...")}
+          placeholder={t("Anzahl der Schlafzimmer...")}
           name="numberOfBedrooms"
           value={numberOfBedrooms}
           onChange={setForm}
@@ -154,11 +154,11 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("Number of Bathrooms")}:</span>
+        <span>{t("Anzahl der Badezimmer")}:</span>
         <Input
           className="mb-4 mt-1"
           label="Number Of Bathrooms"
-          placeholder={t("Number of Bathrooms...")}
+          placeholder={t("Anzahl der Badezimmer...")}
           name="numberOfBathrooms"
           value={numberOfBathrooms}
           onChange={setForm}
@@ -171,12 +171,12 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
       </Label>
       <Label className="mt-4">
         <span>
-          {t("Usable Area")} (m<sup>2</sup>):
+          {t("Nutzfläche")} (m<sup>2</sup>):
         </span>
         <Input
           className="mb-4 mt-1"
           label="Usable Area"
-          placeholder={t("Usable Area...")}
+          placeholder={t("Nutzfläche...")}
           name="usableArea"
           value={usableArea}
           onChange={setForm}
@@ -189,12 +189,12 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
       </Label>
       <Label className="mt-4">
         <span>
-          {t("Plot Area")} (m<sup>2</sup>):
+          {t("Grundstücksfläche")} (m<sup>2</sup>):
         </span>
         <Input
           className="mb-4 mt-1"
           label="Plot Area"
-          placeholder={t("Plot Area...")}
+          placeholder={t("Grundstücksfläche...")}
           name="plotArea"
           value={plotArea}
           onChange={setForm}
@@ -206,11 +206,11 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("Number of Garages")}:</span>
+        <span>{t("Anzahl der Garagen")}:</span>
         <Input
           className="mb-4 mt-1"
           label="Number Of Garages"
-          placeholder={t("Number of Garages...")}
+          placeholder={t("Anzahl der Garagen...")}
           name="numberOfGarages"
           value={numberOfGarages}
           onChange={setForm}
@@ -222,7 +222,7 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("Type of Parking Space")}:</span>
+        <span>{t("Art des Stellplatzes")}:</span>
         <Select
           className="mb-4 mt-1"
           label="Type of Parking Space"
@@ -235,13 +235,13 @@ const BuildingTypeHouse = ({ formData, setForm }) => {
           fullwidth="true"
           readOnly={true}
         >
-          <option value="">{t("Choose an option")}</option>
-          <option value="3">{t("outdoor parking space")}</option>
+          <option value="">{t("Wählen Sie eine Option")}</option>
+          <option value="3">{t("Parkplatz im Freien")}</option>
           <option value="4">{t("Carport")}</option>
           <option value="2">{t("Garage")}</option>
-          <option value="1">{t("Not specified")}</option>
-          <option value="6">{t("parking garage")}</option>
-          <option value="7">{t("underground car park")}</option>
+          <option value="1">{t("Nicht angegeben")}</option>
+          <option value="6">{t("Parkhaus")}</option>
+          <option value="7">{t("Tiefgarage")}</option> 
         </Select>
       </Label>
       <Label className="mt-4">

@@ -25,9 +25,8 @@ export const StripeProvider = ({ children }) => {
       .then((response) => {
         setLoaded(true);
         // setProducts(response.data.products)
-        setProducts(response.data.data);
-        console.log("--------------------------------------");
-        console.log("Stripe Context> load Products > response.data.data: ",response.data.data);
+        setProducts(response.data.data); 
+        console.log("Stripe Context> load Products > response.data.data: ",response?.data);
       })
       .catch((err) => {
         setLoaded(true);
