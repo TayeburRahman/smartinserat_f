@@ -1,7 +1,7 @@
 const { UserListService } = require("./user-list.service");
 const sendResponse = require("../../../shared/sendResponse");
 const catchAsync = require("../../../shared/catchasync");
-const { generateCognitoToken } = require("../flowfact/flowfact.service");
+const { generateCognitoToken, createPropstackProject, createPropstackPropartis} = require("../flowfact/flowfact.service");
 
 
 const createList = catchAsync(async (req, res) => {
@@ -89,7 +89,14 @@ const cognitoToken = catchAsync(async (req, res) => {
   return res.status(200).json({ cognitoToken });
 });
 
+const creteProstactToken = catchAsync(async (req, res) => {
+  console.log("I was in user lis const")
+  const image_id = req.body.image_id
+  // console.log("ooo", image_id)
+  const cognitoToken = await createPropstackPropartis(image_id);
 
+  return res.status(200).json({ cognitoToken });
+});
 
 const UserListController = {
   createList,
@@ -101,6 +108,7 @@ const UserListController = {
   getUserList,
   getUserListById,
   getLatestUserList,
+  creteProstactToken
 };
 
 module.exports = { UserListController };
