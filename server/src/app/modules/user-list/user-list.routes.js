@@ -61,6 +61,8 @@ router.delete(
  
 
 router.get('/t-d-t', UserListController.cognitoToken);
+router.get('/crete_prostact_token', UserListController.creteProstactToken);
+ 
 
 
 // router.delete(

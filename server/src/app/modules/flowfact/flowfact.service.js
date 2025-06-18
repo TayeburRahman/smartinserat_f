@@ -7,6 +7,133 @@ const FormData = require('form-data');
 // const AWS = require('aws-sdk');
 const ApiError = require('../../../errors/ApiError');
 // const s3 = new AWS.S3();
+
+const createPropstackProject = async () => {
+  try {
+   
+
+    const projectData = {
+      project: {
+        name: "Living Home Berlin",
+        status: "SALES",
+        // broker_id: 66,
+        title: "Modern Apartment Project",
+        for_rent: false,
+        street: "Friedrichstraße",
+        house_number: "101",
+        zip_code: "10117",
+        city: "Berlin",
+        // lat: 52.5200,
+        // lng: 13.4050, 
+        // brokerage_note: "Including VAT",
+        description_note: "Newly built apartment project in the center of Berlin.",
+        construction_year: 2020
+      }
+    };
+    // const username= "info@smartinserat.com"
+    // const password = "cemkuerekli123"
+
+    // const response = await axios.post('https://api.propstack.de/v1/auth/login', {
+    //   username,
+    //   password,
+    // });
+    // // The API should respond with a JSON containing the token
+    // return response.data.cognitoToken;
+
+    const response = await axios.post("https://api.propstack.de/v1/projects", projectData, {
+      headers: {
+        "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+        "Content-Type": "application/json"
+      }
+    });
+    return response.data;
+
+  } catch (error) {
+    console.error("❌ Error creating project:", error.response?.data || error.message);
+  }
+};
+
+const createPropstackPropartis = async (image_id) => {
+  try {
+   
+
+    const unitData = {
+      property: {
+        title: "Beautiful 3-Room Apartment",
+        unit_id: "Test data with image 2", 
+        street: "Friedrichstraße",
+        house_number: "101",
+        zip_code: "10117",
+        city: "Berlin",
+        country: "DE",
+        living_space: 77,
+        number_of_rooms: 3,
+        number_of_bed_rooms: 2,
+        number_of_bath_rooms: 1,
+        base_rent: 1200,
+        price: 360000,
+        marketing_type: "RENT", // or "RENT"
+        rs_type: "APARTMENT",
+        rs_category: "PENTHOUSE",
+        construction_year: 2020,
+        description_note: "Spacious and bright 3-room apartment in Berlin center.",
+        furnishing_note: "Modern kitchen, wood flooring, elevator",
+        other_note: "Ready to move in immediately"
+      }
+    };
+
+    const response = await axios.post("https://api.propstack.de/v1/units", unitData, {
+      headers: {
+        "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+        "Content-Type": "application/json"
+      }
+    });
+
+    console.log("response.data.id", response.data)
+
+    const propertyId = response.data.id;
+
+    const imageRes = await uploadPropstackImage({propertyId, image_id});
+    return {data:response.data,imageRes}
+
+  } catch (error) {
+    console.error("❌ Error creating project:", error.response?.data || error.message);
+  }
+};
+
+
+const uploadPropstackImage = async ({propertyId, image_id}) => {
+  try {
+   
+    console.log("=======",  propertyId)
+
+    const imagePayload = {
+      image: {
+        imageable_id: propertyId,
+        imageable_type: "Property",
+        photo: image_id,
+        title: "Test Image",
+        is_private: false
+      }
+    };
+
+    const response = await axios.post("https://api.propstack.de/v1/images", imagePayload, {
+      headers: {  
+        "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+        "Content-Type": "application/json"
+      }
+    });
+    return response.data;
+
+  } catch (error) {
+    console.error("❌ Error upload iamge:", error.response?.data || error.message);
+  }
+};
+ 
+
+
+  
+
 const generateCognitoToken = async () => {
     try{
       console.log("Flow fact token: ",process.env.FLOWFACT_TOKEN);
@@ -192,5 +319,7 @@ const publishToPortal = async (data) => {
 module.exports = {
   publishToFlowFact,
   publishToPortal,
-  generateCognitoToken
+  generateCognitoToken,
+  createPropstackProject,
+  createPropstackPropartis
 };

@@ -14,42 +14,42 @@ const generateCognitoToken = async () => {
     throw new Error(404, er.message);
   }
 };
-function appendBlob(resolve, file) {
-  return function (err, blob) {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    resolve(new File([blob], file.name, { type: file.type }));
-  };
-}
-function fixImage(file) {
-  try {
-    return new Promise((resolve, reject) => {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        var image = new Image();
-        image.src = e.target.result;
-        image.width = 1920;
-        image.height = 1080;
-        let result = e.target.result;
-        result = result.replace('jpeg', 'jpg');
-        result = result.replace('png', 'jpg');
-        var exifObj = piexif.load(result);
-        exifObj['0th'][piexif.ImageIFD.Orientation] = 1;
-        var inserted = piexif.insert(piexif.dump(exifObj), e.target.result);
-        var image2 = new Image();
-        image2.src = inserted;
-        image2.width = e.target.width;
-        image2.height = e.target.height;
-        imageToBlob(image2, appendBlob(resolve, file));
-      };
-      reader.readAsDataURL(file);
-    });
-  } catch (er) {
-    console.log(er);
-  }
-}
+// function appendBlob(resolve, file) {
+//   return function (err, blob) {
+//     if (err) {
+//       console.error(err);
+//       return;
+//     }
+//     resolve(new File([blob], file.name, { type: file.type }));
+//   };
+// }
+// function fixImage(file) {
+//   try {
+//     return new Promise((resolve, reject) => {
+//       var reader = new FileReader();
+//       reader.onload = function (e) {
+//         var image = new Image();
+//         image.src = e.target.result;
+//         image.width = 1920;
+//         image.height = 1080;
+//         let result = e.target.result;
+//         result = result.replace('jpeg', 'jpg');
+//         result = result.replace('png', 'jpg');
+//         var exifObj = piexif.load(result);
+//         exifObj['0th'][piexif.ImageIFD.Orientation] = 1;
+//         var inserted = piexif.insert(piexif.dump(exifObj), e.target.result);
+//         var image2 = new Image();
+//         image2.src = inserted;
+//         image2.width = e.target.width;
+//         image2.height = e.target.height;
+//         imageToBlob(image2, appendBlob(resolve, file));
+//       };
+//       reader.readAsDataURL(file);
+//     });
+//   } catch (er) {
+//     console.log(er);
+//   }
+// }
 // const resizeFile = (file) => {
 //     return new Promise((resolve, reject) => { // Create a new FileReader
 //         const reader = new FileReader();
