@@ -22,7 +22,7 @@ const createList = async (req) => {
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'user not found');
 
   if (req.query.uniqId) {
-    console.log("Was in uniqId true")
+    console.log("Was in uniqId true", user)
     //lets create unique id for the new list
     const userList = await UserList.aggregate([{ "$match": { email } }]);
     const listNumber = ++(userList.length);
@@ -31,6 +31,7 @@ const createList = async (req) => {
     console.log("Returning uniqID and listNumber");
     console.log("uniqID ", uniqId);
     console.log("listNumber ", listNumber);
+
     return {
       uniqId,
       listNumber

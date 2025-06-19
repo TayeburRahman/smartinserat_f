@@ -91,9 +91,8 @@ const PropertySlider = ({ title, topMargin = false }) => {
       id="Leistungen"
     >
       <div
-        className={`w-full max-w-7xl px-5 xl:px-0 ${
-          topMargin ? "pb-4 pt-8 sm:pt-20" : "py-8"
-        }`}
+        className={`w-full max-w-7xl px-5 xl:px-0 ${topMargin ? "pb-4 pt-8 sm:pt-20" : "py-8"
+          }`}
       >
         <div className="w-full flex flex-row justify-between text-center items-center pb-6">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-700 text-center">

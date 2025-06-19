@@ -6,7 +6,7 @@ import { config } from '../../../assets/config/config';
 import { AuthContext } from '../../../context/AuthContext';
 import {  useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { flowFactService } from '../../../services/flowfact.service';
+// import { flowFactService } from '../../../services/flowfact.service';
 import { SnackbarContext } from '../../../context/SnackbarContext';
 import * as LottiePlayer from '@lottiefiles/lottie-player';
 import Loading from '../../../assets/animation/loading.txt';
@@ -159,7 +159,7 @@ export const Review = (props) => {
     setIsSnackbarOpen(true);
 
     const isBelowMax = (f) => String(f).length < 3800;
-    const isBelowMaxF = (f) => f.size < 200000000;
+    // const isBelowMaxF = (f) => f.size < 200000000;
     let fields = Object.values(formData);
     if (
       imgMultiStepForm.selectedType.length > 50
@@ -181,54 +181,54 @@ export const Review = (props) => {
     }
     // setEnabled(false);
     setLoading(true);
+    const sendData = { ...formData, props };
+
+    crossOriginIsolated.log("=======", sendData)
 
     //request uniqId
-    let reqUniqId = await axios.post(
-      `${apiUrl}/userList/create?uniqId=true`,
-      {
-        email,
-      }
-    );
-    let uniqId = reqUniqId.data.data.uniqId;
-    let listNumber = reqUniqId.data.data.listNumber;
-    const data = { ...formData, email, uniqId, listNumber };
+    // let reqUniqId = await axios.post(
+    //   `${apiUrl}/userList/create?uniqId=true`,
+    //   {
+    //     email,
+    //   }
+    // );
+    // let uniqId = reqUniqId.data.data.uniqId;
+    // let listNumber = reqUniqId.data.data.listNumber;
+   
+    // console.log("==formData", formData)
+    // if (formData.energy === 'true') {
+    //   data.energy = true;
+    // } else {
+    //   data.energy = false;
+    // }
+    // // let oldDate = Date.now();
 
-    if (formData.energy === 'true') {
-      data.energy = true;
-    } else {
-      data.energy = false;
-    }
-    // let oldDate = Date.now();
+    // let info = flowFactData?.flowFactInfo;
+    // console.log("==info", info)
 
-    let info = flowFactData?.flowFactInfo;
+    // if (!info) {
+    //   info = await flowFactService.publishImagesToFlowFact(
+    //     Object.assign(data, { phone }),
+    //     imgMultiStepForm,
+    //     planMultiStepForm,
+    //     openSnackbar,
+    //     t,
+    //     setLoadingTitle,
+    //     setCurrentImgIdx,
+    //     setCurrentImgForm,
+    //     setProgressValue
+    //   );
+    // }
 
-    if (!info) {
-      info = await flowFactService.publishImagesToFlowFact(
-        Object.assign(data, { phone }),
-        imgMultiStepForm,
-        planMultiStepForm,
-        openSnackbar,
-        t,
-        setLoadingTitle,
-        setCurrentImgIdx,
-        setCurrentImgForm,
-        setProgressValue
-      );
-    }
+    // data.entityId = info.entityId;
+    // data.schema_name = info.schema_name;
+    // data.flowfactContactId = info.contactId;
+    // data.listingPrice = data.listingPrice.replace(/\./g, '');
+    // data.rentPrice = data.rentPrice.replace(/\./g, '');
+    // data.newBuilding = data.newBuilding === "" ? false : data.newBuilding === "true" ? true : false;
+    // data.monumentProtection = data.monumentProtection === "" ? false : data.monumentProtection === "true" ? true : false;
 
-    data.entityId = info.entityId;
-    data.schema_name = info.schema_name;
-    data.flowfactContactId = info.contactId;
-    data.listingPrice = data.listingPrice.replace(/\./g, '');
-    data.rentPrice = data.rentPrice.replace(/\./g, '');
-    data.newBuilding = data.newBuilding === "" ? false : data.newBuilding === "true" ? true : false;
-    data.monumentProtection = data.monumentProtection === "" ? false : data.monumentProtection === "true" ? true : false;
-
-    const sendData = new FormData();
-    await buildFormData(
-      sendData,
-      Object.assign(data, { phone })
-    );
+ 
 
     axios
       .post(`${apiUrl}/userList/create`, sendData)
@@ -254,15 +254,13 @@ export const Review = (props) => {
       })
       .finally(() => {
         console.log("I was in finally block in Review.js handleSubmit")
-        localStorage.removeItem('formData');
-        localStorage.removeItem('entityId');
-        // localStorage.removeItem('imgMultiStepForm');
-        // localStorage.removeItem('planMultiStepForm');
+        // localStorage.removeItem('formData');
+        // localStorage.removeItem('entityId'); 
 
-        setTimeout(() => {
-          localStorage.removeItem('imgMultiStepForm');
-          localStorage.removeItem('planMultiStepForm');
-        }, 100); 
+        // setTimeout(() => {
+        //   localStorage.removeItem('imgMultiStepForm');
+        //   localStorage.removeItem('planMultiStepForm');
+        // }, 100); 
         console.log("After clearing local in Review.js handleSubmit");
       });
   };
@@ -1380,12 +1378,13 @@ export const Review = (props) => {
             variant='contained'
             style={{ marginRight: '1rem' }}
             onClick={() => {
-              navigation.previous();
-              my_swiper.slidePrev();
+              navigation.previous(-1);
+              my_swiper.slidePrev(-1);
             }}
           >
             {t('back')}
           </Button>
+          
           <Button
             variant='contained'
             style={{ marginTop: '1.5rem' }}
@@ -1393,6 +1392,8 @@ export const Review = (props) => {
           >
             {t('save and proceed')}
           </Button>
+
+
           {/* {loading && (
             <lottie-player
               autoplay

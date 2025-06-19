@@ -45,7 +45,7 @@ export default function UserList() {
   }, [location.search]);
 
   const handlePush = () => {
-    history.push("/app/create_ads");
+    history("/app/create_ads");
   };
 
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Img from './Img';
 import ImageType from './imageType';
 import React, { useContext, useEffect, useState } from 'react';
-import { flowFactService } from '../../../services';
+// import { flowFactService } from '../../../services';
 import { SnackbarContext } from '../../../context/SnackbarContext';
 import { Box } from '@mui/material';
 import axios from 'axios';
@@ -120,22 +120,22 @@ export const Images = (props) => {
     }
     // let oldDate = Date.now();
     
-    let flowFactInfo = await flowFactService.publishImagesToFlowFact(
-      Object.assign(data, { phone }),
-      imgMultiStepForm,
-      planMultiStepForm,
-      openSnackbar,
-      t,
-      setLoadingTitle,
-      setCurrentImgIdx,
-      setCurrentImgForm,
-      setProgressValue
-    );
+    // let flowFactInfo = await flowFactService.publishImagesToFlowFact(
+    //   Object.assign(data, { phone }),
+    //   imgMultiStepForm,
+    //   planMultiStepForm,
+    //   openSnackbar,
+    //   t,
+    //   setLoadingTitle,
+    //   setCurrentImgIdx,
+    //   setCurrentImgForm,
+    //   setProgressValue
+    // );
 
     setFlowFactData({
       data,
       sendData,
-      flowFactInfo,
+      // flowFactInfo,
       uniqId,
       listNumber,
     });

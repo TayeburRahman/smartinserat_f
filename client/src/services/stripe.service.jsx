@@ -73,6 +73,7 @@ const pauseSubscription = (uniqId) => {
       return response.data.uniqId;
     });
 };
+
 //cancel auto renew
 const cancelAutoRenew = (uniqId) => {
   return axios
