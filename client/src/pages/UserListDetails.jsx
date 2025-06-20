@@ -3,6 +3,8 @@ import { Select, Input, Label } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
 
 const BuildingTypeHouse = ({ formData, setForm }) => {
+
+  console.log("formData", formData)
   const {
     numberOfFloors,
     numberOfRooms,

@@ -26,8 +26,7 @@ export const Review = (props) => {
     my_swiper,
     phone,
     loading,
-    setLoading,
-    flowFactData,
+    setLoading, 
   } = props;
   const { go } = navigation;
   const {
@@ -159,7 +158,7 @@ export const Review = (props) => {
     setIsSnackbarOpen(true);
 
     const isBelowMax = (f) => String(f).length < 3800;
-    // const isBelowMaxF = (f) => f.size < 200000000;
+    const isBelowMaxF = (f) => f.size < 200000000;
     let fields = Object.values(formData);
     if (
       imgMultiStepForm.selectedType.length > 50
@@ -180,55 +179,20 @@ export const Review = (props) => {
       return;
     }
     // setEnabled(false);
-    setLoading(true);
-    const sendData = { ...formData, props };
+    setLoading(true);  
+    const data = { ...formData, email,};
+    console.log("==formData", formData)
+    if (formData.energy === 'true') {
+      data.energy = true;
+    } else {
+      data.energy = false;
+    }  
 
-    crossOriginIsolated.log("=======", sendData)
-
-    //request uniqId
-    // let reqUniqId = await axios.post(
-    //   `${apiUrl}/userList/create?uniqId=true`,
-    //   {
-    //     email,
-    //   }
-    // );
-    // let uniqId = reqUniqId.data.data.uniqId;
-    // let listNumber = reqUniqId.data.data.listNumber;
-   
-    // console.log("==formData", formData)
-    // if (formData.energy === 'true') {
-    //   data.energy = true;
-    // } else {
-    //   data.energy = false;
-    // }
-    // // let oldDate = Date.now();
-
-    // let info = flowFactData?.flowFactInfo;
-    // console.log("==info", info)
-
-    // if (!info) {
-    //   info = await flowFactService.publishImagesToFlowFact(
-    //     Object.assign(data, { phone }),
-    //     imgMultiStepForm,
-    //     planMultiStepForm,
-    //     openSnackbar,
-    //     t,
-    //     setLoadingTitle,
-    //     setCurrentImgIdx,
-    //     setCurrentImgForm,
-    //     setProgressValue
-    //   );
-    // }
-
-    // data.entityId = info.entityId;
-    // data.schema_name = info.schema_name;
-    // data.flowfactContactId = info.contactId;
-    // data.listingPrice = data.listingPrice.replace(/\./g, '');
-    // data.rentPrice = data.rentPrice.replace(/\./g, '');
-    // data.newBuilding = data.newBuilding === "" ? false : data.newBuilding === "true" ? true : false;
-    // data.monumentProtection = data.monumentProtection === "" ? false : data.monumentProtection === "true" ? true : false;
-
- 
+    const sendData = new FormData();
+    await buildFormData(
+      sendData,
+      Object.assign(data, { phone })
+    );
 
     axios
       .post(`${apiUrl}/userList/create`, sendData)
@@ -254,13 +218,13 @@ export const Review = (props) => {
       })
       .finally(() => {
         console.log("I was in finally block in Review.js handleSubmit")
-        // localStorage.removeItem('formData');
-        // localStorage.removeItem('entityId'); 
+        localStorage.removeItem('formData');
+        localStorage.removeItem('entityId'); 
 
-        // setTimeout(() => {
-        //   localStorage.removeItem('imgMultiStepForm');
-        //   localStorage.removeItem('planMultiStepForm');
-        // }, 100); 
+        setTimeout(() => {
+          localStorage.removeItem('imgMultiStepForm');
+          localStorage.removeItem('planMultiStepForm');
+        }, 100); 
         console.log("After clearing local in Review.js handleSubmit");
       });
   };

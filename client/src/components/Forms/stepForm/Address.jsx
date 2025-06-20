@@ -73,7 +73,7 @@ export const Address = ({ formData, setForm, navigation, isReviewMode, my_swiper
             value={hideAddress}
             checked={hideAddress}
           />
-          <span className="text-sm">{dictionary["createAds"][languageReducer]["address"]["hide_address"]}</span>
+          <span className="text-sm text-black">{dictionary["createAds"][languageReducer]["address"]["hide_address"]}</span>
       </div>
       <div style={{ marginTop: "1rem" }}>
         <>

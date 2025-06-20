@@ -9,63 +9,34 @@ const { generateCognitoToken } = require("../flowfact/flowfact.service");
 const axios = require('axios');
 const cron = require("node-cron");
 const moment = require("moment");
-
+ 
 const createList = async (req) => {
   const { email } = req.body;
 
-  console.log("createList");
-  console.log("===========");
-  console.log("req.body", req.body);
-  console.log("email", email);
-  //check the user
-  const user = await UserService.getUserByEmail(email);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'user not found');
-
-  if (req.query.uniqId) {
-    console.log("Was in uniqId true", user)
-    //lets create unique id for the new list
-    const userList = await UserList.aggregate([{ "$match": { email } }]);
-    const listNumber = ++(userList.length);
-    const uniqId = `${user.customerId}-${listNumber}`;
-
-    console.log("Returning uniqID and listNumber");
-    console.log("uniqID ", uniqId);
-    console.log("listNumber ", listNumber);
-
-    return {
-      uniqId,
-      listNumber
-    }
+  if (!email) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email is required');
   }
 
-  console.log("After uniqId")
+  const user = await UserService.getUserByEmail(email);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
 
-  const lists = new UserList({
-    ...req.body,
-  });
-  //   lists.save((error, list) => {
-  //     if (error) {
-  //       return res.status(400).json({ error });
-  //     }
-  //     if (list) {
+  console.log("===", req.body)
 
-  //       return list;
-  //     }
-  //   });
+  const lists = req.body 
 
   try {
-    const savedList = await lists.save(); // Use async/await instead of callback
+    const savedList = await UserList.create(lists);
     console.log('List saved successfully:', savedList);
     return savedList;
   } catch (error) {
-    console.error('Error saving list:', error);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Error saving list');
   }
-
 };
 
-const getLatestUserList = async (req) => {
-  // Fetch the latest 10 ads with specific conditions
+
+const getLatestUserList = async (req) => { 
   const lists = await UserList.find({
     subscriptionPause: false,
     subscriptionExpire: true

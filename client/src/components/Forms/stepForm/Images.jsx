@@ -42,8 +42,7 @@ export const Images = (props) => {
     formData,
     phone,
     loading,
-    setLoading,
-    setFlowFactData,
+    setLoading, 
   } = props;
   const { go } = navigation;
   const [maxFiles, setMaxFiles] = useState(false);
@@ -104,20 +103,17 @@ export const Images = (props) => {
     setLoading(true);
     const sendData = new FormData();
     //request uniqId
-    let reqUniqId = await axios.post(
-      `${apiUrl}/userList/create?uniqId=true`,
-      {
-        email,
-      }
-    );
-    let uniqId = reqUniqId.data.uniqId;
-    let listNumber = reqUniqId.data.listNumber;
-    const data = { ...formData, email, uniqId, listNumber };
-    if (formData.energy === 'true') {
-      data.energy = true;
-    } else {
-      data.energy = false;
-    }
+    // let reqUniqId =
+    //  await axios.post(
+    //   `${apiUrl}/userList/create?uniqId=true`,
+    //   {
+    //     email,
+    //   }
+    // );
+    // let uniqId = reqUniqId.data.uniqId;
+    // let listNumber = reqUniqId.data.listNumber;
+ 
+    // =================
     // let oldDate = Date.now();
     
     // let flowFactInfo = await flowFactService.publishImagesToFlowFact(
@@ -132,14 +128,17 @@ export const Images = (props) => {
     //   setProgressValue
     // );
 
-    setFlowFactData({
-      data,
-      sendData,
-      // flowFactInfo,
-      uniqId,
-      listNumber,
-    });
 
+    // ==Need Changes=======================
+    // ==============================================
+
+    const data = { ...formData, email};
+    if (formData.energy === 'true') {
+      data.energy = true;
+    } else {
+      data.energy = false;
+    } 
+    console.log("data=====34", data)
     setTimeout(() => {
       my_swiper.slideNext();
 

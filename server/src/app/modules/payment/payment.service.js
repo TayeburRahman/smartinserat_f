@@ -125,14 +125,7 @@ const checkAndUpdateStatusByWebhook = async (req) => {
           await publishTo4Platforms(data, true, true, true, false);
           break;
         case 'PREMIUM':
-          await publishTo4Platforms(data, true, true, true, true);
-          //and we need to send email with {data} to manually publish to premuim portal
-          // let formData = {
-          //   title: data.listingTitle,
-          //   uniqId: data.uniqId,
-          //   email: data.formEmail,
-          // };
-          // await new emailService({ name: 'Dominik', email: 'buchung@smartinserat.de' }).EmailMePremium(formData);
+          await publishTo4Platforms(data, true, true, true, true); 
           break;
       }
 

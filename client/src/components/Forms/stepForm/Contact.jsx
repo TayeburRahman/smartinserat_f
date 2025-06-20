@@ -16,7 +16,7 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
 
   function normalizePhoneNumber1(input, defaultCountry = null) {
     const parsedPhone = parsePhoneNumber(input, defaultCountry)
-    console.log(input, 'parsed as:', parsedPhone)
+ 
     if (parsedPhone) {
       return parsedPhone.number
     } else {
@@ -32,9 +32,7 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
   
   }, [])
 
-  const handleContactNext = () => {
-
-    console.log("formdata.phone", formData.phone);
+  const handleContactNext = () => { 
     console.log("phone", phone);
 
 
@@ -63,6 +61,8 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
     return navigation.next()
   }
 
+
+  console.log("=phone:======", phone)
 
 
   return (
@@ -113,7 +113,7 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
           value={nameHide}
           onChange={setForm}
         />
-        <span>{t("hide name")}</span>
+        <span className="text-black">{t("Name verbergen")}</span>
       </div>
 
       <Label className="mt-4">

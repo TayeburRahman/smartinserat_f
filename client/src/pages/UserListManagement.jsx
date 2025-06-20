@@ -37,8 +37,6 @@ function UserListManagement() {
   const apiUrl = config.api.url;
   const [userListings, setUserListings] = useState([]);
 
-  console.log('userLists', userLists)
-
   const [noData, setNoData] = useState(false);
 
   useEffect(() => {

@@ -154,8 +154,7 @@ export const useMultiStepForm = (type) => {
 };
 
 export const MultiStepForm = () => {
-  const { user } = useContext(AuthContext);
-  const [flowFactData, setFlowFactData] = useState();
+  const { user } = useContext(AuthContext); 
 
 
   const defaultData = {
@@ -248,9 +247,7 @@ export const MultiStepForm = () => {
   const [energy, setEnergy] = useState(false);
   const [testEnergy, setTestEnergy] = useState('no energy');
   const [loading, setLoading] = useState(false);
-  const props = {
-    flowFactData,
-    setFlowFactData,
+  const props = { 
     imgMultiStepForm,
     planMultiStepForm,
     setListData,

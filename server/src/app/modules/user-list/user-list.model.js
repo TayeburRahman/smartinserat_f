@@ -5,10 +5,10 @@ const { Schema, model } = mongoose;
 
 const UserListSchema = new Schema(
     {
-        uniqId: {
-            type: String,
-            unique: true
-        },
+        // uniqId: {
+        //     type: String,
+        //     unique: true
+        // },
         email: {
             type: String,
         },
@@ -96,6 +96,7 @@ const UserListSchema = new Schema(
         },
         numberOfFloors: {
             type: String,
+            default: null
         },
         numberOfRooms: {
             type: String,
