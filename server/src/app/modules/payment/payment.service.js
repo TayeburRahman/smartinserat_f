@@ -27,16 +27,21 @@ const createCheckoutSession = async (req) => {
     }
 
     const packagePrice = Number(package.price); // Convert package.price to a number
-    const unitAmount = packagePrice * 100; // Convert to cents
+    const unitAmount = packagePrice * 100; 
+
+    const listing = await UserList.findById(listingId)
+    if(!listing?._id){
+      throw new ApiError(400, "Server reference error! please try again!");
+    }
 
     let session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `${YOUR_DOMAIN}app/userLists?success=true`,
+      success_url: `${YOUR_DOMAIN}app/payment/stripe-webhooks?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}app/userLists?canceled=true`,
       customer_email: `${user.email}`,
       client_reference_id: listingId,
-      metadata: { packageId: package._id.toString() },
+      metadata: { packageId: package._id.toString(), listingId },
       line_items: [
         {
           price_data: {
@@ -61,20 +66,36 @@ const createCheckoutSession = async (req) => {
 
 
 const checkAndUpdateStatusByWebhook = async (req) => {
-  const sig = req.headers['stripe-signature'];
-  let event;
-  try {
-    event = stripe.webhooks.constructEvent(req.body, sig, config.stripe.endpoint_secret);
-    // event = stripe.webhooks.constructEvent(req.body, sig, 'whsec_9d3f294e767ee851892730c440f5bc9936aee58afb59ef536aaf6de952698b7e');
-  } catch (err) {
-    console.error(`Webhook signature verification failed: ${err.message}`);
-    throw new ApiError(400, `Webhook Error: ${err.message}`);
-  }
+  // const sig = req.headers['stripe-signature'];
+  // let event;
+  // try {
+  //   event = stripe.webhooks.constructEvent(req.body, sig, config.stripe.endpoint_secret);
+  //   // event = stripe.webhooks.constructEvent(req.body, sig, 'whsec_9d3f294e767ee851892730c440f5bc9936aee58afb59ef536aaf6de952698b7e');
+  // } catch (err) {
+  //   console.error(`Webhook signature verification failed: ${err.message}`);
+  //   throw new ApiError(400, `Webhook Error: ${err.message}`);
+  // }
 
-  if (event.type === 'checkout.session.completed') {
+  // console.log("createCheckoutSession",event, sig)
+  // ===========================================
+  const sessionId = req.query.session_id; 
 
-    const session = event.data.object;
-    const listingId = session.client_reference_id;
+  if (!sessionId) {
+    return { status: "failed", message: "Missing session ID in the request." };
+}
+
+const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+
+console.log('session',session)
+ 
+ 
+  // ===========================================
+
+  if (session.payment_status === 'paid') {
+
+    // const session = event.data.object;
+    const listingId = session.metadata.listingId;
     const paymentIntentId = session.payment_intent;
     const packageId = session.metadata.packageId;
 
@@ -85,7 +106,7 @@ const checkAndUpdateStatusByWebhook = async (req) => {
         throw new ApiError(404, 'Package not found');
       }
 
-      const subscriptionType = package.subscriptionType; // assuming packageName holds BASIC, MEDIUM, PREMIUM
+      const subscriptionType = package.subscriptionType;  
       const subscriptionStartDate = new Date();
       const subscriptionEndDate = new Date(subscriptionStartDate);
 

@@ -2045,7 +2045,7 @@ classnames@^2.5.1:
     autoprefixer "^9.8.6"
     axios "^1.8.4"
     chart.js "^4.4.9"
-    client "file:../../../../.cache/yarn/v6/npm-client-0.0.0-28aedbd2-e4d2-49c3-8f10-0cf4062d1716-1750251096158/node_modules/client"
+    client "file:../../../../.cache/yarn/v6/npm-client-0.0.0-4a5a846c-184b-4928-bb4c-6fb233c03d19-1750523202918/node_modules/client"
     dotenv "^16.4.7"
     firebase "^11.9.1"
     formik "^2.4.6"
@@ -2074,6 +2074,7 @@ classnames@^2.5.1:
     react-router-dom "^7.4.0"
     react-router-hash-link "^2.4.3"
     react-select "^5.10.1"
+    react-spinners "^0.17.0"
     react-tabs "^6.1.0"
     styled-components "^6.1.17"
     swiper "^11.2.6"
@@ -2956,9 +2957,9 @@ image-to-blob@^0.2.0:
   dependencies:
     image-to-data-uri jcblw/image-to-data-uri.js
 
-"image-to-data-uri@git+https://github.com/jcblw/image-to-data-uri.js":
+image-to-data-uri@jcblw/image-to-data-uri.js:
   version "0.0.1"
-  resolved "git+https://github.com/jcblw/image-to-data-uri.js#bcd2218a4fe1531080fd2fdb81e96b0c7d8909a6"
+  resolved "https://codeload.github.com/jcblw/image-to-data-uri.js/tar.gz/bcd2218a4fe1531080fd2fdb81e96b0c7d8909a6"
 
 import-fresh@^3.2.1, import-fresh@^3.3.0:
   version "3.3.1"
@@ -3717,6 +3718,13 @@ react-fast-compare@^3.1.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz#929a97a532304ce9fee4bcae44234f1ce2c21d49"
   integrity sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==
+
+react-feather@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/react-feather/-/react-feather-2.0.10.tgz#0e9abf05a66754f7b7bb71757ac4da7fb6be3b68"
+  integrity sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-focus-lock@2.4.1:
   version "2.4.1"

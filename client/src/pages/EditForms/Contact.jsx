@@ -20,7 +20,11 @@
 //   const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
 //   const [enabled, setEnabled] = useState(true);
 //   useEffect(() => {
-//     if (enabled) {formData
+//     if (enabled) {
+//       closeSnackbar();
+//     } else {
+//       openSnackbar(t("Updating Please Wait..."));
+//     }
 //   }, [enabled, openSnackbar, closeSnackbar]);
 //   const handleUpdateList = async (uniqId) => {
 //     setEnabled(false)
@@ -29,11 +33,12 @@
 //       .updateUserListDetails(uniqId, Object.assign(formData, { phone: phoneNumber?.length > 8 ? phoneNumber : "" }) )
 //       .then(async (res) => {
 //         setEnabled(true)
-//         history("/app");
-//         history("/app/userLists");
+//         history.push("/app");
+//         history.replace("/app/userLists");
 //       })
 //       .catch((err) => console.log(err));
 //   };
+  
 //   return (
 //     <div className="container mx-auto px-4">
 //       <Label className="mt-4">

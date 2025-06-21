@@ -41,6 +41,7 @@
     "react-chartjs-2": "^5.3.0",
     "react-dom": "18",
     "react-dropzone": "^14.3.8",
+    "react-feather": "^2.0.10",
     "react-helmet": "^6.1.0",
     "react-hooks-helper": "^1.6.0",
     "react-hot-toast": "^2.5.2",

@@ -26,6 +26,7 @@ function PricingCardSale({
 
 
   const handlePaymentClick = (e) => {
+    console.log("========Data all" )
       e.preventDefault();
       callback(packageId, listData._id);
   }

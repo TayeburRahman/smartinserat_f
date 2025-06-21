@@ -45,7 +45,7 @@ function Products({ products, listData, enabled, PricingCardCallback, pages, sub
           if (listingType !== product.listingType) {
             return null;
           }
-
+          console.log('listData=================', listData)
           console.log("inside map")
 
           if (product.subscriptionDuration !== subscriptionDuration) return null;
@@ -172,24 +172,37 @@ export const Submit = ({ listData, setListData, pages }) => {
 
   const [errorMessage, setErrorMessage] = useState(false);
 
+  console.log('listData', listData)
+
   const PricingCardCallback = async (packageId, listingId) => {
+
+    if(!listData?._id){
+      openSnackbar(t('Server error, please try again!'));
+      return;
+    }
+    
     try {
       const { data } = await axios.post(`${config.api.url}/payment/stripe/create-checkout-session`, {
         packageId,
-        listingId,
-      });
-
-
-      const stripe = await stripePromise;
-
+        listingId: listData?._id,
+      }); 
+      console.log("data===========================================",data) 
+      const stripe = await stripePromise; 
 
       const { error } = await stripe.redirectToCheckout({
         sessionId: data.data.id,
       });
 
-      if (error) {
-        console.error('Error redirecting to checkout:', error);
-      }
+      // if (error) {
+      //   console.error('Error redirecting to checkout:', error);
+      // }else{ 
+      //   const { data } = await axios.get(`${config.api.url}/payment/stripe-webhooks?session_id={CHECKOUT_SESSION_ID}`); 
+      //    if(data){
+      //     openSnackbar(t('Payment successful!'), 'success', 3000);
+      //    }else{
+      //     openSnackbar(t('Payment successful! But not update in Database please contact with admin'), 'error', 400);
+      //    } 
+      // }
     } catch (error) {
       console.log("Error: ", error);
     }

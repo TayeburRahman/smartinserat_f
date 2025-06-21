@@ -1,5 +1,4 @@
-import { lazy } from 'react';
-
+import { lazy } from 'react'; 
 // use lazy for better code splitting, a.k.a. load faster
 const Logout = lazy(() => import('../pages/Logout'));
 const Profile = lazy(() => import('../pages/Profile'));
@@ -13,7 +12,7 @@ const Page404 = lazy(() => import('../pages/404'));
 const Buttons = lazy(() => import('../pages/Buttons'));
 const UsersList = lazy(() => import('../pages/UsersList'));
 const Unsubscribe = lazy(() => import('../pages/Unsubscribe'));
-
+const PaymentSuccess = lazy(() => import('../pages/PaymentSuccess'));
 const userRoutes = [
   { path: '/profile', element: Profile },
   { path: '/create_ads', element: CreateListing },
@@ -27,6 +26,7 @@ const userRoutes = [
   { path: '/forms', element: Forms },
   { path: '/404', element: Page404 },
   { path: '/unsubscribe', element: Unsubscribe },
+  { path: '/payment/stripe-webhooks', element: PaymentSuccess },
 ];
 
 export default userRoutes;
