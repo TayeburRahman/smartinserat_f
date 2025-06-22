@@ -12,7 +12,8 @@ const createCheckoutSession = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const checkAndUpdateStatusByWebhook = catchAsync(async (req, res) => {
+
+const checkAndUpdateStatusByWebhook = catchAsync(async (req, res) => { 
   const result = await PaymentService.checkAndUpdateStatusByWebhook(req);
 
   sendResponse(res, {
@@ -22,6 +23,7 @@ const checkAndUpdateStatusByWebhook = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const pauseSubscription  = catchAsync(async (req, res) => {
   const result = await PaymentService.pauseSubscription(req);
 
@@ -32,6 +34,7 @@ const pauseSubscription  = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const unpauseSubscription  = catchAsync(async (req, res) => {
   const result = await PaymentService.unpauseSubscription(req);
 

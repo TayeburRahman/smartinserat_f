@@ -9,9 +9,7 @@ const UserList = require("../user-list/user-list.model");
 const { generateCognitoToken } = require("../flowfact/flowfact.service");
 const stripe = require("stripe")(config.stripe.stripe_secret_key);
 const axios = require('axios');
-
 const YOUR_DOMAIN = process.env.RESET_PASS_UI_LINK;
-
 
 const createCheckoutSession = async (req) => {
   try {
@@ -37,7 +35,7 @@ const createCheckoutSession = async (req) => {
     let session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `${YOUR_DOMAIN}app/payment/stripe-webhooks?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${YOUR_DOMAIN}app/payment/stripe-webhooks/{CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}app/userLists?canceled=true`,
       customer_email: `${user.email}`,
       client_reference_id: listingId,
@@ -75,20 +73,16 @@ const checkAndUpdateStatusByWebhook = async (req) => {
   //   console.error(`Webhook signature verification failed: ${err.message}`);
   //   throw new ApiError(400, `Webhook Error: ${err.message}`);
   // }
-
   // console.log("createCheckoutSession",event, sig)
   // ===========================================
-  const sessionId = req.query.session_id; 
+  const sessionId = req.query.session_id;  
 
   if (!sessionId) {
     return { status: "failed", message: "Missing session ID in the request." };
-}
+  }
+   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-
-console.log('session',session)
- 
+   console.log('session=========================',session)
  
   // ===========================================
 
@@ -109,8 +103,7 @@ console.log('session',session)
       const subscriptionType = package.subscriptionType;  
       const subscriptionStartDate = new Date();
       const subscriptionEndDate = new Date(subscriptionStartDate);
-
-      // Add subscription duration logic (assuming package has a duration in months)
+ 
       subscriptionEndDate.setMonth(subscriptionEndDate.getMonth() + package.subscriptionDuration);
 
       const data = await UserList.findByIdAndUpdate(
@@ -118,15 +111,15 @@ console.log('session',session)
         {
           $set: {
             paymentIntentId: paymentIntentId,
-            payemntStatus: 'completed',
+            paymentStatus: 'completed',
             subscription: {
               type: subscriptionType,
             },
             subscriptionUpdatedAt: subscriptionStartDate,
             activeUntil: subscriptionEndDate,
             subscriptionExpire: true,
-            // inactive: false
-            pending: false
+            inactive: false,
+            status: "active"
           },
         },
         { new: true }
@@ -136,22 +129,9 @@ console.log('session',session)
         throw new ApiError(404, 'UserList entry not found');
       }
 
-      data.status = true;
-
-      switch (package.subscriptionType) {
-        case 'BASIC':
-          await publishTo4Platforms(data, true, true, false, false);
-          break;
-        case 'MEDIUM':
-          await publishTo4Platforms(data, true, true, true, false);
-          break;
-        case 'PREMIUM':
-          await publishTo4Platforms(data, true, true, true, true); 
-          break;
-      }
-
-
+      data.status = true; 
       console.log(`Order updated successfully: ${data}`);
+       return data
     } catch (err) {
       console.error(`Error updating UserList: ${err.message}`);
       throw new ApiError(500, `Database Error: ${err.message}`);

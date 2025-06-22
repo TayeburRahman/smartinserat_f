@@ -6,8 +6,8 @@ const { ENUM_USER_ROLE } = require("../../../utils/enums");
 const bodyParser = require("body-parser");
 
 const router = Router();
-router.post("/stripe/webhook", bodyParser.raw({ type: 'application/json' }), PaymentController.checkAndUpdateStatusByWebhook);
-
+// router.post("/stripe/webhook", bodyParser.raw({ type: 'application/json' }), PaymentController.checkAndUpdateStatusByWebhook);
+router.get("/stripe/webhook", PaymentController.checkAndUpdateStatusByWebhook);
 router.post("/stripe/create-checkout-session",
     bodyParser.json(),
     auth(ENUM_USER_ROLE.USER),

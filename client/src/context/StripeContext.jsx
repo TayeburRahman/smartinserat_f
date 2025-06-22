@@ -18,24 +18,23 @@ export const StripeProvider = ({ children }) => {
     setStripePromise(loadStripe(config.stripe.publicKey));
   }, []);
 
-  const loadProducts = useCallback(() => {
-    // axios.post(`${apiUrl}/v1/stripe/get-products`, {})
-    axios
-      .get(`${apiUrl}/package/getAllPackages`)
-      .then((response) => {
-        setLoaded(true);
-        // setProducts(response.data.products)
-        setProducts(response.data.data); 
-        console.log("Stripe Context> load Products > response.data.data: ",response?.data);
-      })
-      .catch((err) => {
-        setLoaded(true);
-      });
-  }, []);
-
+  const loadProducts = useCallback(async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/package/getAllPackages`);
+      setProducts(response?.data?.data || []);
+      console.log("Packages Loaded:", response?.data?.data);
+    } catch (error) {
+      console.error("Network error while loading packages:", error.message);
+    } finally {
+      setLoaded(true);
+    }
+  }, [apiUrl]);
+  
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
+  
+  
 
   const value = useMemo(() => {
     return {

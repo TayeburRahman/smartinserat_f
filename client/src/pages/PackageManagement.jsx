@@ -32,8 +32,6 @@ function PackageManagement() {
   const [value, setValue] = useState(false);
   const apiUrl = config.api.url;
   const [packageLists, setPackageLists] = useState([]);
-
-  console.log('packageLists', packageLists)
   const [noData, setNoData] = useState(false);
 
   useEffect(() => {
@@ -43,8 +41,6 @@ function PackageManagement() {
       closeSnackbar();
     }
   }, [resfreshing, openSnackbar, closeSnackbar]);
-
-
 
   const refreshPackages = useCallback(() => {
     setRefreshing(true);
@@ -88,14 +84,11 @@ function PackageManagement() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-
+    const fetchData = async () => { 
       try {
         // const response = await axios.get(`${apiUrl}/admin/packages`);
         const response = await axios.get(`${apiUrl}/package/getAllPackages`);
-        
-
-        console.log("First fetch packages", response.data)
+       
         if(response.data.status === '200') {
           setPackageLists(response?.data?.data);
         } else {
@@ -104,17 +97,6 @@ function PackageManagement() {
       } catch (error) {
         console.log(error);
       }
-      // axios
-      //   .get(`${apiUrl}/v1/auth/get/users`)
-      //   .then((response) => {
-
-      //     if (response.data.message === 'success') {
-      //       setUserLists(response?.data?.user);
-      //       return
-      //     }
-      //     setNoData(true);
-      //   })
-      //   .catch((error) => console.log(error));
     }
 
     fetchData()
@@ -183,8 +165,9 @@ function PackageManagement() {
       return <PageError message="Some error occured : please try again." />;
     }
   }
+
   const escapeRegExp = (string) => {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   };
 
 
@@ -194,8 +177,7 @@ function PackageManagement() {
       setValue(false);
     } else {
       setValue(true);
-      const searchText = event?.target.value;
-
+      const searchText = event?.target.value; 
 
       console.log("Search text: ", searchText);
       console.log("In search Packages packageLists:", packageLists)
@@ -207,7 +189,7 @@ function PackageManagement() {
         const regex = new RegExp(escapedSearchText, "i");
   
         const matchedPackages = packageLists?.filter((user) => {
-          // Checking if any of the fields match the regular expression
+         // Checking if any of the fields match the regular expression
           return (
             regex.test(user?.packageName) ||
             regex.test(user?.packageDescription) ||
@@ -216,15 +198,11 @@ function PackageManagement() {
             regex.test(user?.subscriptionDuration) ||
             regex.test(user?.price)
           );
-        });
-  
-
+        }); 
 
       // const matchedPackages = packageLists?.filter((pkg) =>
       //   pkg?.packageName.toLowerCase().includes(searchText.toLowerCase())
-      // );
-
-      console.log("matchedPackages", matchedPackages)
+      // ); 
       setSearchPackages(matchedPackages);
     }
   };

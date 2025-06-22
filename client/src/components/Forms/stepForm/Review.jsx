@@ -180,8 +180,7 @@ export const Review = (props) => {
     }
     // setEnabled(false);
     setLoading(true);  
-    const data = { ...formData, email,};
-    console.log("==formData", formData)
+    const data = { ...formData, email,}; 
     if (formData.energy === 'true') {
       data.energy = true;
     } else {
@@ -201,8 +200,7 @@ export const Review = (props) => {
         setListData(response.data.data);
         // openSnackbar(t('List Is Created'), 'success', 3000);
         setLoading(false);
-        // setEnabled(true);
-
+        // setEnabled(true); 
         setIsSnackbarOpen(false)
         my_swiper.slideNext();
         go('submit');

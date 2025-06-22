@@ -29,11 +29,7 @@ function Products({ products, listData, enabled, PricingCardCallback, pages, sub
     listingType = 'rent';
   } else {
     listingType = 'sale';
-  }
-
-  console.log("Listing type", listingType)
-
-
+  }  
   console.log("--------------------------------------");
   console.log("Submit>Products> products: ", products);
   return (

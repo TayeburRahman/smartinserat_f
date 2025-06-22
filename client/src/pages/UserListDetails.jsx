@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Submit } from "../components/Forms/stepForm/Submit";
 
 const UserListDetails = ({ formData, handledeleteList, isOpen, onToggle }) => {
   const { t } = useTranslation();
+  const [selectedListData, setSelectedListData] = useState(null);
 
   const formatKey = (key) =>
     key
       .replace(/([A-Z])/g, " $1")
       .replace(/^./, (str) => str.toUpperCase());
+
+  const handlePayNow = () => {
+    setSelectedListData(formData); 
+  };
 
   return (
     <div
@@ -25,22 +31,77 @@ const UserListDetails = ({ formData, handledeleteList, isOpen, onToggle }) => {
       <div
         onClick={onToggle}
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#ffffff",
           padding: "16px 20px",
           cursor: "pointer",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          fontWeight: "600",
+          fontWeight: 600,
           fontSize: "1.1rem",
-          borderBottom: isOpen ? "1px solid #ddd" : "none",
+          borderBottom: isOpen ? "1px solid #e0e0e0" : "none",
+          transition: "background-color 0.2s ease",
         }}
       >
-        <span>{formData?.listingTitle || "Untitled Listing"}</span>
-        <span style={{ fontSize: "1.5rem" }}>{isOpen ? "−" : "+"}</span>
+        <div style={{ display: "flex", gap: "6px" }}>
+          <span>{formData?.listingTitle || "Untitled Listing"}</span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontSize: "0.95rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <span
+              style={{
+                backgroundColor:
+                  formData.status === "pending" ? "#FFF3CD" : "#D4EDDA",
+                color: formData.status === "pending" ? "#856404" : "#155724",
+                padding: "4px 10px",
+                borderRadius: "12px",
+                fontWeight: 500,
+                minWidth: "80px",
+                textAlign: "center",
+              }}
+            >
+              {formData.status}
+            </span>
+
+            {formData?.subscriptionUpdatedAt && (
+              <span style={{ color: "#666", fontSize: "0.9rem" }}>
+                {new Date(formData.subscriptionUpdatedAt).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            )}
+
+            {formData?.subscriptionUpdatedAt && formData.activeUntil && (
+              <span style={{ color: "#666", fontSize: "0.9rem" }}> to </span>
+            )}
+
+            {formData?.activeUntil && (
+              <span style={{ color: "#666", fontSize: "0.9rem" }}>
+                {new Date(formData.activeUntil).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Right Icon */}
+        <span style={{ fontSize: "1.5rem", color: "#888" }}>
+          {isOpen ? "−" : "+"}
+        </span>
       </div>
 
-      {/* Details */}
+      {/* Collapsible Details Section */}
       {isOpen && (
         <div style={{ padding: "20px", color: "#333" }}>
           <div
@@ -60,7 +121,7 @@ const UserListDetails = ({ formData, handledeleteList, isOpen, onToggle }) => {
               } else if (typeof value === "object" && value !== null) {
                 try {
                   value = JSON.stringify(value);
-                } catch (err) {
+                } catch {
                   value = "Unsupported data";
                 }
               }
@@ -78,8 +139,32 @@ const UserListDetails = ({ formData, handledeleteList, isOpen, onToggle }) => {
             })}
           </div>
 
-          {/* Delete Button */}
-          <div style={{ marginTop: "24px", textAlign: "right" }}>
+          {/* Pay Now + Delete */}
+          <div
+            style={{
+              marginTop: "24px",
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "10px",
+            }}
+          >
+            {formData?.paymentStatus !== "completed" && (
+              <button
+                onClick={handlePayNow}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#3498db",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontWeight: "500",
+                }}
+              >
+                Pay Now
+              </button>
+            )}
+
             <button
               onClick={() => handledeleteList(formData._id)}
               style={{
@@ -95,6 +180,16 @@ const UserListDetails = ({ formData, handledeleteList, isOpen, onToggle }) => {
               Delete Listing
             </button>
           </div>
+ 
+          {selectedListData?._id === formData._id && (
+            <div className="mt-8">
+              <Submit
+                listData={selectedListData}
+                setListData={setSelectedListData}
+                pages={[]}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

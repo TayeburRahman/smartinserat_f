@@ -26,6 +26,8 @@ const PricingSection = () => {
     12: "month12",
   };
 
+  
+
   return (
     <section className="w-full bg-white mt-16" id='Preise'>
       <div className="max-w-5xl mx-auto flex justify-center items-center flex-col">
@@ -61,8 +63,7 @@ const PricingSection = () => {
                         subscriptionKeys[subscriptionDuration]
                       ] }
                   </h6>
-                </Tab>
-                
+                </Tab> 
                   ))}
                 </TabList>
                 {subscriptionDurations && subscriptionDurations.map((subscriptionDuration, index) => (

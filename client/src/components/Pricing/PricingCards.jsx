@@ -1,8 +1,7 @@
-import React, {  useEffect, useState } from "react";
+import React, {  useContext, useEffect, useState } from "react";
 import PriceCard from "../Cards/PriceCard";
 import { dictionary } from "../../resources/multiLanguages";
-import { StripeContext } from "../../context/StripeContext";
-import { useContext } from "react";
+import { StripeContext } from "../../context/StripeContext"; 
 import { ClipLoader } from "react-spinners"; 
 import PricingCardLoader from "./PricingCardLoader";
 const PricingCards = ({ listingType, subscriptionDuration }) => {
@@ -121,22 +120,20 @@ const PricingCards = ({ listingType, subscriptionDuration }) => {
       subscriptionKeys[subscriptionDuration]
     ];
 
-
     useEffect(() => {
       setLoading(true);
       // const timer = setTimeout(() => {
-        const filteredData = packages.filter(
-          (pkg) =>
+        const filteredData = packages.filter((pkg) =>
             pkg.listingType === listingType &&
             pkg.subscriptionDuration === subscriptionDuration
         );
         setFilteredPackages(filteredData);
         setLoading(false);
       // },  100);  
-  
       // return () => clearTimeout(timer);
-    }, [listingType, subscriptionDuration, packages]);
+    }, [listingType, subscriptionDuration, packages]); 
 
+  console.log('subscriptionDurations', subscriptionDuration, listingType, packages)
   return (
     <div className="md:flex mx-auto block md:w-full gap-4 justify-center px-5">
     {loading
