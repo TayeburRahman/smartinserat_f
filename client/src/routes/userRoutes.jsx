@@ -26,7 +26,7 @@ const userRoutes = [
   { path: '/forms', element: Forms },
   { path: '/404', element: Page404 },
   { path: '/unsubscribe', element: Unsubscribe },
-  { path: '/payment/stripe-webhooks', element: PaymentSuccess },
+  { path: '/payment/stripe-webhooks/:session_id', element: PaymentSuccess },
 ];
 
 export default userRoutes;

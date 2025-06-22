@@ -1,26 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { config } from '../assets/config/config';
+import { CheckCircle, XCircle } from 'lucide-react';   
 import { SnackbarContext } from '../context/SnackbarContext';
-import { CheckCircle, XCircle } from 'react-feather';
+import { config } from '../assets/config/config';
 
 const PaymentSuccess = () => {
-  // Correctly get the session_id from the URL query string (no destructuring)
-  const query = new URLSearchParams(window.location.search);
-  const sessionId = query.get('session_id'); // sessionId is string or null
-
+  const { session_id } = useParams();
   const navigate = useNavigate();
   const { openSnackbar } = useContext(SnackbarContext);
 
-  const [status, setStatus] = useState<'pending' | 'success' | 'error'>('pending');
+  const [status, setStatus] = useState('pending');
 
   useEffect(() => {
     const verifyPayment = async () => {
       try {
         const { data } = await axios.get(
-          `${config.api.url}/payment/stripe-webhooks?session_id=${sessionId}`
+          `${config.api.url}/payment/stripe-webhooks?session_id=${session_id}`
         );
+
+        console.log("data====", data)
 
         if (data?.paymentStatus === 'success') {
           openSnackbar('Payment successful!', 'success');
@@ -36,10 +35,10 @@ const PaymentSuccess = () => {
       }
     };
 
-    if (sessionId) {
+    if (session_id) {
       verifyPayment();
     }
-  }, [sessionId, openSnackbar]);
+  }, [session_id, openSnackbar]);
 
   const renderContent = () => {
     if (status === 'pending') {
@@ -65,7 +64,7 @@ const PaymentSuccess = () => {
 
     return (
       <>
-        <XCircle size={64} color="#e74c3c" />
+        <XCircle size={64} color="#e74c3c" style={{ display: "grid", justifyItems: "center"}}/>
         <h2 style={{ color: '#e74c3c', marginTop: '1rem' }}>Payment Error</h2>
         <p style={{ color: '#666' }}>
           Your payment was successful but not updated. Please contact support.
