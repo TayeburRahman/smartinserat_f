@@ -82,9 +82,7 @@ const checkAndUpdateStatusByWebhook = async (req) => {
   }
    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-   console.log('session=========================',session)
- 
-  // ===========================================
+   console.log('session=========================',session) 
 
   if (session.payment_status === 'paid') {
 
@@ -128,6 +126,8 @@ const checkAndUpdateStatusByWebhook = async (req) => {
       if (!data) {
         throw new ApiError(404, 'UserList entry not found');
       }
+
+      // const 
 
       data.status = true; 
       console.log(`Order updated successfully: ${data}`);

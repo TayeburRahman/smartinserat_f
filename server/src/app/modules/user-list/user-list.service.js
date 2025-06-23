@@ -1,15 +1,15 @@
-
 const ApiError = require("../../../errors/ApiError");
 const User = require("../user/user.model");
 const httpStatus = require("http-status");
 const Auth = require("../auth/auth.model");
 const UserList = require("./user-list.model");
-const { UserService } = require("../user/user.service");
-const { generateCognitoToken } = require("../flowfact/flowfact.service");
+const { UserService } = require("../user/user.service"); 
 const axios = require('axios');
 const cron = require("node-cron");
 const moment = require("moment");
+const { createPropstackProperties } = require("../flowfact/postpack.service");
  
+
 const createList = async (req) => {
   const { email } = req.body;
 
@@ -20,21 +20,29 @@ const createList = async (req) => {
   const user = await UserService.getUserByEmail(email);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-
-  console.log("===", req.body)
-
+  }  
   const lists = req.body 
-
+  
   try {
-    const savedList = await UserList.create(lists);
-    console.log('List saved successfully:', savedList);
+    // console.log("======",lists)
+    const createPt = await createPropstackProperties(req.body)
+    
+    if(!createPt.status){
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Error saving list');
+    }
+
+    const listsWithImages = {
+      ...lists,
+      imgCollection: createPt.images,  
+    };
+    console.log("imgCollection", listsWithImages)
+    const savedList = await UserList.create(listsWithImages);
+    // console.log('List saved successfully:', savedList);
     return savedList;
   } catch (error) {
-    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Error saving list');
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Error saving list', error);
   }
 };
-
 
 const getLatestUserList = async (req) => { 
   const lists = await UserList.find({

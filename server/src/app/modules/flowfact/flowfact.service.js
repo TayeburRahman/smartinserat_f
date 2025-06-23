@@ -53,7 +53,7 @@ const createPropstackProject = async () => {
   }
 };
 
-const createPropstackPropartis = async (image_id) => {
+const createPropstackProperties = async (image_id) => {
   try {
    
 
@@ -321,5 +321,5 @@ module.exports = {
   publishToPortal,
   generateCognitoToken,
   createPropstackProject,
-  createPropstackPropartis
+  createPropstackProperties
 };

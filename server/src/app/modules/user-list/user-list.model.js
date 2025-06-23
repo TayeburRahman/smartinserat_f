@@ -10,7 +10,6 @@ const UserListSchema = new Schema(
         entityId: { type: String },
         portalIds: { type: Array },
         paymentIntentId: { type: String },
-    
         subscription: {
           type: {
             type: String,
@@ -123,7 +122,7 @@ const UserListSchema = new Schema(
           type: Boolean,
           default: true,
         },
-        status:{type: String, default:"pending"},
+        status:{type: String, default:"inactive"},
         contactType: { type: String },
         commission: { type: String },
         buildingphase: { type: String },
