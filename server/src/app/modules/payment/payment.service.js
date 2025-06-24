@@ -127,10 +127,34 @@ const checkAndUpdateStatusByWebhook = async (req) => {
         throw new ApiError(404, 'UserList entry not found');
       }
 
-      // const 
+      if (!data.unitsId) {
+        console.log('Missing unitsId in UserList');
+      } else {
+        const unitData = {
+          property: {
+            archived: false,
+          },
+        };
 
-      data.status = true; 
-      console.log(`Order updated successfully: ${data}`);
+        const response = await axios.put(
+          `https://api.propstack.de/v1/units/${data.unitsId}`,
+          unitData,
+          {
+            headers: {
+              "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response?.data) {
+          throw new ApiError(httpStatus.BAD_GATEWAY, 'Failed to update unit status in Propstack');
+        }
+
+        console.log(`Unit status updated in Propstack:`, response.data);
+      }
+ 
+      data.status = true;  
        return data
     } catch (err) {
       console.error(`Error updating UserList: ${err.message}`);

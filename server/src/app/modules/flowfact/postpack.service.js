@@ -51,10 +51,8 @@ const createPropstackProperties = async (userData) => {
         location_note: userData.location,
         other_note: userData.additionalDescription,
         commission: userData.commission,
-        courtage_note: `Provision: ${userData.commission || "k.A"}`,
-
-        archived: userData.status === "inactive",
-
+        courtage_note: `Provision: ${userData.commission || "k.A"}`, 
+        archived: true, 
         partial_custom_fields: {
           monthlyHousePayment: userData.monthlyHousepayment,
           energyEfficiencyClass: userData.energyEfficiencyClass,
@@ -84,7 +82,7 @@ const createPropstackProperties = async (userData) => {
     // Extract large image URLs
     const largeImageUrls = (propertyData?.images || []).map((img) => img.big_url); 
 
-    return { status: true ,images: largeImageUrls };
+    return { status: true ,images: largeImageUrls, propertyId };
   } catch (error) {
     console.error("❌ Error creating property in Propstack:", error.response?.data || error.message);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create property in Propstack");

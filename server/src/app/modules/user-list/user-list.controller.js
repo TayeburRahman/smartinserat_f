@@ -61,16 +61,7 @@ const updateList = catchAsync(async (req, res) => {
     message: "Userlist updated successfully",
     data: result,
   });
-});
-const deleteImage = catchAsync(async (req, res) => {
-  const result = await UserListService.deleteImage(req);
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "Userlist image removed successfully",
-    data: result,
-  });
-});
+}); 
 
 const deleteUserList = catchAsync(async (req, res) => {
   const result = await UserListService.deleteUserList(req);
@@ -103,8 +94,7 @@ const UserListController = {
   cognitoToken,
   getMyList,
   deleteUserList,
-  updateList,
-  deleteImage,
+  updateList, 
   getUserList,
   getUserListById,
   getLatestUserList,

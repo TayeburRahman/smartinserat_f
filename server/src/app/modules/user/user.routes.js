@@ -8,8 +8,8 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 
 
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json({ limit: '500mb' }));
+router.use(bodyParser.urlencoded({ extended: true, limit: '500mb' }));
 
 // User routes
 router.patch(

@@ -11,7 +11,7 @@ const { createPropstackProperties } = require("../flowfact/postpack.service");
  
 
 const createList = async (req) => {
-  const { email } = req.body;
+  const { email } = req.body; 
 
   if (!email) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email is required');
@@ -21,21 +21,22 @@ const createList = async (req) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }  
-  const lists = req.body 
+  const lists = req.body  
   
   try {
     // console.log("======",lists)
     const createPt = await createPropstackProperties(req.body)
     
-    if(!createPt.status){
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Error saving list');
-    }
+    if(!createPt.status && !createPt?.propertyId){
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong while saving the list. Please try again later!');
+    } 
 
     const listsWithImages = {
       ...lists,
-      imgCollection: createPt.images,  
+      unitsId: createPt?.propertyId,
+      imgCollection: createPt?.images || [],  
     };
-    console.log("imgCollection", listsWithImages)
+   
     const savedList = await UserList.create(listsWithImages);
     // console.log('List saved successfully:', savedList);
     return savedList;
@@ -54,7 +55,6 @@ const getLatestUserList = async (req) => {
 
   return lists;
 };
-
 
 const getUserList = async (req) => {
   const { adType, propertyType, location, postalCode, price, search, page = 1, limit = 12 } = req.query;
@@ -165,95 +165,41 @@ const updateList = async (req) => {
   });
 
   return updatedList;
-};
-
-const deleteImage = async (req) => {
-  let id = req.body.id;
-  let uniqId = req.body.uniqId;
-  const cognitoToken = await generateCognitoToken();
-
-  if (req.query.title) {
-    try {
-      UserList.findOne({ uniqId }, async (err, data) => {
-        if (err) {
-          throw new ApiError(404, "No list found");
-        }
-        if (data) {
-          await axios.patch(`https://api.production.cloudios.flowfact-prod.cloud/multimedia-service/items/${id}`, [
-            {
-
-              "op": "replace",
-
-              "path": "/title",
-
-              "value": req.body.title
-
-            }
-          ], {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              cognitoToken
-            }
-          });
-          return { mesaage: 'success' };
-        }
-      });
-    } catch (er) {
-      console.log(er.message, 150);
-    }
-    return
-  }
-
-  try {
-    await axios.delete(`https://api.production.cloudios.flowfact-prod.cloud/multimedia-service/items/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        cognitoToken
-      }
-    });
-    return { mesaage: 'success' };
-  } catch (er) {
-    throw new ApiError(404, "Failed");
-  }
-};
+}; 
 
 const deleteUserList = async (req) => {
   let uniqId = req.params.uniqId;
 
-  try {
-    const data = await UserList.findOne({ uniqId });
-
+  try { 
+    const data = await UserList.findById(uniqId);
     if (!data) {
       throw new ApiError(400, "No list found");
-    }
-
-    const cognitoToken = await generateCognitoToken();
+    } 
 
     // Perform the delete operation
-    const response = await axios.delete(`https://api.production.cloudios.flowfact-prod.cloud/entity-service/schemas/${data.schema_name}/entities/${data.entityId}`, {
-      headers: {
-        "Content-Type": "application/json",
-        cognitoToken
-      }
-    });
+    await axios.delete(`https://api.propstack.de/v1/units/${data.unitsId}`, {
+       headers: {
+      "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+    },
+    }); 
+    const resultDb = await UserList.findByIdAndDelete(uniqId);
 
-    // Check if the delete operation with FlowFact was successful
-    if (response.status === 200) {
-      // Delete the document from the database
-      await UserList.deleteOne({ uniqId });
-      return { message: 'success' };
-    } else {
-      console.log("Failed to delete from external API");
-      throw new ApiError(400, "Failed to delete from external service");
-    }
+    return resultDb;
 
-  } catch (err) {
-    // Handle errors, possibly log or rethrow them
+  } catch (err) { 
     throw new ApiError(400, err.message || "An error occurred");
   }
 };
+
+// const getImageUrlById = async (unitId) => {
+//   const response = await axios.get(`https://api.propstack.de/v1/units`, {
+//     headers: {
+//       "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+//     },
+//   });
+//   console.log(response.data)
+//   return response.data;
+// };
 
 const queryUserLists = async (filter, options) => {
   // const users = await User.paginate(filter, options);
@@ -327,8 +273,7 @@ cron.schedule("* * * * *", unpublishExpiredLists);
 const UserListService = {
   createList,
   getMyList,
-  updateList,
-  deleteImage,
+  updateList, 
   deleteUserList,
   queryUserLists,
   getUserList,

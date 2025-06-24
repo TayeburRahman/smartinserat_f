@@ -7,9 +7,8 @@ const bodyParser = require("body-parser");
 
 const router = express.Router();
 
-
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json({ limit: '200mb' }));
+router.use(bodyParser.urlencoded({ extended: true, limit: '200mb' }));
 
 // User routes
 router.post(
@@ -40,19 +39,14 @@ router.patch(
   uploadFile(),
   auth(ENUM_USER_ROLE.USER),
   UserListController.updateList
-);
- 
-router.patch(
-  "/image",
-  auth(ENUM_USER_ROLE.USER),
-  UserListController.deleteImage
-);
+); 
  
 router.get(
   "/my-properties",
   auth(ENUM_USER_ROLE.USER),
   UserListController.getMyList
 );
+
 router.delete(
   "/deleteList/:uniqId",
   auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.ADMIN),

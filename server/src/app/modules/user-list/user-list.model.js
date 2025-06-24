@@ -10,6 +10,7 @@ const UserListSchema = new Schema(
         entityId: { type: String },
         portalIds: { type: Array },
         paymentIntentId: { type: String },
+        unitsId: {type: String}, 
         subscription: {
           type: {
             type: String,
@@ -77,11 +78,7 @@ const UserListSchema = new Schema(
         monthlyHousepayment: { type: String },
         parkingSpacePrice: { type: String },
         landArea: { type: String },
-        stateOfDevelopment: { type: String },
-        description: { type: String },
-        features: { type: String },
-        location: { type: String },
-        additionalDescription: { type: String },
+        stateOfDevelopment: { type: String },   
         listingPrice: { type: Number },
         rentPrice: { type: Number },
         nickName: { type: String },
@@ -129,6 +126,10 @@ const UserListSchema = new Schema(
         energyEfficiencyClass: { type: String },
         leasablearea: { type: String },
         totalarea: { type: String },
+        description: { type: String },
+        additionalDescription: { type: String },
+        location: { type: String }, 
+        features: { type: String },
         paymentIsSepa: {
           type: Boolean,
           default: false,
