@@ -269,6 +269,7 @@ export const MultiStepForm = () => {
     loading,
     setLoading,
   };
+
   const stepColor = {
     color: 'blue',
   };
@@ -281,14 +282,14 @@ export const MultiStepForm = () => {
   }, [formData]);
 
   useEffect(() => {
-    console.log('imgMultiStepForm', imgMultiStepForm);
+    // console.log('imgMultiStepForm', imgMultiStepForm);
     window.localStorage.setItem(
       'imgMultiStepForm',
       JSON.stringify(imgMultiStepForm)
     );
   }, [imgMultiStepForm]);
   useEffect(() => {
-    console.log('planMultiStepForm', planMultiStepForm);
+    // console.log('planMultiStepForm', planMultiStepForm);
     window.localStorage.setItem(
       'planMultiStepForm',
       JSON.stringify(planMultiStepForm)

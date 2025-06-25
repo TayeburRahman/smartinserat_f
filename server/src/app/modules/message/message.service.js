@@ -9,6 +9,7 @@ const createMessage = async (req) => {
     const data = req.body;
       try {
         const message = await Message.create(data)
+        console.log("createMessage", message)
 
         return message
       

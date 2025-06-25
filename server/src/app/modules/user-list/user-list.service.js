@@ -57,7 +57,7 @@ const getLatestUserList = async (req) => {
 };
 
 const getUserList = async (req) => {
-  const { adType, propertyType, location, postalCode, price, search, page = 1, limit = 12 } = req.query;
+  const { adType, buildingType, location, postalCode, price, search, page = 1, limit = 12 } = req.query;
 
   // Build the query object
   let query = {
@@ -65,14 +65,15 @@ const getUserList = async (req) => {
     subscriptionExpire: true
   };
 
+  console.log("req.query",req.query)
   const fixedAdType = adType === "rent" ? "For Rent" : "For Sale";
 
   if (adType) query.listingType = fixedAdType;
-  if (propertyType) query.schema_name = propertyType;
-  if (location) query.location = new RegExp(location, 'i'); // Case-insensitive search
+  if (buildingType) query.buildingType = buildingType;
+  if (location) query.location = new RegExp(location, 'i');  
   if (postalCode) query.zip = postalCode;
-  if (price) query.listingPrice = { $lte: price }; // Search for price <= specified value
-  if (search) query.listingTitle = new RegExp(search, 'i'); // Case-insensitive title search
+  if (price) query.listingPrice = { $lte: price };  
+  if (search) query.listingTitle = new RegExp(search, 'i');  
 
   // Convert page and limit to integers
   const pageNum = parseInt(page, 10) || 1;

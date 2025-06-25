@@ -23,6 +23,8 @@ export const AuthProvider = ({ children }) => {
           const response = await axios.get(`${apiUrl}/user/profile`, {
             headers: { Authorization: `Bearer ${retrievedToken}` },
           });
+          console.log("response", response)
+          
           setUser(response.data.data);
           setAccessToken(retrievedToken); // Update state for consistency
           localStorage.setItem("accessToken", retrievedToken);

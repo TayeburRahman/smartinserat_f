@@ -140,8 +140,7 @@ const AdsContainer = () => {
           limit,
         },
       });
-      console.log(response.data.data.lists);
-      // Assuming the API returns ads in the response
+      console.log(response.data.data.lists); 
       setAds(response.data.data.lists);
       setTotalPages(response.data.data.totalPages);
       setCurrentPage(response.data.data.currentPage);
@@ -151,7 +150,7 @@ const AdsContainer = () => {
       setLoading(false);
     }
   };
-  // Optional: Fetch all ads when component mounts for the first time
+ 
   useEffect(() => {
     fetchAds();
   }, [debouncedSearch, adType, propertyType, location, postalCode, price]); // Include dependencies to trigger API calls
@@ -261,9 +260,9 @@ const AdsContainer = () => {
 
             {loading ? (
               <ThemedSuspense />
-            ) : recentImmobilien.length > 0 ? (
+            ) : ads.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-5">
-                {recentImmobilien.map((ad) => (
+                {ads.map((ad) => (
                   <AdCard
                     key={ad._id}
                     id={ad._id}
@@ -273,12 +272,12 @@ const AdsContainer = () => {
                     postalCode={ad.zip}
                     location={ad.location}
                     price={ad.listingPrice}
-                    img={ad?.img} // Fallback to demo image if no image is provided
+                    img={ad?.imgCollection.length && ad?.imgCollection[0]}  
                   />
                 ))}
               </div>
             ) : (
-              <p>{dictionary["ads"][languageReducer]["noadsfound"]}</p> // Show message when no ads are found
+              <p>{dictionary["ads"][languageReducer]["noadsfound"]}</p> 
             )}
 
             <div className="flex justify-center mt-5">

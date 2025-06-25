@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -57,6 +56,15 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 @media (prefers-color-scheme: light) {
@@ -179,7 +187,6 @@ html {
 .animated-letter:nth-child(11) {
   animation-delay: 0.5s;
 }
- 
 
 @keyframes slideFadeIn {
   to {
@@ -202,4 +209,3 @@ html {
     line-height: 3rem !important;
   }
 }
-

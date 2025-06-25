@@ -63,22 +63,23 @@ export const Data = ({ formData, setForm, navigation,
       <Label className="mt-4">
         <span>{dictionary["createAds"][languageReducer]["data"]["buildingType"]}:</span>
         <Select
-          className="mb-4 mt-1"
-          label="Building Type"
-          name="buildingType"
-          value={buildingType}
-          onChange={setForm}
-          margin="normal"
-          variant="outlined"
-          autoComplete="off"
-          fullwidth='true'
-        >
-          <option value="House">{t("Haus")}</option>
-          <option value="Flat">{t("Wohnung")}</option>
-          <option value="Land">{t("land")}</option>
-          <option value="Commercial">{t("Gewerblich")}</option>
-          <option value="Investment">{t("Investition")}</option>
-        </Select>
+  className="mb-4 mt-1"
+  label="Building Type"
+  name="buildingType"
+  value={buildingType}
+  onChange={setForm}
+  margin="normal"
+  variant="outlined"
+  autoComplete="off"
+  fullWidth
+> 
+  <option value="APARTMENT">{t("Wohnung")}</option>
+  <option value="SPECIAL_PURPOSE">{t("Land")}</option>
+  <option value="TRADE_SITE">{t("Gewerblich")}</option>
+  <option value="INVESTMENT">{t("Investition")}</option>
+  <option value="HOUSE">{t("Haus")}</option>
+</Select>
+
       </Label>
       {listingType === "For Sale" && (
         <Label className="mt-4">

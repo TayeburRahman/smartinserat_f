@@ -35,15 +35,16 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
   const languageReducer = "de";
   return (
     <div className="container mx-auto px-4">
-      {buildingType === "House" && <BuildingTypeHouse {...buildingTypeProps} />}
-      {buildingType === "Flat" && <BuildingTypeFlat {...buildingTypeProps} />}
-      {buildingType === "Land" && <BuildingTypeLand {...buildingTypeProps} />}
-      {buildingType === "Commercial" && (
-        <BuildingTypeCommercial {...buildingTypeProps} />
-      )}
-      {buildingType === "Investment" && (
-        <BuildingTypeInvestment {...buildingTypeProps} />
-      )}
+      {buildingType === "HOUSE" && <BuildingTypeHouse {...buildingTypeProps} />}
+{buildingType === "APARTMENT" && <BuildingTypeFlat {...buildingTypeProps} />}
+{buildingType === "SPECIAL_PURPOSE" && <BuildingTypeLand {...buildingTypeProps} />}
+{buildingType === "TRADE_SITE" && (
+  <BuildingTypeCommercial {...buildingTypeProps} />
+)}
+{buildingType === "INVESTMENT" && (
+  <BuildingTypeInvestment {...buildingTypeProps} />
+)}
+
       {contactType === "business" && <Label className="mt-4">
         <span>{dictionary["createAds"][languageReducer]["details"]["amountOfCommission"]}:</span>
         <Input
@@ -236,7 +237,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           <option value="HO1">{dictionary["createAds"][languageReducer]["details"]["wood"]}</option>
         </Select>
       </Label>
-      {buildingType !== 'Land' &&
+      {buildingType !== 'LAND' &&
       <Label className="mt-4">
         <span>
           {dictionary["createAds"][languageReducer]["details"]["yearOfBuilding"]}:
@@ -256,7 +257,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           fullwidth='true'
         />
       </Label> }
-      {buildingType === 'House' &&
+      {buildingType === 'HOUSE' &&
           <Label className="mt-4">
             <span>
               {dictionary["createAds"][languageReducer]["details"]["buildingPhase"]}:
@@ -350,83 +351,130 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
               {dictionary["createAds"][languageReducer]["details"]["back"]}
             </Button>
             <Button
-              variant="contained"
-              fullwidth='true'
-              color="primary"
-              style={{ marginTop: "1rem" }}
-              onClick={() => {
-                if(energy && !/\d{2}.\d{2}.\d{4}/.test(formData.energyPassCreationDate)){
-                  setFRequired(true);
-                  return;
-                }
-                if((formData.yearOfBuilding === '' || !formData.yearOfBuilding.length === 4 || +formData.yearOfBuilding < 1500) && buildingType !== 'Land'&& buildingType !== 'Commercial'){
-                  setFRequired(true);
-                  return;
-                }
-                if( formData.numberOfRooms === '' && buildingType !== 'Land' && buildingType !== 'Commercial' && buildingType !== 'Investment' ){
-                  setFRequired(true);
-                  return;
-                }
-                if( formData.specificBuildingType === '' && buildingType !== 'Commercial' && buildingType !== 'Investment'){
-                  setFRequired(true);
-                  return;
-                }
-                if( formData.buildingphase === '' && buildingType === 'House' ){
-                  setFRequired(true);
-                  return;
-                }
-                if( formData.estatetype === ''  && (buildingType === 'Commercial' || buildingType === 'Investment' )){
-                  setFRequired(true);
-                  return;
-                }
-                if( formData.totalarea === ''   && buildingType === 'Commercial' ){
-                  setFRequired(true);
-                  return;
-                }
-                if( formData.leasablearea === '' &&  buildingType === 'Investment' ){
-                  setFRequired(true);
-                  return;
-                }
-                if((formData.buildingType === 'House' && !formData.livingArea) ||  (formData.buildingType === 'House' && formData.livingArea === '')){
-                  setFRequired(true);
-                  return;
-                }
-                if((formData.buildingType === 'House' && !formData.plotArea) ||  (formData.buildingType === 'House' && formData.plotArea === '')){
-                  setFRequired(true);
-                  return;
-                }
-                if(formData.buildingType === 'House' && formData.buildingphase.length === '' ){
-                  setFRequired(true);
-                  return;
-                }
-                if(buildingType === 'Flat'
-                && formData.livingArea.length === 0 ){
-                  setFRequired(true);
-                  return;
-                }
-                if((formData.buildingType === 'Land' && !formData.plotArea) ||  (formData.buildingType === 'Land' && formData.plotArea === '')){
-                  setFRequired(true);
-                  return;
-                }
-                if(energy && formData.energyPass.length === 0){
-                  setFRequired(true);
-                  return;
-                }
-                if(energy && formData.typeOfHeating.length === 0 ){
-                  setFRequired(true);
-                  return;
-                }
-                if(energy && formData.typeOfEnergyPass.length === 0 ){
-                  setFRequired(true);
-                  return;
-                }
-                setFRequired(false);
-                my_swiper.slideNext();
-                return navigation.next()
-              }}
-            >
-              {dictionary["createAds"][languageReducer]["details"]["next"]}
-            </Button>
+  variant="contained"
+  fullWidth
+  color="primary"
+  style={{ marginTop: "1rem" }}
+  onClick={() => {
+    // Regex test for date dd.mm.yyyy (with escaped dot)
+    if (energy && !/\d{2}\.\d{2}\.\d{4}/.test(formData.energyPassCreationDate)) {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      (formData.yearOfBuilding === "" ||
+        formData.yearOfBuilding.length !== 4 ||
+        +formData.yearOfBuilding < 1500) &&
+      buildingType !== "SPECIAL_PURPOSE" &&
+      buildingType !== "TRADE_SITE"
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      formData.numberOfRooms === "" &&
+      buildingType !== "SPECIAL_PURPOSE" &&
+      buildingType !== "TRADE_SITE" &&
+      buildingType !== "INVESTMENT"
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      formData.specificBuildingType === "" &&
+      buildingType !== "TRADE_SITE" &&
+      buildingType !== "INVESTMENT"
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (formData.buildingphase === "" && buildingType === "HOUSE") {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      formData.estatetype === "" &&
+      (buildingType === "TRADE_SITE" || buildingType === "INVESTMENT")
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (formData.totalarea === "" && buildingType === "TRADE_SITE") {
+      setFRequired(true);
+      return;
+    }
+
+    if (formData.leasablearea === "" && buildingType === "INVESTMENT") {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      buildingType === "HOUSE" &&
+      (!formData.livingArea || formData.livingArea === "")
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      buildingType === "HOUSE" &&
+      (!formData.plotArea || formData.plotArea === "")
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (buildingType === "HOUSE" && (!formData.buildingphase || formData.buildingphase === "")) {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      buildingType === "FLAT" &&
+      (!formData.livingArea || formData.livingArea.length === 0)
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (
+      buildingType === "SPECIAL_PURPOSE" &&
+      (!formData.plotArea || formData.plotArea === "")
+    ) {
+      setFRequired(true);
+      return;
+    }
+
+    if (energy && (!formData.energyPass || formData.energyPass.length === 0)) {
+      setFRequired(true);
+      return;
+    }
+
+    if (energy && (!formData.typeOfHeating || formData.typeOfHeating.length === 0)) {
+      setFRequired(true);
+      return;
+    }
+
+    if (energy && (!formData.typeOfEnergyPass || formData.typeOfEnergyPass.length === 0)) {
+      setFRequired(true);
+      return;
+    }
+
+    setFRequired(false);
+    my_swiper.slideNext();
+    return navigation.next();
+  }}
+>
+  {dictionary["createAds"][languageReducer]["details"]["next"]}
+</Button>
+
           </>
         </>
     </div>

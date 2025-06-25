@@ -153,24 +153,51 @@ export const Review = (props) => {
     }
   }
 
-  const handleSubmit = async () => {
-    openSnackbar(t('Creating UserList'));
-    setIsSnackbarOpen(true);
+  const blobUrlToBase64 = async (blobUrl) => {
+    const res = await fetch(blobUrl);
+    const blob = await res.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        // Remove the "data:image/...;base64," prefix 
+        resolve(base64String);
+      };
+      reader.onerror = reject;
+    });
+  };
 
-    const isBelowMax = (f) => String(f).length < 3800;
-    const isBelowMaxF = (f) => f.size < 200000000;
+  const handleSubmit = async () => {
+    openSnackbar(t("Creating UserList"));
+    setIsSnackbarOpen(true);
+  
+    const imgMultiStepForm = JSON.parse(localStorage.getItem("imgMultiStepForm")) || {};
+    const planMultiStepForm = JSON.parse(localStorage.getItem("planMultiStepForm")) || {};
+  
+  
+    let base64Images = [];
+    let base64Plans = [];
+  
+    if (imgMultiStepForm?.showType?.length) {
+      base64Images = await Promise.all(
+        imgMultiStepForm.showType.map((url) => blobUrlToBase64(url))
+      );
+    }
+  
+    if (planMultiStepForm?.showType?.length) {
+      base64Plans = await Promise.all(
+        planMultiStepForm.showType.map((url) => blobUrlToBase64(url))
+      );
+    }
+ 
+    const isBelowMax = (f) => String(f)?.length < 3800;
     let fields = Object.values(formData);
-    if (
-      imgMultiStepForm.selectedType.length > 50
-      // || !imgMultiStepForm.selectedType.every(isBelowMaxF)
-    ) {
+    if (imgMultiStepForm.selectedType?.length > 50) {
       setMaxFiles(true);
       return;
     }
-    if (
-      planMultiStepForm.selectedType.length > 10
-      // || !planMultiStepForm.selectedType.every(isBelowMaxF)
-    ) {
+    if (planMultiStepForm.selectedType?.length > 10) {
       setMaxFiles(true);
       return;
     }
@@ -178,54 +205,54 @@ export const Review = (props) => {
       setMaxCharacters(true);
       return;
     }
-    // setEnabled(false);
-    setLoading(true);  
-    const data = { ...formData, email,}; 
-    if (formData.energy === 'true') {
-      data.energy = true;
-    } else {
-      data.energy = false;
-    }  
-
+  
+    setLoading(true);
+ 
+    const imgCollection = [...base64Images, ...base64Plans]; 
+    if(!imgCollection?.length){
+      openSnackbar(t("Please add the property images!"), "danger", 2000);
+      return;
+    }
+    const data = {
+      ...formData,
+      email,
+      imgCollection,  
+      energy: formData.energy === "true",
+    };
+    console.log("sendData====", data)
     const sendData = new FormData();
-    await buildFormData(
-      sendData,
-      Object.assign(data, { phone })
-    );
+    await buildFormData(sendData, Object.assign(data, { phone }));
 
-    axios
-      .post(`${apiUrl}/userList/create`, sendData)
-      .then((response) => {
-        console.log('response', response);
-        setListData(response.data.data);
-        // openSnackbar(t('List Is Created'), 'success', 3000);
-        setLoading(false);
-        // setEnabled(true); 
-        setIsSnackbarOpen(false)
-        my_swiper.slideNext();
-        go('submit');
-        return;
-      })
-      .catch((error) => {
-        console.log(error);
-        openSnackbar(
-          t(error.message || 'Something Went Very Wrong!'),
-          'danger',
-          2000
-        );
-      })
-      .finally(() => {
-        console.log("I was in finally block in Review.js handleSubmit")
-        localStorage.removeItem('formData');
-        localStorage.removeItem('entityId'); 
-
-        setTimeout(() => {
-          localStorage.removeItem('imgMultiStepForm');
-          localStorage.removeItem('planMultiStepForm');
-        }, 100); 
-        console.log("After clearing local in Review.js handleSubmit");
-      });
+ 
+  
+    try { 
+      const response = await axios.post(`${apiUrl}/userList/create`, sendData);
+      console.log("response.data.data", response.data.data)
+      setListData(response.data.data);
+      setLoading(false);
+      setIsSnackbarOpen(false); 
+      if(response.data){
+        localStorage.removeItem("formData");
+            localStorage.removeItem("entityId");
+            setTimeout(() => {
+              localStorage.removeItem("imgMultiStepForm");
+              localStorage.removeItem("planMultiStepForm");
+            }, 100);
+            }
+      my_swiper.slideNext();
+      go("submit");
+      return;
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      openSnackbar(
+        t(error.status === 500 ?"Please change the image to large": error.message|| "Something Went Very Wrong!"),
+        "danger",
+        2000
+      );
+    }  
   };
+ 
 
   return (
     <div className='container mt-4 mx-auto px-4'>
@@ -271,7 +298,7 @@ export const Review = (props) => {
           {accordion && (
             <div className='my-3'>
               <ul>
-                {buildingType === 'House' && (
+                {buildingType === 'HOUSE' && (
                   <div>
                     <li className=''>
                       {t('Haustyp')}:{' '}
@@ -480,7 +507,7 @@ export const Review = (props) => {
                     )}
                   </div>
                 )}
-                {buildingType === 'Flat' && (
+                {buildingType === 'FLAT' && (
                   <div>
                     <li className=''>
                       {t('Specific Flat Type')}:{' '}
@@ -626,7 +653,7 @@ export const Review = (props) => {
                     )}
                   </div>
                 )}
-                {buildingType === 'Land' && (
+                {buildingType === 'LAND' && (
                   <div>
                     <li>
                       {t('Specific Land Type')}:{' '}
@@ -728,7 +755,7 @@ export const Review = (props) => {
                     )}
                   </div>
                 )}
-                {buildingType === 'Commercial' && (
+                {buildingType === 'SPECIAL_PURPOSE' && (
                   <div>
                     <li>
                       {t('Estate Type')}:{' '}
@@ -930,7 +957,256 @@ export const Review = (props) => {
                     )}
                   </div>
                 )}
-                {buildingType === 'Investment' && (
+                {buildingType === 'INVESTMENT' && (
+                  <div>
+                    <li>
+                      {t('Estate Type')}:{' '}
+                      {t(
+                        (() => {
+                          let info;
+                          switch (formData.estatetype) {
+                            case '04':
+                              info = 'Anlage-/Investmentobjekte';
+                              break;
+                            case '04SIB':
+                              info = 'Betreutes Wohnen (Invest.)';
+                              break;
+                            case '04GWB':
+                              info = 'Bürogebäude (Invest.)';
+                              break;
+                            case '04W01':
+                              info = 'Eigentumswohnung (Invest.)';
+                              break;
+                            case '04W02':
+                              info = 'Einfamilienhaus (Invest.)';
+                              break;
+                            case '04HIE':
+                              info = 'Einkaufszentrum (Invest.)';
+                              break;
+                            case '04HIF':
+                              info = 'Fachmarktzentrum (Invest.)';
+                              break;
+                            case '04ZF':
+                              info = 'Freizeitimmobilie (Invest.)';
+                              break;
+                            case '04GA':
+                              info = 'Gaststätte / Gasthaus (Invest.)';
+                              break;
+                            case '04GWG':
+                              info = 'Geschäftshaus, Handel, Büro (Invest.)';
+                              break;
+                            case '04GWA':
+                              info = 'Gewerbeanwesen (Invest.)';
+                              break;
+                            case '04GWE':
+                              info = 'Gewerbeeinheit (Invest.)';
+                              break;
+                            case '04GWH':
+                              info = 'Halle/Lager (Invest.)';
+                              break;
+                            case '04HI':
+                              info = 'Handelsimmobilien (Invest.)';
+                              break;
+                            case '04GAH':
+                              info = 'Hotel (Invest.)';
+                              break;
+                            case '04GW':
+                              info =
+                                'Industrie- und Gewerbeimmobilien (Invest.)';
+                              break;
+                            case '04GWI':
+                              info = 'Industrieanwesen (Invest.)';
+                              break;
+                            case '04HIK':
+                              info = 'Kaufhaus (Invest.)';
+                              break;
+                            case '04SIK':
+                              info = 'Klinik (Invest.)';
+                              break;
+                            case '04HIL':
+                              info = 'Laden/Verkaufsfläche (Invest.)';
+                              break;
+                            case '04W03':
+                              info = 'Mehrfamilienhaus (Invest.)';
+                              break;
+                            case '04ZP':
+                              info = 'Parkhaus (Invest.)';
+                              break;
+                            case '04SIP':
+                              info = 'Pflegeheim (Invest.)';
+                              break;
+                            case '04GWS':
+                              info = 'Servicecenter (Invest.)';
+                              break;
+                            case '04Z':
+                              info = 'Sonstiges (Invest.)';
+                              break;
+                            case '04SI':
+                              info = 'Sozialimmobilien (Invest.)';
+                              break;
+                            case '04HIS':
+                              info = 'Supermarkt (Invest.)';
+                              break;
+                            case '04W05':
+                              info = 'Wohn-/Geschäftshaus (Invest.)';
+                              break;
+                            case '04W04':
+                              info = 'Wohnanlage (Invest.)';
+                              break;
+                            case '04W':
+                              info = 'Wohnimmobilien (Invest.)';
+                              break;
+                          }
+                          return info;
+                        })()
+                      )}
+                    </li>
+                    <li>
+                      {t('Year Of Building')}: {t(yearOfBuilding)}
+                    </li>
+                    <li>
+                      {t('Special Features')}:{' '}
+                      {newBuilding && t('New Building')}
+                      {monumentProtection && t(', Monument Protection')}
+                    </li>
+                    <li>
+                      {t('Leasable Area')}: {t(leasablearea)}
+                    </li>
+                    <li>
+                      {t('Number of Floors')}: {t(numberOfFloors)}
+                    </li>
+                    <li>
+                      {t('Number of Rooms')}: {t(numberOfRooms)}
+                    </li>
+                    <li>
+                      {t('Number of Bedrooms')}: {t(numberOfBedrooms)}
+                    </li>
+                    <li>
+                      {t('Number of Bathrooms')}: {t(numberOfBathrooms)}
+                    </li>
+                    <li>
+                      {t('Usable Area')}: {t(usableArea)}
+                    </li>
+                    <li>
+                      {t('Plot Area')}: {t(plotArea)}
+                    </li>
+                    <li>
+                      {t('Number of Garages')}: {t(numberOfGarages)}
+                    </li>
+                    <li>
+                      {t('Type Of Parking Space')}:{' '}
+                      {t(
+                        (() => {
+                          let info;
+                          switch (typeOfParkingSpace) {
+                            case '1':
+                              info = 'Not specified';
+                              break;
+                            case '2':
+                              info = 'Garage';
+                              break;
+                            case '3':
+                              info = 'outdoor parking space';
+                              break;
+                            case '4':
+                              info = 'Carport';
+                              break;
+                            case '6':
+                              info = 'parking garage';
+                              break;
+                            case '7':
+                              info = 'underground car park';
+                              break;
+                          }
+                          return info;
+                        })()
+                      )}
+                    </li>
+                    <li>
+                      {t('Number of Parking Spaces')}:{' '}
+                      {t(numberOfParkingSpaces)}
+                    </li>
+                    {energy === 'true' && (
+                      <>
+                        <li>
+                          {t('Energy')}: {t('Energy')}
+                        </li>
+                        <li>
+                          {t('Energy Pass')}: {t(energyPass)}
+                        </li>
+                        <li>
+                          {t('Energy Efficiency Class')}:{' '}
+                          {t(energyEfficiencyClass)}
+                        </li>
+                        <li>
+                          {t('energy Pass Creation Date')}:{' '}
+                          {t(energyPassCreationDate)}
+                        </li>
+                        <li>
+                          {t('Type Of Heating')}:{' '}
+                          {t(
+                            (() => {
+                              let info;
+                              switch (typeOfHeating) {
+                                case '':
+                                  info = '--please choose--';
+                                  break;
+                                case '02':
+                                  info = 'Furnace heating';
+                                  break;
+                                case '03':
+                                  info = 'Central heating';
+                                  break;
+                                case '01':
+                                  info = 'Floor heating';
+                                  break;
+                                case 'FUS':
+                                  info = 'Underfloor heating';
+                                  break;
+                              }
+                              return info;
+                            })()
+                          )}
+                        </li>
+                        <li>
+                          {t('Type Of Energypass')}:{' '}
+                          {t(
+                            (() => {
+                              let info;
+                              switch (typeOfEnergyPass) {
+                                case '1':
+                                  info = '--please choose--';
+                                  break;
+                                case '3':
+                                  info = 'consumption pass';
+                                  break;
+                                case '2':
+                                  info = 'require pass';
+                                  break;
+                              }
+                              return info;
+                            })()
+                          )}
+                        </li>
+                        {listingType === 'For Rent' && (
+                          <>
+                            <li>
+                              {t('Additional Cost')}: {t(additionalCost)}
+                            </li>
+                            <li>
+                              {t('Heating Cost in Details')}:{' '}
+                              {t(heatingCostinDetails)}
+                            </li>
+                            <li>
+                              {t('Secuirity Cost')}: {t(secuirityCost)}
+                            </li>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
+                  {buildingType === 'TRADE_SITE' && (
                   <div>
                     <li>
                       {t('Estate Type')}:{' '}

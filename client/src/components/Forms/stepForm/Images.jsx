@@ -132,13 +132,12 @@ export const Images = (props) => {
     // ==Need Changes=======================
     // ==============================================
 
-    const data = { ...formData, email};
+    const data = { ...formData, email}; 
     if (formData.energy === 'true') {
       data.energy = true;
     } else {
       data.energy = false;
-    } 
-    console.log("data=====34", data)
+    }  
     setTimeout(() => {
       my_swiper.slideNext();
 

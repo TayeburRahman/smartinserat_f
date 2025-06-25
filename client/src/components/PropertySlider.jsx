@@ -1,88 +1,40 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Link } from "react-router-dom";
 import AdCard from "./Ads/AdCard";
+import { config } from "../assets/config/config";
 
 const PropertySlider = ({ title, topMargin = false }) => {
   const [recentImmobilien, setRecentImmobilien] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  // Your API fetch function with no filters, page 1, limit 12 by default
+  const fetchAds = async (page = 1, limit = 12) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${config.api.url}/userList`, {
+        params: {
+          page,
+          limit,
+          // add filters here if needed, e.g. adType, propertyType, etc.
+        },
+      });
+      setRecentImmobilien(response.data.data.lists);
+    } catch (error) {
+      console.error("Error fetching ads:", error);
+      setRecentImmobilien([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch on mount
   useEffect(() => {
-    const loadImages = async () => {
-      const ads1 = (await import("../assets/images/demo/ads1.png")).default;
-      const ads2 = (await import("../assets/images/demo/ads2.png")).default;
-      const ads3 = (await import("../assets/images/demo/ads3.png")).default;
-      const ads4 = (await import("../assets/images/demo/ads4.png")).default;
-      const ads5 = (await import("../assets/images/demo/ads5.png")).default;
-      const ads6 = (await import("../assets/images/demo/ads5.png")).default;
-
-      setRecentImmobilien([
-        {
-          entityId: "12345",
-          _id: "ad1",
-          city: "Berlin",
-          zip: "10115",
-          listingPrice: 250000,
-          listingTitle: "Modern Apartment in Berlin",
-          uniqId: "DE-BER-001",
-          img: ads1,
-        },
-        {
-          entityId: "67890",
-          _id: "ad2",
-          city: "Munich",
-          zip: "80331",
-          listingPrice: 350000,
-          listingTitle: "Luxury Condo in Munich",
-          uniqId: "DE-MUN-002",
-          img: ads2,
-        },
-        {
-          entityId: "54321",
-          _id: "ad3",
-          city: "Hamburg",
-          zip: "20095",
-          listingPrice: 180000,
-          listingTitle: "Cozy Studio in Hamburg",
-          uniqId: "DE-HAM-003",
-          img: ads3,
-        },
-        {
-          entityId: "98765",
-          _id: "ad4",
-          city: "Frankfurt",
-          zip: "60311",
-          listingPrice: 275000,
-          listingTitle: "Spacious Loft in Frankfurt",
-          uniqId: "DE-FRA-004",
-          img: ads4,
-        },
-        {
-          entityId: "54321",
-          _id: "ad5",
-          city: "Hamburg",
-          zip: "20095",
-          listingPrice: 180000,
-          listingTitle: "Cozy Studio in Hamburg",
-          uniqId: "DE-HAM-005",
-          img: ads5,
-        },
-        {
-          entityId: "98765",
-          _id: "ad6",
-          city: "Frankfurt",
-          zip: "60311",
-          listingPrice: 275000,
-          listingTitle: "Spacious Loft in Frankfurt",
-          uniqId: "DE-FRA-006",
-          img: ads6,
-        },
-      ]);
-    };
-
-    loadImages();
+    fetchAds();
   }, []);
 
   return (
@@ -91,8 +43,9 @@ const PropertySlider = ({ title, topMargin = false }) => {
       id="Leistungen"
     >
       <div
-        className={`w-full max-w-7xl px-5 xl:px-0 ${topMargin ? "pb-4 pt-8 sm:pt-20" : "py-8"
-          }`}
+        className={`w-full max-w-7xl px-5 xl:px-0 ${
+          topMargin ? "pb-4 pt-8 sm:pt-20" : "py-8"
+        }`}
       >
         <div className="w-full flex flex-row justify-between text-center items-center pb-6">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-700 text-center">
@@ -100,8 +53,10 @@ const PropertySlider = ({ title, topMargin = false }) => {
           </h1>
         </div>
 
-        {recentImmobilien.length === 0 ? (
+        {loading ? (
           <p>Loading ads...</p>
+        ) : recentImmobilien.length === 0 ? (
+          <p>Keine Immobilienanzeigen gefunden.</p>
         ) : (
           <Swiper
             className="w-full"
@@ -121,8 +76,8 @@ const PropertySlider = ({ title, topMargin = false }) => {
             }}
             modules={[Autoplay, Navigation]}
           >
-            {recentImmobilien.map((ad, i) => (
-              <SwiperSlide key={i}>
+            {recentImmobilien.map((ad) => (
+              <SwiperSlide key={ad._id}>
                 <AdCard
                   entityId={ad.entityId}
                   id={ad._id}
@@ -131,7 +86,7 @@ const PropertySlider = ({ title, topMargin = false }) => {
                   price={ad.listingPrice}
                   title={ad.listingTitle}
                   objectCode={ad.uniqId}
-                  img={ad.img}
+                  img={ad?.imgCollection.length && ad?.imgCollection[0]}  
                 />
               </SwiperSlide>
             ))}
@@ -142,11 +97,6 @@ const PropertySlider = ({ title, topMargin = false }) => {
           <Link
             to="/ads"
             className="bg-royalPurple text-white text-center text-base sm:text-lg py-3 px-10 rounded-lg w-full sm:w-auto hover:text-white font-bold font-extrabold uppercase"
-            style={
-              {
-                // fontFamily: 'Filicudi Solid',
-              }
-            }
           >
             ALLE IMMOBILIEN ANZEIGEN
           </Link>

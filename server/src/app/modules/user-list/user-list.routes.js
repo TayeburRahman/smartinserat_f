@@ -18,8 +18,7 @@ router.post(
   UserListController.createList
 );
 router.get(
-  "/",
-  // uploadFile(),
+  "/", 
   // auth(ENUM_USER_ROLE.USER),
   UserListController.getUserList
 );
