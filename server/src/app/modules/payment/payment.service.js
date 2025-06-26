@@ -39,7 +39,7 @@ const createCheckoutSession = async (req) => {
       cancel_url: `${YOUR_DOMAIN}app/userLists?canceled=true`,
       customer_email: `${user.email}`,
       client_reference_id: listingId,
-      metadata: { packageId: package._id.toString(), listingId },
+      metadata: { packageId: package._id.toString(), listingId, userId },
       line_items: [
         {
           price_data: {
@@ -62,18 +62,8 @@ const createCheckoutSession = async (req) => {
   }
 };
 
-
 const checkAndUpdateStatusByWebhook = async (req) => {
-  // const sig = req.headers['stripe-signature'];
-  // let event;
-  // try {
-  //   event = stripe.webhooks.constructEvent(req.body, sig, config.stripe.endpoint_secret);
-  //   // event = stripe.webhooks.constructEvent(req.body, sig, 'whsec_9d3f294e767ee851892730c440f5bc9936aee58afb59ef536aaf6de952698b7e');
-  // } catch (err) {
-  //   console.error(`Webhook signature verification failed: ${err.message}`);
-  //   throw new ApiError(400, `Webhook Error: ${err.message}`);
-  // }
-  // console.log("createCheckoutSession",event, sig)
+ 
   // ===========================================
   const sessionId = req.query.session_id;  
 
@@ -151,6 +141,16 @@ const checkAndUpdateStatusByWebhook = async (req) => {
           throw new ApiError(httpStatus.BAD_GATEWAY, 'Failed to update unit status in Propstack');
         }
 
+        await Payment.create({
+          paymentMethod: 'card',
+          user: session.metadata.userId,  
+          listingId: listingId,
+          amount: session.amount_total / 100,  
+          transactionId: session.payment_intent,
+          status: 'completed',
+          note: `Payment successful for package: ${package.subscriptionType}`,
+        });
+
         console.log(`Unit status updated in Propstack:`, response.data);
       }
  
@@ -198,7 +198,6 @@ async function flowFactPlatform(id, data, cognitoToken) {
   }
 }
 
-
 async function publishTo4Platforms(data, immoscot, ebay, immowelt, wordpress) {
   try {
     const cognitoToken = await generateCognitoToken();
@@ -220,8 +219,6 @@ async function publishTo4Platforms(data, immoscot, ebay, immowelt, wordpress) {
     return true;
   }
 }
-
-
 
 //pause subs
 const pauseSubscription = async (req) => {

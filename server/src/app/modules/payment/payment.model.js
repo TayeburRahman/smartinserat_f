@@ -13,9 +13,9 @@ const paymentSchema = new Schema(
       ref: "User",
       required: true,
     },
-    job: {
+    listingId: {
       type: ObjectId,
-      ref: "Job",
+      ref: "UserList",
       required: true,
     },
     amount: {
