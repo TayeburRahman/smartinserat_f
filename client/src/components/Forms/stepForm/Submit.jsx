@@ -1,11 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-
-import SectionTitle from '../../Typography/SectionTitle';
-import BillingForm from '../../Forms/BillingForm';
+ 
 import { PricingCardSale } from '../../Cards/PricingCardCheckout';
 import { SnackbarContext } from '../../../context/SnackbarContext';
-import { StripeContext } from '../../../context/StripeContext';
-import { stripeService } from '../../../services';
+import { StripeContext } from '../../../context/StripeContext'; 
 import { HelperText } from '@windmill/react-ui';
 import { useTranslation } from 'react-i18next';
 import { useStripe } from '@stripe/react-stripe-js';

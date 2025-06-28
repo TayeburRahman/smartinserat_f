@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import { DesktopNavbar } from "../components/HeaderLanding";
-import { MobileNavbar } from "../components/HeaderLanding";
-import { FooterLanding } from "../components/FooterLanding";
+import { MobileNavbar } from "../components/HeaderLanding"; 
 import { Helmet } from "react-helmet";
 const axios = require('axios');
 function SectionFeaturesGrid({ children }) {
@@ -32,7 +31,7 @@ function Unsubscribe() {
       <DesktopNavbar />
       <MobileNavbar />
       <SectionFeaturesGrid />
-      <FooterLanding />
+      {/* <Footer/> */}
     </>
   );
 }

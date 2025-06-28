@@ -15,8 +15,7 @@ import { config } from "../../assets/config/config";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { dictionary } from "../../resources/multiLanguages";
-import { AuthContext } from "../../context/AuthContext";
-// import { PricingCardEnergy } from "../components/Cards/PricingCardEnergy";
+import { AuthContext } from "../../context/AuthContext"; 
 
 function SetTitleTag() {
   return (
