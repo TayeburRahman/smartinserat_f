@@ -1,102 +1,158 @@
-import React from 'react'
-import { Line, Bar } from 'react-chartjs-2'
+import React, { useState, useEffect } from 'react'
+import { Bar } from 'react-chartjs-2'
+import axios from 'axios'
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
   BarElement,
   Title,
   Tooltip,
   Legend,
-  Filler,
 } from 'chart.js'
+import { config } from '../../assets/config/config'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
   BarElement,
   Title,
   Tooltip,
-  Legend,
-  Filler
+  Legend
 )
 
-const subscriptionGrowthData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug'],
-  datasets: [
-    {
-      label: 'Subscriptions',
-      data: [20, 90, 50, 100, 60, 90, 70, 55],
-      fill: true,
-      backgroundColor: 'rgba(59, 130, 246, 0.3)', // Tailwind blue-500 with opacity
-      borderColor: 'rgba(59, 130, 246, 1)',
-      tension: 0.4,
-    },
-  ],
-}
-
-const subscriptionOptions = {
+const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: { legend: { display: false } },
   scales: {
     x: { grid: { display: false } },
-    y: { beginAtZero: true, grid: { drawBorder: false } },
+    y: { beginAtZero: true },
   },
 }
 
-const userGrowthData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  datasets: [
-    {
-      label: 'Active Users',
-      data: [60, 55, 50, 52, 54, 53, 70, 65, 60, 62, 61, 63],
-      backgroundColor: 'rgba(59, 130, 246, 0.5)',
-    },
-    {
-      label: 'New Users',
-      data: [40, 30, 25, 20, 28, 25, 35, 32, 30, 28, 29, 30],
-      backgroundColor: 'rgba(59, 130, 246, 0.2)',
-    },
-  ],
-}
+const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i)
+const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-const userGrowthOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: { legend: { display: false } },
-  scales: {
-    x: { stacked: true, grid: { display: false } },
-    y: { stacked: true, beginAtZero: true },
-  },
+function mapApiDataToChart(apiData) {
+  const counts = new Array(12).fill(0)
+  const monthToIndex = monthLabels.reduce((acc, month, idx) => {
+    acc[month] = idx
+    return acc
+  }, {})
+
+  apiData.forEach(({ month, count }) => {
+    const idx = monthToIndex[month]
+    if (idx !== undefined) counts[idx] = count ?? 0
+  })
+
+  return {
+    labels: monthLabels,
+    datasets: [
+      {
+        label: 'Count',
+        data: counts,
+        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+      },
+    ],
+  }
 }
 
 export default function GrowthCharts() {
+  const [paymentYear, setPaymentYear] = useState(new Date().getFullYear())
+  const [userYear, setUserYear] = useState(new Date().getFullYear())
+  const [userGrowthData, setUserGrowthData] = useState(null)
+  const [paymentGrowthData, setPaymentGrowthData] = useState(null)
+
+  useEffect(() => {
+    async function fetchUserGrow() {
+      try {
+        const res = await axios.get(`${config.api.url}/dashboard/get_user_growth`, {
+          params: { year: userYear },
+        })
+        const data = res.data?.data?.data || []
+        setUserGrowthData(mapApiDataToChart(data))
+      } catch (error) {
+        console.error('Failed to fetch user growth:', error)
+      }
+    }
+
+    fetchUserGrow()
+  }, [userYear])
+
+  useEffect(() => {
+    async function fetchPaymentGrow() {
+      try {
+        const res = await axios.get(`${config.api.url}/dashboard/get_payment_growth`, {
+          params: { year: paymentYear },
+        })
+        const data = res.data?.data?.data || []
+        setPaymentGrowthData(mapApiDataToChart(data))
+      } catch (error) {
+        console.error('Failed to fetch payment growth:', error)
+      }
+    }
+
+    fetchPaymentGrow()
+  }, [paymentYear])
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-    {/* Subscription Growth */}
-    <div className="w-full">
-      <div className="bg-white shadow-md rounded-lg p-4 h-full min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
-        <h3 className="text-lg font-semibold mb-4  text-gray-700">Subscription Growth</h3>
-        <div className="h_custom_300">
-          <Line data={subscriptionGrowthData} options={subscriptionOptions} />
+      {/* Payment Growth */}
+      <div className="w-full">
+        <div className="bg-white shadow-md rounded-lg p-4 h-full min-h-[250px]">
+          <h3 className="text-lg font-semibold mb-4 text-gray-700 flex items-center justify-between">
+            Payment Growth
+            <select
+              id="year-payment"
+              value={paymentYear}
+              onChange={(e) => setPaymentYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1"
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </h3>
+          <div className="h_custom_300" style={{ minHeight: 250 }}>
+            {paymentGrowthData ? (
+              <Bar data={paymentGrowthData} options={chartOptions} />
+            ) : (
+              <p>Loading payment growth...</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* User Growth */}
+      <div className="w-full">
+        <div className="bg-white shadow-md rounded-lg p-4 h-full min-h-[250px]">
+          <h3 className="text-lg font-semibold mb-4 text-gray-700 flex items-center justify-between">
+            User Growth
+            <select
+              id="year-user"
+              value={userYear}
+              onChange={(e) => setUserYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1"
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </h3>
+          <div className="h_custom_300" style={{ minHeight: 250 }}>
+            {userGrowthData ? (
+              <Bar data={userGrowthData} options={chartOptions} />
+            ) : (
+              <p>Loading user growth...</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
-  
-    {/* User Growth */}
-    <div className="w-full">
-      <div className="bg-white shadow-md rounded-lg p-4 h-full min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
-        <h3 className="text-lg font-semibold mb-4  text-gray-700">User Growth</h3>
-        <div className="h_custom_300">
-          <Bar data={userGrowthData} options={userGrowthOptions} />
-        </div>
-      </div>
-    </div>
-  </div>  
   )
 }

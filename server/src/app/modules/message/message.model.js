@@ -21,6 +21,10 @@ const MessageSchema = new Schema(
         uniqId: {
             type: String,
         },
+        isSeen: {
+            type: Boolean,
+            default: false
+        },
     },
     {
         timestamps: true,

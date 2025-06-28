@@ -64,8 +64,7 @@ const getUserList = async (req) => {
     subscriptionPause: false,
     subscriptionExpire: true
   };
-
-  console.log("req.query",req.query)
+ 
   const fixedAdType = adType === "rent" ? "For Rent" : "For Sale";
 
   if (adType) query.listingType = fixedAdType;

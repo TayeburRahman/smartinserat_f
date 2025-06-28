@@ -33,7 +33,13 @@ function Users() {
   const [searchQuery, setSearchQuery] = useState("");
   const [userLists, setUserLists] = useState([]);
   const [noData, setNoData] = useState(false);
+  const [isUpdateOpen, setUpdateOpen] = useState(false)
+const [selectedUser, setSelectedUser] = useState(null)
 
+const handleClose = () => {
+  setUpdateOpen(false)
+  setSelectedUser(null)
+}
   const apiUrl = config.api.url;
 
   const refreshUsers = useCallback(() => {
@@ -109,44 +115,33 @@ function Users() {
  
 
   const onModalClose = (type) => {
+    const modalSetters = {
+      createUser: setShowCreateModal,
+      updateUser: setShowUpdateModal,
+      updatePassword: setShowUpdatePasswordModal,
+      deleteUser: setShowDeleteModal,
+    };
     setActiveUser(null);
-    switch (type) {
-      case "createUser": 
-        setShowCreateModal(false);
-        break;
-      case "updateUser":  
-        setShowUpdateModal(false);
-        break;
-      case "updatePassword":
-        setShowUpdatePasswordModal(false);
-        break;
-      case "deleteUser":
-        setShowDeleteModal(false);
-        break;
-      default:
-        break;
-    }
-  };
-  console.log("==jshowUpdateModal", showUpdateModal)
-  const onModalAction = (type) => {
-    setActiveUser(null);
-    switch (type) {
-      case "createUser":
-      case "updateUser":
-      case "deleteUser":
-        setShowCreateModal(false);
-        setShowUpdateModal(false);
-        setShowDeleteModal(false);
-        refreshUsers();
-        break;
-      case "updatePassword":
-        setShowUpdatePasswordModal(false);
-        break;
-      default:
-        break;
-    }
+    modalSetters[type]?.(false);
   };
 
+  const onModalAction = (type) => {
+    const modalSetters = {
+      createUser: setShowCreateModal,
+      updateUser: setShowUpdateModal,
+      deleteUser: setShowDeleteModal,
+      updatePassword: setShowUpdatePasswordModal,
+    };
+    
+    setActiveUser(null);
+    modalSetters[type]?.(false);
+  
+    if (["createUser", "updateUser", "deleteUser"].includes(type)) {
+      refreshUsers();
+    }
+  };
+ 
+ 
   const handleSearch = (event) => {
     const searchText = event.target.value;
     setSearchQuery(searchText);
@@ -230,7 +225,8 @@ function Users() {
       />
 
       <CreateUserModal isOpen={showCreateModal} onClose={onModalClose} onAction={onModalAction} />
-      <UpdateUserModal isOpen={showUpdateModal} onClose={onModalClose} onAction={onModalAction} m_user={activeUser} />
+      <UpdateUserModal isOpen={showUpdateModal} onClose={onModalClose} onAction={onModalAction} m_user={activeUser} /> 
+      
       <UpdatePasswordModal isOpen={showUpdatePasswordModal} onClose={onModalClose} onAction={onModalAction} m_user={activeUser} />
       <DeleteUserModal isOpen={showDeleteModal} onClose={onModalClose} onAction={onModalAction} m_user={activeUser} />
     </>

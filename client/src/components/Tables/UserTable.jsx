@@ -42,10 +42,10 @@ function Body({ dataTable, onAction }) {
   const [open, setOpen] = useState(false); 
   const [userData, setUser] = useState(''); 
 
-const handleSendEmail = (data) =>{
-   setOpen(true)
-   setUser(data)
-}
+// const handleSendEmail = (data) =>{
+//    setOpen(true)
+//    setUser(data)
+// }
 
 
 
@@ -72,14 +72,14 @@ const handleSendEmail = (data) =>{
                 <OutlinePersonIcon className="w-5 h-5" aria-hidden="true" />
               </Button>
 
-              <Button layout="link" size="icon" aria-label="Edit"  onClick={(e) => { handleSendEmail(user)}} >
+              {/* <Button layout="link" size="icon" aria-label="Edit"  onClick={(e) => { handleSendEmail(user)}} >
                 <MailIcon className="w-5 h-5" aria-hidden="true" />
-              </Button>
+              </Button> */}
 
 
-              <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(user, 'updatePassword') } }}>
+              {/* <Button layout="link" size="icon" aria-label="Edit Password" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(user, 'updatePassword') } }}>
                 <EditIcon className="w-5 h-5" aria-hidden="true" />
-              </Button>
+              </Button> */}
               <Button layout="link" size="icon" aria-label="Delete" onClick={(e) => { e.preventDefault(); if (onAction) { onAction(user, 'deleteUser') } }}>
                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
               </Button>
@@ -98,11 +98,14 @@ function SearchUsers({ searchTable, onAction }) {
 
   const [open, setOpen] = useState(false); 
   const [userData, setUser] = useState(''); 
+  
 
 const handleSendEmail = (data) =>{
    setOpen(true)
    setUser(data)
 }
+console.log('open',open)
+
   return (
     <TableBody>
       {searchTable?.map((user, i) => (

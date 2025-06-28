@@ -131,9 +131,9 @@ function Footer() {
             <Link to="/agb/#top" className="text-gray-600 hover:text-gray-800">
               AGB
             </Link>
-            <Link to="/widerrufsbelehrung/#top" className="text-gray-600 hover:text-gray-800">
+            {/* <Link to="/widerrufsbelehrung/#top" className="text-gray-600 hover:text-gray-800">
             Widerrufsbelehrung
-            </Link>
+            </Link> */}
              
             <div className="hidden md:block">
               <img

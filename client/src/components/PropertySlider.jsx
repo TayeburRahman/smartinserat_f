@@ -11,16 +11,14 @@ import { config } from "../assets/config/config";
 const PropertySlider = ({ title, topMargin = false }) => {
   const [recentImmobilien, setRecentImmobilien] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Your API fetch function with no filters, page 1, limit 12 by default
+ 
   const fetchAds = async (page = 1, limit = 12) => {
     setLoading(true);
     try {
       const response = await axios.get(`${config.api.url}/userList`, {
         params: {
           page,
-          limit,
-          // add filters here if needed, e.g. adType, propertyType, etc.
+          limit, 
         },
       });
       setRecentImmobilien(response.data.data.lists);

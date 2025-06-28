@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/Routes/ProtectedRoute";
 import ForwardRoute from "./components/Routes/ForwardRoute";
 import Login from "./pages/Login";  
 import FirebaseProvider from "./Firebase/FirebaseProvider";
+import ScrollToTop from "./ScrollToTop";
 
 const Layout = lazy(() => import("./containers/Layout"));
 const Auth = lazy(() => import("./containers/Auth"));
@@ -31,6 +32,7 @@ function App() {
     <Router>
         <FirebaseProvider> 
       <AccessibleNavigationAnnouncer />
+      <ScrollToTop />
       <Routes>
          <Route path="/auth/*" element={<ForwardRoute element={<Auth />} />} />
          <Route path="/impressum" element={<ImpressumPage />} />

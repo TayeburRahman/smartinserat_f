@@ -19,7 +19,9 @@ export default function DeleteUserListModal({isOpen, onClose, onAction, m_list})
     .then(() => {
       setEnabled(true)
       setError(null)
-      onAction('deleteListing')
+      onAction('deleteListing'); // Notify parent to refresh
+      handleModalClose(); // Close modal after success
+      // onAction('deleteListing')
     })
     .catch(err => {
       setEnabled(true)

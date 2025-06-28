@@ -22,6 +22,7 @@ function Header() {
 }
 
 function Body({ dataTable, onAction }) {
+    console.log("userList", dataTable)
     return (
         <TableBody>
             {dataTable?.map((userList, i) => (
@@ -54,8 +55,8 @@ function Body({ dataTable, onAction }) {
                         </Badge>
                     </TableCell>
                     <TableCell>
-                        <Badge type={!userList?.subscriptionPause ? "primary" : "danger"}>
-                            {userList?.subscriptionPause ? "Unpublished" : "Published"}
+                        <Badge type={userList?.status === "active" ? "primary" : "danger"}>
+                            {userList?.status}
                         </Badge>
                     </TableCell>
                     <TableCell>

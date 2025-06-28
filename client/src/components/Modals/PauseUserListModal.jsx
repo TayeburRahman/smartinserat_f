@@ -14,8 +14,9 @@ export default function PauseUserListModal({isOpen, onClose, onAction, m_list}) 
   }
 
   const handleModalAction = () => {
+    console.log("======ll", m_list?._id)
     setEnabled(false)
-    userListService.pauseUserlist(m_list.uniqId)
+    userListService.pauseUserlist(m_list?._id)
     .then(() => {
       setEnabled(true)
       setError(null)

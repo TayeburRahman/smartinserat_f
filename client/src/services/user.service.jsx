@@ -42,6 +42,12 @@ const updateUserDetails = (data) => {
 const deleteUser = (userId) => {
 	return axios.delete(`${apiUrl}/admin/users/${userId}`, {})
 }
+
+const deleteMessage = (userId) => { 
+	return axios.delete(`${apiUrl}/message/${userId}`, {})
+}
+
+ 
 const deleteUserList = (uniqId) => {
 	return axios.delete(`${apiUrl}/userList/deleteList/${uniqId}`, {})
 }
@@ -53,4 +59,5 @@ export const userService = {
   updateUserDetails,
   deleteUser,
   deleteUserList,
+  deleteMessage
 }

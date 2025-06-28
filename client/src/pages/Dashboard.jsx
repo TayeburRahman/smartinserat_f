@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../utils/demo/chartSetup'
 
-import InfoCard from '../components/Cards/InfoCard' 
+import InfoCard from '../components/Cards/InfoCard'
 import PageTitle from '../components/Typography/PageTitle'
 import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
@@ -27,21 +27,42 @@ import {
 } from '../utils/demo/chartsData'
 import { Link } from 'react-router-dom'
 import GrowthCharts from '../components/Chart/ChartCard'
+import axios from 'axios'
+import { config } from '../assets/config/config'
 
 function Dashboard() {
   const [page, setPage] = useState(1)
-  const [data, setData] = useState([])
-
+  const [data, setData] = useState([]) 
   // pagination setup
   const resultsPerPage = 10
 
-
-
-  // on page change, load new sliced data
-  // here you would make another server request for new data
+  const [transitions, setTransitions] = useState([])
   useEffect(() => {
-    setData(response)
-  }, [page])
+    async function fetchUserGrow() {
+      try {
+        const response = await axios.get(`${config.api.url}/dashboard/get_transitions_list`);
+        setTransitions(response.data?.data?.result);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    }
+    fetchUserGrow()
+  }, [page]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`${config.api.url}/dashboard/get_total_count`);
+        setData(response.data?.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    }
+    fetchData();
+  }, [page]);
+
+
+
 
   return (
     <>
@@ -49,7 +70,7 @@ function Dashboard() {
 
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Total clients" value="6389">
+        <InfoCard title="Total clients" value={`${data?.totalUsers ? data?.totalUsers : 0}`}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -58,7 +79,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Account balance" value="$ 46,760.89">
+        <InfoCard title="Account balance" value={`${data?.totalIncome ? data?.totalIncome : 0}`}>
           <RoundIcon
             icon={CartIcon}
             iconColorClass="text-blue-500 dark:text-blue-100"
@@ -67,7 +88,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="User Listing" value="376">
+        <InfoCard title="User Listing" value={`${data?.totalListing ? data?.totalListing : 0}`}>
           <RoundIcon
             icon={MoneyIcon}
             iconColorClass="text-blue-500 dark:text-blue-100"
@@ -76,7 +97,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Pending Message" value="35">
+        <InfoCard title="Pending Message" value={`${data?.unseenMessagesCount ? data?.unseenMessagesCount : 0}`}>
           <RoundIcon
             icon={ChatIcon}
             iconColorClass="text-teal-500 dark:text-teal-100"
@@ -103,34 +124,49 @@ function Dashboard() {
             </tr>
           </TableHeader>
           <TableBody>
-            {data.slice(1, 9).map((user, i) => (
-              <TableRow key={i}>
+            {transitions?.length && transitions?.slice(0, 8).map((txn, i) => (
+              <TableRow key={txn._id || i}>
                 <TableCell>
-                  <span className="text-sm">Id</span>
+                  <span className="text-sm">{txn.transactionId || 'N/A'}</span>
                 </TableCell>
+
                 <TableCell>
                   <div className="flex items-center text-sm">
-                    <Avatar className="hidden mr-3 md:block" src='' alt="USER image" />
+                    <Avatar
+                      className="hidden mr-3 md:block"
+                      src={txn.user?.profile_image || ''}
+                      alt="User image"
+                    />
                     <div>
-                      <p className="font-semibold">Full Name</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">User Email</p>
+                      <p className="font-semibold">{txn.user?.name || 'Unknown'}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {txn.user?.email || 'No Email'}
+                      </p>
                     </div>
                   </div>
                 </TableCell>
+
                 <TableCell>
-                  <span className="text-sm">$ 1230</span>
-                </TableCell>
-                <TableCell>
-                  <Badge type='success'>success</Badge>
+                  <span className="text-sm">${txn.amount?.toFixed(2) || '0.00'}</span>
                 </TableCell>
 
                 <TableCell>
-                  <span className="text-sm">{new Date('11/29/2019').toLocaleDateString()}</span>
+                  <Badge type={txn.status === 'completed' ? 'success' : 'danger'}>
+                    {txn.status}
+                  </Badge>
+                </TableCell>
+
+                <TableCell>
+                  <span className="text-sm">
+                    {txn.createdAt
+                      ? new Date(txn.createdAt).toLocaleDateString()
+                      : 'N/A'}
+                  </span>
                 </TableCell>
               </TableRow>
             ))}
-
           </TableBody>
+
           <TableFooter>
             <TableRow>
               <TableCell colSpan={5}>

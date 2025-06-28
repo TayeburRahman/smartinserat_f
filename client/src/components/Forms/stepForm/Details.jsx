@@ -9,8 +9,8 @@ import { useTranslation } from "react-i18next";
 import { dictionary } from "../../../resources/multiLanguages";
 
 export const Details = ({ formData, setForm, navigation, isReviewMode,
-   my_swiper, fRequired, setFRequired,
-   energy, setEnergy,  testEnergy, setTestEnergy}) => {
+  my_swiper, fRequired, setFRequired,
+  energy, setEnergy, testEnergy, setTestEnergy }) => {
   const { go } = navigation;
   const {
     buildingType,
@@ -36,14 +36,14 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
   return (
     <div className="container mx-auto px-4">
       {buildingType === "HOUSE" && <BuildingTypeHouse {...buildingTypeProps} />}
-{buildingType === "APARTMENT" && <BuildingTypeFlat {...buildingTypeProps} />}
-{buildingType === "SPECIAL_PURPOSE" && <BuildingTypeLand {...buildingTypeProps} />}
-{buildingType === "TRADE_SITE" && (
-  <BuildingTypeCommercial {...buildingTypeProps} />
-)}
-{buildingType === "INVESTMENT" && (
-  <BuildingTypeInvestment {...buildingTypeProps} />
-)}
+      {buildingType === "APARTMENT" && <BuildingTypeFlat {...buildingTypeProps} />}
+      {buildingType === "SPECIAL_PURPOSE" && <BuildingTypeLand {...buildingTypeProps} />}
+      {buildingType === "TRADE_SITE" && (
+        <BuildingTypeCommercial {...buildingTypeProps} />
+      )}
+      {buildingType === "INVESTMENT" && (
+        <BuildingTypeInvestment {...buildingTypeProps} />
+      )}
 
       {contactType === "business" && <Label className="mt-4">
         <span>{dictionary["createAds"][languageReducer]["details"]["amountOfCommission"]}:</span>
@@ -104,13 +104,13 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
         <>
           <Label className="mt-4">
             <span>{dictionary["createAds"][languageReducer]["details"]["energyPass"]}:</span>
-            <span style={{color: "red"}}>*</span>
+            <span style={{ color: "red" }}>*</span>
             <Input
               type="number"
               className="mb-4 mt-1"
               label="Energy Pass"
               placeholder={dictionary["createAds"][languageReducer]["details"]["enterEnergyPass"]}
-              name="energyPass"             
+              name="energyPass"
               value={energyPass}
               onChange={setForm}
               margin="normal"
@@ -121,7 +121,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           </Label>
           <Label className="mt-4">
             <span>{dictionary["createAds"][languageReducer]["details"]["energyEfficiencyClass"]}:</span>
-            <span style={{color: "red"}}>*</span>
+            <span style={{ color: "red" }}>*</span>
             <Select
               className="mb-4 mt-1"
               label="Energy Efficiency Class"
@@ -149,8 +149,8 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           <Label className="mt-4">
             <span>{dictionary["createAds"][languageReducer]["details"]["energyPassCreationDate"]}:</span>
             <span style={{ color: "red" }}>* </span>
-            {fRequired && 
-            <span style={{ color: "red" }}>{t("(dd.mm.yyyy)")}</span>
+            {fRequired &&
+              <span style={{ color: "red" }}>{t("(dd.mm.yyyy)")}</span>
             }
             <Input
               type="text"
@@ -168,7 +168,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           </Label>
           <Label className="mt-4">
             <span>{dictionary["createAds"][languageReducer]["details"]["typeOfHeating"]}:</span>
-            <span style={{color: "red"}}>*</span>
+            <span style={{ color: "red" }}>*</span>
             <Select
               className="mb-4 mt-1"
               label="Type Of Heating"
@@ -190,7 +190,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           </Label>
           <Label className="mt-4">
             <span>{dictionary["createAds"][languageReducer]["details"]["typeOfEnergyPass"]}</span>
-            <span style={{color: "red"}}>*</span>
+            <span style={{ color: "red" }}>*</span>
             <Select
               className="mb-4 mt-1"
               label="Type Of Energypass"
@@ -223,7 +223,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           autoComplete="off"
           fullwidth='true'
           readOnly={true}
-        > 
+        >
           <option value="">{dictionary["createAds"][languageReducer]["details"]["choose"]}</option>
 
           <option value="ol">{dictionary["createAds"][languageReducer]["details"]["oil"]}</option>
@@ -238,49 +238,49 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
         </Select>
       </Label>
       {buildingType !== 'LAND' &&
-      <Label className="mt-4">
-        <span>
-          {dictionary["createAds"][languageReducer]["details"]["yearOfBuilding"]}:
-          <span style={{color: "red"}}>*</span>
-        </span>
-        <Input
-          type="number"
-          className="mb-4 mt-1"
-          label="Year Of Building"
-          placeholder={dictionary["createAds"][languageReducer]["details"]["enterYearOfBuilding"]}
-          name="yearOfBuilding"
-          value={yearOfBuilding}
-          onChange={setForm}
-          margin="normal"
-          variant="outlined"
-          autoComplete="off"
-          fullwidth='true'
-        />
-      </Label> }
+        <Label className="mt-4">
+          <span>
+            {dictionary["createAds"][languageReducer]["details"]["yearOfBuilding"]}:
+            <span style={{ color: "red" }}>*</span>
+          </span>
+          <Input
+            type="number"
+            className="mb-4 mt-1"
+            label="Year Of Building"
+            placeholder={dictionary["createAds"][languageReducer]["details"]["enterYearOfBuilding"]}
+            name="yearOfBuilding"
+            value={yearOfBuilding}
+            onChange={setForm}
+            margin="normal"
+            variant="outlined"
+            autoComplete="off"
+            fullwidth='true'
+          />
+        </Label>}
       {buildingType === 'HOUSE' &&
-          <Label className="mt-4">
-            <span>
-              {dictionary["createAds"][languageReducer]["details"]["buildingPhase"]}:
-              <span style={{color: "red"}}>*</span>
-            </span>
-            <Select
-              className="mb-4 mt-1"
-              name="buildingphase"
-              value={buildingphase}
-              onChange={setForm}
-              margin="normal"
-              variant="outlined"
-              autoComplete="off"
-              fullwidth='true'
-              readOnly={true}
-            > 
-              <option value="">{dictionary["createAds"][languageReducer]["details"]["chooseAnOption"]}</option>
-              <option value="no_information">{dictionary["createAds"][languageReducer]["details"]["noInformation"]}</option>
-              <option value="completed">{dictionary["createAds"][languageReducer]["details"]["completed"]}</option>
-              <option value="in_planning">{dictionary["createAds"][languageReducer]["details"]["inPlanning"]}</option>
-              <option value="under_construction">{dictionary["createAds"][languageReducer]["details"]["underConstruction"]}</option>
-            </Select>
-          </Label>
+        <Label className="mt-4">
+          <span>
+            {dictionary["createAds"][languageReducer]["details"]["buildingPhase"]}:
+            <span style={{ color: "red" }}>*</span>
+          </span>
+          <Select
+            className="mb-4 mt-1"
+            name="buildingphase"
+            value={buildingphase}
+            onChange={setForm}
+            margin="normal"
+            variant="outlined"
+            autoComplete="off"
+            fullwidth='true'
+            readOnly={true}
+          >
+            <option value="">{dictionary["createAds"][languageReducer]["details"]["chooseAnOption"]}</option>
+            <option value="no_information">{dictionary["createAds"][languageReducer]["details"]["noInformation"]}</option>
+            <option value="completed">{dictionary["createAds"][languageReducer]["details"]["completed"]}</option>
+            <option value="in_planning">{dictionary["createAds"][languageReducer]["details"]["inPlanning"]}</option>
+            <option value="under_construction">{dictionary["createAds"][languageReducer]["details"]["underConstruction"]}</option>
+          </Select>
+        </Label>
       }
       {/* Conditional form elements */}
       {listingType === "For Rent" && (
@@ -335,148 +335,148 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           </Label>
         </div>
       )}
+      <>
+        {fRequired ? <div style={{ color: "red" }}>{dictionary["createAds"][languageReducer]["details"]["pleaseFillInRequiredFields"]}</div> : false}
         <>
-          {fRequired ? <div style={{color: "red"}}>{dictionary["createAds"][languageReducer]["details"]["pleaseFillInRequiredFields"]}</div> : false}
-          <>
-            <Button
-              layout="link"
-              color="secondary"
-              variant="contained"
-              style={{ marginRight: "1rem" }}
-              onClick={() => {
-                my_swiper.slidePrev();
-                return navigation.previous()
-              }}
-            >
-              {dictionary["createAds"][languageReducer]["details"]["back"]}
-            </Button>
-            <Button
-  variant="contained"
-  fullWidth
-  color="primary"
-  style={{ marginTop: "1rem" }}
-  onClick={() => {
-    // Regex test for date dd.mm.yyyy (with escaped dot)
-    if (energy && !/\d{2}\.\d{2}\.\d{4}/.test(formData.energyPassCreationDate)) {
-      setFRequired(true);
-      return;
-    }
+          <Button
+            layout="link"
+            color="secondary"
+            variant="contained"
+            style={{ marginRight: "1rem" }}
+            onClick={() => {
+              my_swiper.slidePrev();
+              return navigation.previous()
+            }}
+          >
+            {dictionary["createAds"][languageReducer]["details"]["back"]}
+          </Button>
+          <Button
+            variant="contained"
+            fullWidth
+            color="primary"
+            style={{ marginTop: "1rem" }}
+            onClick={() => {
+              // Regex test for date dd.mm.yyyy (with escaped dot)
+              if (energy && !/\d{2}\.\d{2}\.\d{4}/.test(formData.energyPassCreationDate)) {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      (formData.yearOfBuilding === "" ||
-        formData.yearOfBuilding.length !== 4 ||
-        +formData.yearOfBuilding < 1500) &&
-      buildingType !== "SPECIAL_PURPOSE" &&
-      buildingType !== "TRADE_SITE"
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                (formData.yearOfBuilding === "" ||
+                  formData.yearOfBuilding.length !== 4 ||
+                  +formData.yearOfBuilding < 1500) &&
+                buildingType !== "SPECIAL_PURPOSE" &&
+                buildingType !== "TRADE_SITE"
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      formData.numberOfRooms === "" &&
-      buildingType !== "SPECIAL_PURPOSE" &&
-      buildingType !== "TRADE_SITE" &&
-      buildingType !== "INVESTMENT"
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                formData.numberOfRooms === "" &&
+                buildingType !== "SPECIAL_PURPOSE" &&
+                buildingType !== "TRADE_SITE" &&
+                buildingType !== "INVESTMENT"
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      formData.specificBuildingType === "" &&
-      buildingType !== "TRADE_SITE" &&
-      buildingType !== "INVESTMENT"
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                formData.specificBuildingType === "" &&
+                buildingType !== "TRADE_SITE" &&
+                buildingType !== "INVESTMENT"
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (formData.buildingphase === "" && buildingType === "HOUSE") {
-      setFRequired(true);
-      return;
-    }
+              if (formData.buildingphase === "" && buildingType === "HOUSE") {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      formData.estatetype === "" &&
-      (buildingType === "TRADE_SITE" || buildingType === "INVESTMENT")
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                formData.estatetype === "" &&
+                (buildingType === "TRADE_SITE" || buildingType === "INVESTMENT")
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (formData.totalarea === "" && buildingType === "TRADE_SITE") {
-      setFRequired(true);
-      return;
-    }
+              if (formData.totalarea === "" && buildingType === "TRADE_SITE") {
+                setFRequired(true);
+                return;
+              }
 
-    if (formData.leasablearea === "" && buildingType === "INVESTMENT") {
-      setFRequired(true);
-      return;
-    }
+              if (formData.leasablearea === "" && buildingType === "INVESTMENT") {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      buildingType === "HOUSE" &&
-      (!formData.livingArea || formData.livingArea === "")
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                buildingType === "HOUSE" &&
+                (!formData.livingArea || formData.livingArea === "")
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      buildingType === "HOUSE" &&
-      (!formData.plotArea || formData.plotArea === "")
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                buildingType === "HOUSE" &&
+                (!formData.plotArea || formData.plotArea === "")
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (buildingType === "HOUSE" && (!formData.buildingphase || formData.buildingphase === "")) {
-      setFRequired(true);
-      return;
-    }
+              if (buildingType === "HOUSE" && (!formData.buildingphase || formData.buildingphase === "")) {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      buildingType === "FLAT" &&
-      (!formData.livingArea || formData.livingArea.length === 0)
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                buildingType === "FLAT" &&
+                (!formData.livingArea || formData.livingArea.length === 0)
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (
-      buildingType === "SPECIAL_PURPOSE" &&
-      (!formData.plotArea || formData.plotArea === "")
-    ) {
-      setFRequired(true);
-      return;
-    }
+              if (
+                buildingType === "SPECIAL_PURPOSE" &&
+                (!formData.plotArea || formData.plotArea === "")
+              ) {
+                setFRequired(true);
+                return;
+              }
 
-    if (energy && (!formData.energyPass || formData.energyPass.length === 0)) {
-      setFRequired(true);
-      return;
-    }
+              if (energy && (!formData.energyPass || formData.energyPass.length === 0)) {
+                setFRequired(true);
+                return;
+              }
 
-    if (energy && (!formData.typeOfHeating || formData.typeOfHeating.length === 0)) {
-      setFRequired(true);
-      return;
-    }
+              if (energy && (!formData.typeOfHeating || formData.typeOfHeating.length === 0)) {
+                setFRequired(true);
+                return;
+              }
 
-    if (energy && (!formData.typeOfEnergyPass || formData.typeOfEnergyPass.length === 0)) {
-      setFRequired(true);
-      return;
-    }
+              if (energy && (!formData.typeOfEnergyPass || formData.typeOfEnergyPass.length === 0)) {
+                setFRequired(true);
+                return;
+              }
 
-    setFRequired(false);
-    my_swiper.slideNext();
-    return navigation.next();
-  }}
->
-  {dictionary["createAds"][languageReducer]["details"]["next"]}
-</Button>
+              setFRequired(false);
+              my_swiper.slideNext();
+              return navigation.next();
+            }}
+          >
+            {dictionary["createAds"][languageReducer]["details"]["next"]}
+          </Button>
 
-          </>
         </>
+      </>
     </div>
   );
 };

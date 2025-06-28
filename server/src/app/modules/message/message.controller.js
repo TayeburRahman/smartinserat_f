@@ -38,6 +38,7 @@ const getMessages = catchAsync(async (req, res) => {
 
 
 const deleteMessage = catchAsync(async (req, res) => {
+    // console.log('================',)
     const result = await MessageService.deleteMessage(req);
     sendResponse(res, {
         statusCode: 200,

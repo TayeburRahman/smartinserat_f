@@ -140,6 +140,8 @@ function Messages() {
     return <PageError message="Some error occurred: please try again." />;
   }
 
+  console.log("messageLists",messageLists)
+
   return (
     <>
       <div className="flex justify-between items-center gap-16">

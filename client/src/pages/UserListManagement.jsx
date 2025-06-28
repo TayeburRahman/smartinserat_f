@@ -2,10 +2,6 @@ import { Button, Input, Label } from "@windmill/react-ui";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { config } from "../assets/config/config";
-// import CreateUserModal from "../components/Modals/CreateUserModal";
-// import DeleteUserModal from "../components/Modals/DeleteUserModal";
-// import UpdatePasswordModal from "../components/Modals/UpdatePasswordModal";
-// import UpdateUserModal from "../components/Modals/UpdateUserModal";
 import UserListTable from "../components/Tables/UserListTable.jsx";
 import ThemedSuspense from "../components/ThemedSuspense";
 import PageTitle from "../components/Typography/PageTitle";
@@ -13,7 +9,6 @@ import { AuthContext } from "../context/AuthContext";
 import { SnackbarContext } from "../context/SnackbarContext";
 import { SearchIcon } from "../icons/index.js";
 import PageError from "./Error";
-import axios from "axios";
 import { userListService } from "../services/userList.service.jsx";
 import DeleteUserListModal from "../components/Modals/DeleteUserListModal.jsx";
 import PauseUserListModal from "../components/Modals/PauseUserListModal.jsx";
@@ -34,14 +29,11 @@ function UserListManagement() {
   const [resfreshing, setRefreshing] = useState(false);
   const [searchUserLists, setSearchUserLists] = useState("");
   const [value, setValue] = useState(false);
-  const apiUrl = config.api.url;
-  const [userListings, setUserListings] = useState([]);
 
-  const [noData, setNoData] = useState(false);
-
+  // Refresh state toast
   useEffect(() => {
     if (resfreshing) {
-      openSnackbar("Refresing UserLists..");
+      openSnackbar("Refreshing UserLists...");
     } else {
       closeSnackbar();
     }
@@ -55,12 +47,10 @@ function UserListManagement() {
         setRefreshing(false);
         setUserLists(data.data.results);
         setTotalResults(data.data.totalResults);
-        return null;
       })
       .catch((err) => {
         setRefreshing(false);
         setError(err);
-        return null;
       });
   }, [currentPage]);
 
@@ -87,27 +77,6 @@ function UserListManagement() {
         break;
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-
-      try {
-        const response = await axios.get(`${apiUrl}/admin/userlists`);
-
-        console.log("userLists", response.data)
-        if (response.data.statusCode === 200) {
-          setUserListings(response?.data?.data?.results);
-        } else {
-          setNoData(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchData()
-  }, []);
-
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -141,7 +110,7 @@ function UserListManagement() {
         setShowCancelModal(false);
         refreshUserLists();
         break;
-      case "deleteUser":
+      case "deleteListing": // ✅ Fixed this
         setShowDeleteModal(false);
         refreshUserLists();
         break;
@@ -150,10 +119,8 @@ function UserListManagement() {
     }
   };
 
-  if (!isLoaded) {
-    return <ThemedSuspense />;
-  }
-
+  // Error handling
+  if (!isLoaded) return <ThemedSuspense />;
   if (error) {
     if (error.response) {
       switch (error.response.status) {
@@ -165,15 +132,16 @@ function UserListManagement() {
             <PageError message="Unauthorized : Only admin can view/update all UserLists." />
           );
         default:
-          return <PageError message="Some error occured : please try again." />;
+          return <PageError message="Some error occurred. Please try again." />;
       }
     } else {
-      return <PageError message="Some error occured : please try again." />;
+      return <PageError message="Some error occurred. Please try again." />;
     }
   }
 
+  // Search Handler
   const escapeRegExp = (string) => {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   };
 
   const handleSearch = (event) => {
@@ -183,30 +151,19 @@ function UserListManagement() {
     } else {
       setValue(true);
       const searchText = event?.target.value;
-
-      console.log("Search text: ", searchText);
-      console.log("userListings:", userListings)
-
-      // Escaping special characters in the search text
       const escapedSearchText = escapeRegExp(searchText);
-
-      // Creating a case-insensitive regular expression from the escaped search text
       const regex = new RegExp(escapedSearchText, "i");
 
-      const matchedUserLists = userLists?.filter((user) => {
-        // Checking if any of the fields match the regular expression
-        return (
-          regex.test(user?.uniqId) ||
-          regex.test(user?.listingTitle) ||
-          regex.test(user?.listingType) ||
-          regex.test(user?.city) ||
-          regex.test(user?.listingPrice) ||
-          regex.test(user?.email) ||
-          regex.test(user?.subscription?.type)
-        );
-      });
+      const matchedUserLists = userLists?.filter((user) =>
+        regex.test(user?.uniqId) ||
+        regex.test(user?.listingTitle) ||
+        regex.test(user?.listingType) ||
+        regex.test(user?.city) ||
+        regex.test(user?.listingPrice) ||
+        regex.test(user?.email) ||
+        regex.test(user?.subscription?.type)
+      );
 
-      console.log("matchedUers", matchedUserLists)
       setSearchUserLists(matchedUserLists);
     }
   };
@@ -222,26 +179,15 @@ function UserListManagement() {
                 <SearchIcon className="w-4 h-4" aria-hidden="true" />
               </div>
               <Input
-                className="p-2 pl-3 border border-solid border-gray-300 focus-within:text-gray-700"
+                className="p-2 pl-3 border border-solid border-gray-300"
                 placeholder="Search for UserLists..."
-                component="form"
                 onChange={handleSearch}
               />
             </div>
           </Label>
         </div>
-        {/* 
-        <div className="my-6">
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              handleAction(null, "createUser");
-            }}
-          >
-            Create UserList
-          </Button>
-        </div> */}
       </div>
+
       <UserListTable
         userLists={userLists}
         resultsPerPage={config.users.resultsPerPage}
@@ -251,6 +197,7 @@ function UserListManagement() {
         value={value}
         searchUserLists={searchUserLists}
       />
+
       <PauseUserListModal
         isOpen={showApproveModal}
         onClose={onModalClose}

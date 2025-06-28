@@ -70,9 +70,7 @@ const checkAndUpdateStatusByWebhook = async (req) => {
   if (!sessionId) {
     return { status: "failed", message: "Missing session ID in the request." };
   }
-   const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-   console.log('session=========================',session) 
+   const session = await stripe.checkout.sessions.retrieve(sessionId); 
 
   if (session.payment_status === 'paid') {
 
@@ -105,7 +103,7 @@ const checkAndUpdateStatusByWebhook = async (req) => {
             },
             subscriptionUpdatedAt: subscriptionStartDate,
             activeUntil: subscriptionEndDate,
-            subscriptionExpire: true,
+            subscriptionExpire: false,
             inactive: false,
             status: "active"
           },
@@ -164,114 +162,71 @@ const checkAndUpdateStatusByWebhook = async (req) => {
     console.log(`Unhandled event type: ${event.type}`);
   }
 }
-
-async function flowFactPlatform(id, data, cognitoToken) {
-  try {
-    await axios.post(
-      `https://api.production.cloudios.flowfact-prod.cloud/portal-management-service/publish`,
-      {
-        entries: [
-          {
-            entityId: data.entityId,
-            showAddress: data.hideAddress ? false : true,
-            targetStatus: data.status ? 'ONLINE' : 'OFFLINE',
-            publishChannels:
-              id === process.env.IMMOSCOUT24_ID
-                ? [
-                  { type: 'SCOUT', channelIdentifier: '10000' },
-                  { type: 'HOMEPAGE', channelIdentifier: '10001' },
-                ]
-                : [],
-          },
-        ],
-        portalId: id,
-      },
-      {
-        headers: {
-          cognitoToken,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-  } catch (er) {
-    console.log(er, 'flowFactPlatform error:');
-  }
-}
-
-async function publishTo4Platforms(data, immoscot, ebay, immowelt, wordpress) {
-  try {
-    const cognitoToken = await generateCognitoToken();
-    //process.env.IMMOSCOUT24_ID
-    if (immoscot) {
-      await flowFactPlatform(process.env.IMMOSCOUT24_ID, data, cognitoToken);
-    }
-    if (ebay) {
-      await flowFactPlatform(process.env.EBAY_KLEINANZEIGEN_ID, data, cognitoToken);
-    }
-    if (immowelt) {
-      await flowFactPlatform(process.env.IMMOWELT_IMMONET_ID, data, cognitoToken);
-    }
-    if (wordpress) {
-      await flowFactPlatform(process.env.WORDPRESS, data, cognitoToken);
-    }
-  } catch (er) {
-    console.log(er);
-    return true;
-  }
-}
-
-//pause subs
+ 
+ 
 const pauseSubscription = async (req) => {
   const uniqId = req.body.uniqId;
-
-  // Check if the list belongs to the user or not
   const userId = req.user.userId;
 
   try {
-    // Find the user list with the specified uniqId
-    const data = await UserList.findOne({ uniqId });
+    const data = await UserList.findById(uniqId);
 
     if (!data) {
       throw new ApiError(400, "List not found");
     }
+
     const currentUser = await User.findById(userId).populate("authId");
 
-    // Authorization check (assuming currentUser is available in req.user)
-    if (currentUser?.authId?.role !== "ADMIN" && data.email !== currentUser?.email) {
+    if (
+      currentUser?.authId?.role !== "ADMIN" &&
+      data.email !== currentUser?.email
+    ) {
       throw new ApiError(403, "Unauthorized");
     }
 
-    // Update the list properties for pausing
-    const updateBody = { subscriptionPause: true };
-    data.set(updateBody); // Use set() for immutability
-    data.status = false;
+    data.status = "inactive";
+    data.subscriptionPause = true;
+    data.subscriptionUpdatedAt = new Date();
 
-    // Publish to platforms based on subscription type (use a mapping for efficiency)
-    const publishMapping = {
-      BASIC: () => publishTo4Platforms(data, true, true, false, false),
-      MEDIUM: () => publishTo4Platforms(data, true, true, true, false),
-      PREMIUM: () => publishTo4Platforms(data, true, true, true, true),
+    const unitData = {
+      property: {
+        archived: true,
+      },
     };
 
-    await publishMapping[data.subscription.type]();
+    const response = await axios.put(
+      `https://api.propstack.de/v1/units/${data.unitsId}`,
+      unitData,
+      {
+        headers: {
+          "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    // Save the updated list
+    if (response.status !== 200) {
+      throw new ApiError(502, "Failed to update Propstack unit status");
+    }
+
     await data.save();
+
+    console.log('=================', data)
 
     return data;
   } catch (error) {
-    // Handle errors appropriately, e.g., log the error and return a suitable response
-    console.error(error);
-    throw new ApiError(500, "Something went wrong")
+    console.error("Pause subscription error:", error);
+    throw new ApiError(500, "Something went wrong");
   }
 };
+
 
 const unpauseSubscription = async (req) => {
   const uniqId = req.body.uniqId;
   const userId = req.user.userId;
+
   try {
-    // Find the user list with the specified uniqId
-    const data = await UserList.findOne({ uniqId });
+    const data = await UserList.findById(uniqId);
 
     if (!data) {
       throw new ApiError(400, "List not found");
@@ -279,36 +234,42 @@ const unpauseSubscription = async (req) => {
 
     const currentUser = await User.findById(userId).populate("authId");
 
-    // Authorization check (assuming currentUser is available in req.user)
     if (currentUser?.authId?.role !== "ADMIN" && data.email !== currentUser?.email) {
       throw new ApiError(403, "Unauthorized");
     }
 
-    // Update the list properties for unpausing
-    const updateBody = { subscriptionPause: false };
-    data.set(updateBody); // Use set() for immutability
-    data.status = true;
+    // Set fields
+    data.subscriptionPause = false;
+    data.status = "active";
+    data.subscriptionUpdatedAt = new Date(); 
 
-    // Publish to platforms based on subscription type (use a mapping for efficiency)
-    const publishMapping = {
-      BASIC: () => publishTo4Platforms(data, true, true, false, false),
-      MEDIUM: () => publishTo4Platforms(data, true, true, true, false),
-      PREMIUM: () => publishTo4Platforms(data, true, true, true, false)
+    const unitData = {
+      property: {
+        archived: false,
+      },
     };
 
-    await publishMapping[data.subscription.type](); // Use toLowerCase() for case-insensitive mapping
+    const response = await axios.put(
+      `https://api.propstack.de/v1/units/${data.unitsId}`,
+      unitData,
+      {
+        headers: {
+          "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    // Save the updated list
+
     await data.save();
 
-    // Send response with the updated data
     return data;
   } catch (error) {
-    // Handle errors appropriately, e.g., log the error and return a suitable response
-    console.error(error);
-    throw new ApiError(500, "Something went wrong")
+    console.error("Unpause subscription error:", error);
+    throw new ApiError(500, "Something went wrong");
   }
 };
+
 
 
 const PaymentService = {
@@ -319,3 +280,36 @@ const PaymentService = {
 };
 
 module.exports = PaymentService;
+
+
+// async function publishTo4Platforms(data, immoscot, ebay, immowelt, wordpress) {
+//   try {
+//     const cognitoToken = await generateCognitoToken();
+//     //process.env.IMMOSCOUT24_ID
+//     if (immoscot) {
+//       await flowFactPlatform(process.env.IMMOSCOUT24_ID, data, cognitoToken);
+//     }
+//     if (ebay) {
+//       await flowFactPlatform(process.env.EBAY_KLEINANZEIGEN_ID, data, cognitoToken);
+//     }
+//     if (immowelt) {
+//       await flowFactPlatform(process.env.IMMOWELT_IMMONET_ID, data, cognitoToken);
+//     }
+//     if (wordpress) {
+//       await flowFactPlatform(process.env.WORDPRESS, data, cognitoToken);
+//     }
+//   } catch (er) {
+//     console.log(er);
+//     return true;
+//   }
+// }
+
+//pause subs
+
+// const publishMapping = {
+//   BASIC: () => publishTo4Platforms(data, true, true, false, false),
+//   MEDIUM: () => publishTo4Platforms(data, true, true, true, false),
+//   PREMIUM: () => publishTo4Platforms(data, true, true, true, false)
+// };
+
+// await publishMapping[data.subscription.type](); 

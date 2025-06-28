@@ -23,15 +23,16 @@ const createMessage = async (req) => {
 
   
   const deleteMessage = async (req) => {
-    let uniqId = req.params.uniqId;
+    let uniqId = req.params.uniqId; 
     
     try {
-        const data = await Message.findOne({ uniqId });
-        
+        const data = await Message.findById(uniqId);
+      
         if (!data) {
             throw new ApiError(400, "No message found");
         }
-        const message =  await Message.deleteOne({ uniqId });
+        console.log("===", data)
+        const message =  await Message.findByIdAndDelete(uniqId);
         
         return message;
 

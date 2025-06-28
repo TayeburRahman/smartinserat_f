@@ -1,11 +1,7 @@
 import { Button, Input, Label } from "@windmill/react-ui";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { config } from "../assets/config/config";
-// import CreateUserModal from "../components/Modals/CreateUserModal";
-// import DeleteUserModal from "../components/Modals/DeleteUserModal";
-// import UpdatePasswordModal from "../components/Modals/UpdatePasswordModal";
-// import UpdateUserModal from "../components/Modals/UpdateUserModal"; 
+import { config } from "../assets/config/config"; 
 import ThemedSuspense from "../components/ThemedSuspense";
 import PageTitle from "../components/Typography/PageTitle";
 import { AuthContext } from "../context/AuthContext";
@@ -13,8 +9,7 @@ import { SnackbarContext } from "../context/SnackbarContext";
 import PageError from "./Error";
 import axios from "axios";
 import { userListService } from "../services/userList.service.jsx"; 
-import TransactionsTable from "../components/Tables/TransactionsTable.jsx";
-import response from '../utils/demo/tableData'
+import TransactionsTable from "../components/Tables/TransactionsTable.jsx"; 
 
 function Transactions() {
   const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
@@ -27,7 +22,7 @@ function Transactions() {
   const [resfreshing, setRefreshing] = useState(false);  
   const apiUrl = config.api.url;
   const [userListings, setUserListings] = useState([]);
-
+  const [transitions, setTransitions] = useState([])
   console.log('userLists', userLists)
 
   const [noData, setNoData] = useState(false);
@@ -64,6 +59,19 @@ function Transactions() {
       setIsLoaded(true);
     });
   }, [refreshUserLists]);
+
+ 
+  useEffect(() => {
+    async function fetchUserGrow() {
+      try {
+        const response = await axios.get(`${config.api.url}/dashboard/get_transitions_list`);
+        setTransitions(response.data?.data?.result);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    }
+    fetchUserGrow()
+  }, [currentPage]);
 
 
   useEffect(() => {
@@ -116,16 +124,17 @@ function Transactions() {
   }
  
 
+ 
 
   return (
     <>
       <div className="flex justify-between items-center gap-16">
-        <PageTitle>Transactions</PageTitle>
+        <PageTitle>Transactions:</PageTitle>
         <div className="w-96"> 
         </div>
       </div>
       <TransactionsTable
-        userLists={userLists}
+        userLists={transitions}
         resultsPerPage={config.users.resultsPerPage}
         totalResults={totalResults} 
         onPageChange={handlePageChange} 

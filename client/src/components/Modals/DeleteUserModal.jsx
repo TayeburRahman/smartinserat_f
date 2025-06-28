@@ -15,27 +15,31 @@ export default function DeleteUserModal({isOpen, onClose, onAction, m_user, type
       onClose('deleteMessage')
     }
   }
+  console.log('   m_user',   m_user)
 
   const handleModalAction = () => {
-    setEnabled(false)
-    userService.deleteUser(m_user._id)
-    .then(() => {
-      setEnabled(true)
-      setError(null)
-      onAction('deleteUser')
-      if(types==="message"){
-        onAction('deleteMessage')
-      }
-    })
-    .catch(err => {
-      setEnabled(true)
-      if(err.response) {
-        setError(err.response.data.message);
-      } else {
-        setError('Some error occured.');
-      }
-    })
-  }
+    setEnabled(false);
+    const deleteFn = types === "message" 
+      ? userService.deleteMessage 
+      : userService.deleteUser;
+  
+    deleteFn(m_user._id)
+      .then(() => {
+        setEnabled(true);
+        setError(null);
+  
+        if (types === "message") {
+          onAction("deleteMessage");
+        } else {
+          onAction("deleteUser");
+        }
+      })
+      .catch((err) => {
+        setEnabled(true);
+        setError(err?.response?.data?.message || "Some error occurred.");
+      });
+  };
+  
 
   return (
     <SimpleModal isOpen={isOpen}
