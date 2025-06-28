@@ -3,53 +3,53 @@ import React, { useState, useContext, useEffect } from "react";
 // import PageTitle from "../components/Typography/PageTitle";
 // import SectionTitle from "../components/Typography/SectionTitle";
 // import BillingForm from "../components/Forms/BillingForm";
-import PricingCard from "../components/Cards/PricingCard";
+// import PricingCard from "../components/Cards/PricingCard";
 // import BillingDetailsCard from "../components/Cards/BillingDetailsCard";
 // import { SnackbarContext } from "../context/SnackbarContext";
-import { StripeContext } from "../context/StripeContext";
+// import { StripeContext } from "../context/StripeContext";
 // import { stripeService } from "../services";
 // import { HelperText } from "@windmill/react-ui";
 // import { useStripe } from "@stripe/react-stripe-js";
 
-function Products({ listData, uniqId, enabled, PricingCardCallback }) {
-  const { products } = useContext(StripeContext);
+// function Products({ listData, uniqId, enabled, PricingCardCallback }) {
+//   const { products } = useContext(StripeContext);
 
-  return (
-    <div className="grid gap-6 mb-8 md:grid-cols-3">
-      {products &&
-        products.map(function (product, i) {
-          if (
-            !product.product.active &&
-            listData.subscription.subscriptionType !==
-              product.product.metadata.type
-          ) {
-            return null;
-          }
-          return (
-            <PricingCard
-              key={i}
-              title={product.product.name}
-              type={product.product.metadata.type}
-              value={
-                product.price.currency_symbol +
-                product.price.unit_amount / 100 +
-                " / " +
-                product.price.recurring.interval
-              }
-              active={
-                listData.subscription.subscriptionType ===
-                product.product.metadata.type
-              }
-              enabled={enabled}
-              listData={listData}
-              uniqId={uniqId}
-              callback={PricingCardCallback}
-            />
-          );
-        })}
-    </div>
-  );
-}
+//   return (
+//     <div className="grid gap-6 mb-8 md:grid-cols-3">
+//       {products &&
+//         products.map(function (product, i) {
+//           if (
+//             !product.product.active &&
+//             listData.subscription.subscriptionType !==
+//               product.product.metadata.type
+//           ) {
+//             return null;
+//           }
+//           return (
+//             <PricingCard
+//               key={i}
+//               title={product.product.name}
+//               type={product.product.metadata.type}
+//               value={
+//                 product.price.currency_symbol +
+//                 product.price.unit_amount / 100 +
+//                 " / " +
+//                 product.price.recurring.interval
+//               }
+//               active={
+//                 listData.subscription.subscriptionType ===
+//                 product.product.metadata.type
+//               }
+//               enabled={enabled}
+//               listData={listData}
+//               uniqId={uniqId}
+//               callback={PricingCardCallback}
+//             />
+//           );
+//         })}
+//     </div>
+//   );
+// }
 
 // const Billing = ({ listData, setListData }) => {
 //   const stripe = useStripe();
