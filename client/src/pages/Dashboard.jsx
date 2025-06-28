@@ -5,7 +5,7 @@ import InfoCard from '../components/Cards/InfoCard'
 import PageTitle from '../components/Typography/PageTitle'
 import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
-import response from '../utils/demo/tableData'
+// import response from '../utils/demo/tableData'
 import {
   TableBody,
   TableContainer,
@@ -19,12 +19,12 @@ import {
   Pagination,
 } from '@windmill/react-ui'
 
-import {
-  doughnutOptions,
-  lineOptions,
-  doughnutLegends,
-  lineLegends,
-} from '../utils/demo/chartsData'
+// import {
+//   doughnutOptions,
+//   lineOptions,
+//   doughnutLegends,
+//   lineLegends,
+// } from '../utils/demo/chartsData'
 import { Link } from 'react-router-dom'
 import GrowthCharts from '../components/Chart/ChartCard'
 import axios from 'axios'
