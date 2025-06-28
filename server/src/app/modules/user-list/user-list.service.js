@@ -16,7 +16,7 @@ const createList = async (req) => {
   if (!email) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email is required');
   }
-
+ 
   const user = await UserService.getUserByEmail(email);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -24,10 +24,10 @@ const createList = async (req) => {
   const lists = req.body  
   
   try {
-    // console.log("======",lists)
+ 
     const createPt = await createPropstackProperties(req.body)
-    
-    if(!createPt.status && !createPt?.propertyId){
+     console.log("createPt?.images", createPt?.images)
+    if(!createPt.status && !createPt?.propertyId || !createPt?.images.length){
       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong while saving the list. Please try again later!');
     } 
 

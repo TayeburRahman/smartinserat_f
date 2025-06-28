@@ -50,7 +50,7 @@ const createPropstackProperties = async (userData) => {
         furnishing_note: userData.features,
         location_note: userData.location,
         other_note: userData.additionalDescription,
-        commission: userData.commission,
+        // commission: userData.commission,
         courtage_note: `Provision: ${userData.commission || "k.A"}`, 
         archived: true, 
         partial_custom_fields: {
@@ -69,8 +69,7 @@ const createPropstackProperties = async (userData) => {
       },
     });
 
-    const propertyId = response.data.id;
-
+    const propertyId = response.data.id; 
     // Upload images if any
     if (userData.imgCollection?.length) {
       await uploadMultipleImages(propertyId, userData.imgCollection);
@@ -82,7 +81,7 @@ const createPropstackProperties = async (userData) => {
     // Extract large image URLs
     const largeImageUrls = (propertyData?.images || []).map((img) => img.big_url); 
 
-    return { status: true ,images: largeImageUrls, propertyId };
+    return { status: true, images: largeImageUrls, propertyId };
   } catch (error) {
     console.error("❌ Error creating property in Propstack:", error.response?.data || error.message);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create property in Propstack");
@@ -101,7 +100,7 @@ const uploadMultipleImages = async (propertyId, images) => {
         is_private: false,
       },
     };
-
+   console.log("bodybodybodybodybodybodybodybodybodybodybodybody")
     try {
       const response = await axios.post("https://api.propstack.de/v1/images", imagePayload, {
         headers: {

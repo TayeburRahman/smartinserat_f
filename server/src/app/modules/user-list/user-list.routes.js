@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({ extended: true, limit: '200mb' }));
 // User routes
 router.post(
   "/create",
-  uploadFile(),
+  // uploadFile(),
   auth(ENUM_USER_ROLE.USER),
   UserListController.createList
 );

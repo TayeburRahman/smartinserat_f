@@ -129,29 +129,75 @@ export const Review = (props) => {
     });
   };
 
-  function buildFormData(formData, data, parentKey) {
+  // function buildFormData(formData, data, parentKey) {
+  //   if (
+  //     data &&
+  //     typeof data === 'object' &&
+  //     !(data instanceof Date) &&
+  //     !(data instanceof File)
+  //   ) {
+  //     Object.keys(data).forEach((key) => {
+  //       buildFormData(
+  //         formData,
+  //         data[key],
+  //         parentKey ? `${parentKey}[${key}]` : key
+  //       );
+  //     });
+  //   } else {
+  //     const value = data == null ? '' : data;
+  //     if (value === '') {
+  //       delete parentKey.value;
+  //     } else {
+  //       formData(parentKey, value);
+  //     }
+  //   }
+  // }
+
+  function cleanObjectForSubmission(data) {
+    if (Array.isArray(data)) {
+      const cleanedArray = data
+        .map(cleanObjectForSubmission)
+        .filter((item) => item !== undefined && item !== null && item !== '');
+      return cleanedArray;
+    }
+  
     if (
       data &&
-      typeof data === 'object' &&
+      typeof data === "object" &&
       !(data instanceof Date) &&
       !(data instanceof File)
     ) {
+      const cleaned = {};
       Object.keys(data).forEach((key) => {
-        buildFormData(
-          formData,
-          data[key],
-          parentKey ? `${parentKey}[${key}]` : key
-        );
+        const value = data[key];
+  
+        if (
+          value === null ||
+          value === undefined ||
+          (typeof value === "string" && value.trim() === "")
+        ) {
+          return;
+        }
+  
+        const cleanedValue = cleanObjectForSubmission(value);
+  
+        if (
+          cleanedValue !== undefined &&
+          cleanedValue !== null &&
+          (typeof cleanedValue !== "object" ||
+            (Array.isArray(cleanedValue) && cleanedValue.length > 0) ||
+            (!Array.isArray(cleanedValue) && Object.keys(cleanedValue).length > 0))
+        ) {
+          cleaned[key] = cleanedValue;
+        }
       });
-    } else {
-      const value = data == null ? '' : data;
-      if (value === '') {
-        delete parentKey.value;
-      } else {
-        formData.append(parentKey, value);
-      }
+      return cleaned;
     }
+  
+    return data;
   }
+  
+  
 
   const blobUrlToBase64 = async (blobUrl) => {
     const res = await fetch(blobUrl);
@@ -213,20 +259,23 @@ export const Review = (props) => {
       openSnackbar(t("Please add the property images!"), "danger", 2000);
       return;
     }
-    const data = {
+
+    const rawData = {
       ...formData,
       email,
-      imgCollection,  
+      phone,
+      imgCollection,
       energy: formData.energy === "true",
+      newBuilding: formData.newBuilding === "true",
+      monumentProtection: formData.monumentProtection === "true",
     };
-    console.log("sendData====", data)
-    const sendData = new FormData();
-    await buildFormData(sendData, Object.assign(data, { phone }));
+    
+    const data = cleanObjectForSubmission(rawData);
 
  
-  
+    console.log("sendData====", data)
     try { 
-      const response = await axios.post(`${apiUrl}/userList/create`, sendData);
+      const response = await axios.post(`${apiUrl}/userList/create`, data);
       console.log("response.data.data", response.data.data)
       setListData(response.data.data);
       setLoading(false);
