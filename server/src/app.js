@@ -17,6 +17,7 @@ app.use(
       "http://smartinserat.de", 
       "https://smartinserat.de", 
       "www.smartinserat.de",
+      "http://64.23.243.67:4173",
       "http://64.23.243.67:3000",
       "http://64.23.243.67:5174",
       "http://64.23.243.67:5173",
