@@ -8,6 +8,7 @@ const createMessage = async (req) => {
 
     const data = req.body;
       try {
+        console.log("===", data)
         const message = await Message.create(data)
         console.log("createMessage", message)
 

@@ -48,7 +48,7 @@ const createList = async (req) => {
 const getLatestUserList = async (req) => { 
   const lists = await UserList.find({
     subscriptionPause: false,
-    subscriptionExpire: true
+    subscriptionExpire: false
   })
     .sort({ createdAt: -1 }) // Sort by creation date, descending
     .limit(10); // Limit the results to 10
@@ -62,7 +62,7 @@ const getUserList = async (req) => {
   // Build the query object
   let query = {
     subscriptionPause: false,
-    subscriptionExpire: true
+    subscriptionExpire: false
   };
  
   const fixedAdType = adType === "rent" ? "For Rent" : "For Sale";
@@ -216,57 +216,58 @@ const queryUserLists = async (filter, options) => {
 
 const unpublishExpiredLists = async () => {
   try {
-    // find records with subscriptionExpire - true
-    let lists = await UserList.find({ subscriptionExpire: true, subscriptionExpired: false, activeUntil: { $ne: null } });
+    const now = new Date();
 
+    const lists  = await UserList.find({
+      subscriptionExpire: false,
+      status : "active",
+      activeUntil: { $lte: now },
+    });
 
-    for (let index = 0; index < lists.length; index++) {
+    for (const list of lists) {
       try {
-        const list = lists[index];
-        list.status = false;
+        await UserList.findByIdAndUpdate(list._id, {
+          subscriptionExpire: true,
+          status: "inactive",
+          subscriptionUpdatedAt: new Date(),
+        });
 
-        console.log('in cron')
-        const currentTime = moment().format()
-        // check if record expires or not
-        const checkExpiryTime = moment(list.activeUntil).isBefore(currentTime);
-
-
-        if (checkExpiryTime) {
-
-          //we unpablish from portals and set unpablished to true
-          switch (list.subscription.type) {
-            case 'BASIC':
-              await publishTo4Platforms(list, true, true, false, false);
-              break;
-            case 'MEDIUM':
-              await publishTo4Platforms(list, true, true, true, false);
-              break;
-            case 'PREMIUM':
-              await publishTo4Platforms(list, true, true, true, false);
-              break;
-          }
-          await UserList.findByIdAndUpdate(list._id, {
-            subscription: {
-              subscriptionType: 'free',
+        if (list.unitsId) {
+          const unitData = {
+            property: {
+              archived: false,
             },
-            subscriptionExpire: false,
-            subscriptionExpired: true
-          })
-        }
+          };
 
-        console.log('new Date(): Checked for expired sub and action taken')
-      } catch (er) {
-        console.log(new Date(), 'UserList Controller unpublishExpiredLists Err!');
-        console.log(er.message);
+          const response = await axios.put(
+            `https://api.propstack.de/v1/units/${list.unitsId}`,
+            unitData,
+            {
+              headers: {
+                "X-API-KEY": "VuovV2F1EXBaZ9JUMalFy1E5gHL90Ji6-rkYracX",
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response?.data) {
+            throw new ApiError(httpStatus.BAD_GATEWAY, "Failed to update unit status in Propstack");
+          }
+
+          console.log("✅ Propstack update:", response.data);
+        }
+      } catch (err ) {
+        console.error(new Date(), "⚠️ Error in unpublishing list:", list._id);
+        console.error(err.message);
       }
     }
-  } catch (error) {
-    console.log(new Date(), 'UserList Controller unpublishExpiredLists Err!');
+  } catch (error ) {
+    console.error(new Date(), "❌ Critical Error in unpublishExpiredLists");
+    console.error(error.message);
   }
 };
 
 
-// cron.schedule("0 0 0 * * *", unpublishExpiredLists);
 cron.schedule("* * * * *", unpublishExpiredLists);
 
 

@@ -6,8 +6,7 @@ const { Schema, model } = mongoose;
 const MessageSchema = new Schema(
     {
         name: {
-            type: String,
-            unique: true
+            type: String
         },
         email: {
             type: String,
