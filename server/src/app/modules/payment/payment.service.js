@@ -31,7 +31,8 @@ const createCheckoutSession = async (req) => {
     if(!listing?._id){
       throw new ApiError(400, "Server reference error! please try again!");
     }
-
+     
+    console.log("config.stripe.stripe_secret_key", config.stripe.stripe_secret_key)
     let session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
