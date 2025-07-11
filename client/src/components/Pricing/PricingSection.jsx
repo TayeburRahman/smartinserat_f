@@ -33,11 +33,12 @@ const PricingSection = () => {
       <div className="max-w-5xl mx-auto flex justify-center items-center flex-col">
         <div className="flex flex-col justify-center items-center px-5">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-700 text-center">
-            Save upto 30% campared to individual Ads
+            {/* Save upto 30% campared to individual Ads */}
+            Bis zu 50% gegenüber Einzelanzeigen sparen
           </h1>
-          <p className="mt-4 text-lg md:text-xl text-gray-600 text-center">
+          {/* <p className="mt-4 text-lg md:text-xl text-gray-600 text-center">
             Maybe your questions are already answered.
-          </p>
+          </p> */}
         </div>
         <Tabs className="w-full py-12 p-2">
           <TabList className="flex justify-center gap-0 mb-5">
