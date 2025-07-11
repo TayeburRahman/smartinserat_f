@@ -188,6 +188,9 @@ html {
   animation-delay: 0.5s;
 }
 
+.phoneInput{
+  background: white !important;
+}
 @keyframes slideFadeIn {
   to {
     opacity: 1;
