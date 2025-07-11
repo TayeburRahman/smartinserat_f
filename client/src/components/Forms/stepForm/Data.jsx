@@ -75,10 +75,11 @@ export const Data = ({ formData, setForm, navigation,
           autoComplete="off"
           fullWidth
         >
-          <option value="APARTMENT">{t("Wohnung")}</option>
+          
           <option value="SPECIAL_PURPOSE">{t("Land")}</option>
           <option value="TRADE_SITE">{t("Gewerblich")}</option>
           <option value="INVESTMENT">{t("Investition")}</option>
+          <option value="APARTMENT">{t("Wohnung")}</option>
           <option value="HOUSE">{t("Haus")}</option>
         </Select>
 
