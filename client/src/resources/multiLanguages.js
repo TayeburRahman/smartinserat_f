@@ -94,14 +94,14 @@ export const dictionary = {
       },
     },
     de: {
-      title: "So funktioniert smartinserat.de",
+      title: "So funktioniert smartinserat.net",
       description:
         "In drei einfachen Schritten können Sie Ihre Immobilie maklerfrei verkaufen oder vermieten.",
       tile1: {
         title: "Schritt 1",
         subTitle: "Registrieren",
         description:
-          "Erstellen Sie ein kostenloses Nutzerkonto auf smartinserat.de mit Ihrer E-Mail-Adresse und einem Passwort.",
+          "Erstellen Sie ein kostenloses Nutzerkonto auf smartinserat.net mit Ihrer E-Mail-Adresse und einem Passwort.",
       },
       tile2: {
         title: "Schritt 2",
@@ -149,7 +149,7 @@ export const dictionary = {
       tile6: {
         title: "REAL ESTATE LIVE CHAT",
         description:
-          "We are there for you for any concerns. You can us from Monday to Friday between 9 a.m. and 5 p.m Contact us by phone or send us an email Send to kontakt@smartinserat.de.",
+          "We are there for you for any concerns. You can us from Monday to Friday between 9 a.m. and 5 p.m Contact us by phone or send us an email Send to kontakt@smartinserat.net.",
       },
     },
     de: {
@@ -375,7 +375,7 @@ testimonials: {
       tile5: {
         faqTitle: "Wie lange dauert es, bis meine Anzeige online ist?",
         faqDescription:
-          "Nachdem Sie Ihre Anzeige erfolgreich gebucht haben, erfolgt eine Überprüfung durch uns,  gefolgt von der Veröffentlichung auf smartinserat.de und der Übertragung auf die ausgewählten Portale. Die Dauer der Übertragung variiert je nach Portal und kann zwischen 20 Minuten und 48 Stunden in Anspruch nehmen. Einige Portale sind schneller, während andere etwas mehr Zeit benötigen. Auf den Portalen ImmoScout24, Immowelt und Immonet sind unsere Inserate in der Regel innerhalb von 20-60 Minuten nach der Freischaltung online sichtbar.",
+          "Nachdem Sie Ihre Anzeige erfolgreich gebucht haben, erfolgt eine Überprüfung durch uns,  gefolgt von der Veröffentlichung auf smartinserat.net und der Übertragung auf die ausgewählten Portale. Die Dauer der Übertragung variiert je nach Portal und kann zwischen 20 Minuten und 48 Stunden in Anspruch nehmen. Einige Portale sind schneller, während andere etwas mehr Zeit benötigen. Auf den Portalen ImmoScout24, Immowelt und Immonet sind unsere Inserate in der Regel innerhalb von 20-60 Minuten nach der Freischaltung online sichtbar.",
       },
       tile6: {
         faqTitle: "Verlängert sich mein Inserat automatisch?",
@@ -956,7 +956,7 @@ testimonials: {
           {
             question: "How can I delete my account?",
             answer:
-              "To delete your account, please send us a short request to support@smartinserat.de.",
+              "To delete your account, please send us a short request to support@smartinserat.net.",
           },
         ],
       },
@@ -1061,7 +1061,7 @@ testimonials: {
           {
             question: "Wie kann ich mein Konto löschen?",
             answer:
-              "Um Ihr Konto zu löschen, senden Sie uns bitte eine kurze Anfrage an support@smartinserat.de.",
+              "Um Ihr Konto zu löschen, senden Sie uns bitte eine kurze Anfrage an support@smartinserat.net.",
           },
         ],
       },

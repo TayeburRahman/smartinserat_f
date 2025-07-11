@@ -31,7 +31,7 @@ const sendEmail = async (options) => {
     from: `${config.smtp.NAME} <${config.smtp.smtp_mail}>`,
     to: email,
     date: formattedDate,
-    signed_by: "smartinserat.de",
+    signed_by: "smartinserat.net",
     subject,
     html,
   };

@@ -29,7 +29,7 @@ const WiderrufPage = () => {
             <p className="font-semibold">SMARTINSERAT – Inh. Dominik Wagenmann</p>
             <p>Meinstr. 48, 38448 Wolfsburg</p>
             <p>Telefon: +49 (0) 5363 / 9469180</p>
-            <p>E-Mail: support@smartinserat.de</p>
+            <p>E-Mail: support@smartinserat.net</p>
           </div>
           <p className="mb-4">
             ) mittels einer eindeutigen Erklärung (z.B. ein mit der Post versandter Brief, Telefax oder E-Mail)

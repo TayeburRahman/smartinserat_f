@@ -22,7 +22,7 @@ app.use(
       "http://64.226.82.90:3000",
       "https://64.226.82.90:3000", 
       "http://localhost:5173",
-      "smartinserat.de"  
+      "smartinserat.net"  
   
     ],
     credentials: true,

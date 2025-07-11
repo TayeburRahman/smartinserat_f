@@ -417,8 +417,8 @@ const forgotPass = async (payload) => {
               </div>
               <div class="footer">
                 <p>Thank you,</p>
-                <p>smartinserat.de</p>
-                <p><a href="https://smartinserat.de/>Visit our website</a></p>
+                <p>smartinserat.net</p>
+                <p><a href="https://smartinserat.net/>Visit our website</a></p>
               </div>
             </div>
           </body>

@@ -394,7 +394,7 @@
 //         lastName: data.nameHide ? 'Anbieter' : data.lastName,
 //         emails: [data.formEmail],
 //         company: 'Smartinserat',
-//         homepage: ['https://Smartinserat.de'],
+//         homepage: ['https://smartinserat.net'],
 //       };
 //       let phone = data.phoneNumber || data.phone;
 //       if (phone?.length > 5) {
@@ -1018,7 +1018,7 @@
 //         lastName: data.nameHide ? 'Anbieter' : data.lastName,
 //         emails: [data.formEmail],
 //         company: 'Smartinserat',
-//         homepage: ['https://Smartinserat.de'],
+//         homepage: ['https://smartinserat.net'],
 //       };
 //       let phone = data.phoneNumber || data.phone;
 //       if (phone?.length > 5) {
@@ -1667,7 +1667,7 @@
 //       lastName: data.nameHide ? 'Anbieter' : data.lastName,
 //       emails: [data.formEmail],
 //       company: 'Smartinserat',
-//       homepage: ['https://Smartinserat.de'],
+//       homepage: ['https://smartinserat.net'],
 //     };
 //     if (data.phoneNumber?.length > 5) {
 //       Object.assign(newData, {
