@@ -191,8 +191,7 @@ html {
 .phone-input-container input {
   background-color: white !important;
   color: black !important; 
-  border-radius: 0.375rem !important;  
-  padding: 0.5rem 0.75rem !important;
+  border-radius: 0.375rem !important;
 }
 @keyframes slideFadeIn {
   to {
