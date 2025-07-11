@@ -3,20 +3,19 @@ import { getStorage } from "firebase/storage";
 
 // Initialize Firebase
 const app = initializeApp({ 
-    apiKey: "AIzaSyBCO67_x0QNiiRHnC2kB51FUDdWLlhcyKM",
-    authDomain: "smartinserat-77dcb.firebaseapp.com",
-    projectId: "smartinserat-77dcb",
-    storageBucket: "smartinserat-77dcb.appspot.com",
-    messagingSenderId: "451114753410",
-    appId: "1:451114753410:web:9b72cb064ffd2968ca839b",
-    measurementId: "G-WF8X6YEYST" 
+    apiKey: "AIzaSyDMV_Kz_nM9p9165O1kMGp1XdoiRRbRj9I",
+    authDomain: "smartinserat-66187.firebaseapp.com",
+    projectId: "smartinserat-66187",
+    storageBucket: "smartinserat-66187.firebasestorage.app",
+    messagingSenderId: "1075537386418",
+    appId: "1:1075537386418:web:34f31bce747f3e605162ab",
+    measurementId: "G-DT0GNZFR0X" 
 });
 
 const storage = getStorage(app);
 export default storage;
 
-
- // apiKey: "AIzaSyAEfPW9TPvmIPEgsUAoNuQjMtmHleAcozw",
+  // apiKey: "AIzaSyAEfPW9TPvmIPEgsUAoNuQjMtmHleAcozw",
     // authDomain: "job-onboard-client.firebaseapp.com",
     // projectId: "job-onboard-client",
     // storageBucket: "job-onboard-client.firebasestorage.app",
