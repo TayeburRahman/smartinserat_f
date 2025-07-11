@@ -16,7 +16,7 @@ import { dictionary } from '../../../resources/multiLanguages';
 import 'react-tabs/style/react-tabs.css';
 
 // console.log('=========================',process.env.REACT_APP_STRIPE_PUBLIC_KEY);  
-const stripePromise = loadStripe('pk_test_51O6u3AA05IKdlVAzi99bVrDDueMtwBqM9dddpFnuQ2QuK8qjZFdpLsU4UcBrdY8QvsCFSG0ArvkMHNCRhhbUt4Kx00Qf2icjpW');
+const stripePromise = loadStripe('pk_test_51QX5j82MtPL2aPEKFGOOrrMZ1BtMjXtqN00FHmQpuvgIsMk6iromQ67GeTJL7hwca9Jzv5xa2efR4yKiXeS6E3pB0076WqrjSM');
 
 function Products({ products, listData, enabled, PricingCardCallback, pages, subscriptionDuration }) {
   const languageReducer= "de";
@@ -178,8 +178,7 @@ export const Submit = ({ listData, setListData, pages }) => {
       const { data } = await axios.post(`${config.api.url}/payment/stripe/create-checkout-session`, {
         packageId,
         listingId: listData?._id,
-      }); 
-      console.log("data===========================================",data) 
+      });  
       const stripe = await stripePromise; 
 
       const { error } = await stripe.redirectToCheckout({
