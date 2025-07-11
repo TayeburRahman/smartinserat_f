@@ -30,7 +30,7 @@ const PricingSection = () => {
 
   return (
     <section className="w-full bg-white mt-16" id='Preise'>
-      <div className="max-w-5xl mx-auto flex justify-center items-center flex-col">
+      <div className="max-w-5xl mx-auto flex justify-center items-center flex-col text-center">
         <div className="flex flex-col justify-center items-center px-5">
         <h3 className="text-royalPurple text-1xl sm:text-2xl font-extrabold uppercase mt-14 p-2">
         PREISE
