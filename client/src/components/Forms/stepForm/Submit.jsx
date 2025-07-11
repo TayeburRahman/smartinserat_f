@@ -27,8 +27,8 @@ function Products({ products, listData, enabled, PricingCardCallback, pages, sub
   } else {
     listingType = 'sale';
   }  
-  console.log("--------------------------------------");
-  console.log("Submit>Products> products: ", products);
+  console.log("stripePromise", stripePromise)
+  console.log("--------------------------------------", products, listData, enabled, PricingCardCallback, pages, subscriptionDuration); 
   return (
     <div className={`grid gap-2 lg:gap-3 xl:gap-4 mb-4 grid-cols-1 xl:grid-cols-3`}>
       {products &&
