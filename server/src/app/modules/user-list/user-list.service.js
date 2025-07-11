@@ -62,7 +62,8 @@ const getUserList = async (req) => {
   // Build the query object
   let query = {
     subscriptionPause: false,
-    subscriptionExpire: false
+    subscriptionExpire: false,
+    status:"active"
   };
  
   const fixedAdType = adType === "rent" ? "For Rent" : "For Sale";
