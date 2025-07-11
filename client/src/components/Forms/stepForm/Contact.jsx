@@ -138,16 +138,16 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
       <Label className="mt-4">
         <span>{t("Telefonnummer")}:</span>
         {fRequired && <span style={{ color: "red" }}>{dictionary["createAds"][languageReducer]["contact"]["pleaseProvideValidPhone"]}</span>}
-        <div className="w-full border border-gray-300 rounded-md py-1 py-2 bg-white">
-  <PhoneInput
-    className="w-full phoneInputs"
-    inputClassName="w-full bg-white text-black border-none outline-none"
-    international
-    countryCallingCodeEditable={false}
-    defaultCountry="DE"
-    value={phone}
-    onChange={setPhone}
-  />
+        <div className="w-full border border-gray-300 rounded-md py-2 py-2 bg-white">
+        <PhoneInput
+  className="phone-input-container mb-4 mt-1"
+  international
+  countryCallingCodeEditable={false}
+  defaultCountry="DE"
+  value={phone}
+  onChange={setPhone}
+/>
+
 </div>
       </Label>
       <div style={{ marginTop: "1rem" }}>

@@ -188,8 +188,12 @@ html {
   animation-delay: 0.5s;
 }
 
-.phoneInputs{
-  background: white !important;
+.phone-input-container input {
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid #d1d5db !important; /* Optional: Tailwind's gray-300 */
+  border-radius: 0.375rem !important;   /* Optional: Tailwind's rounded-md */
+  padding: 0.5rem 0.75rem !important;
 }
 @keyframes slideFadeIn {
   to {
