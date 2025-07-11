@@ -16,8 +16,8 @@ import { dictionary } from '../../../resources/multiLanguages';
 import 'react-tabs/style/react-tabs.css';
 
  
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY); 
-// const stripePromise = loadStripe('pk_test_51QX5j82MtPL2aPEKFGOOrrMZ1BtMjXtqN00FHmQpuvgIsMk6iromQ67GeTJL7hwca9Jzv5xa2efR4yKiXeS6E3pB0076WqrjSM');
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY); 
+const stripePromise = loadStripe('pk_test_51QX5j82MtPL2aPEKFGOOrrMZ1BtMjXtqN00FHmQpuvgIsMk6iromQ67GeTJL7hwca9Jzv5xa2efR4yKiXeS6E3pB0076WqrjSM');
 
 function Products({ products, listData, enabled, PricingCardCallback, pages, subscriptionDuration }) {
   const languageReducer= "de";
