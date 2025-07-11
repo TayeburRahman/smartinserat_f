@@ -100,13 +100,13 @@ function CreateUserForm({formRef, callback}) {
             ) : null}
           </Label>
 
-          {/* <Label className="mt-4">
+          <Label className="mt-4">
             <span>Role</span>
             <Field className="mt-1" as={Select} name="role">
               <option val="USER">User</option>
               <option val="ADMIN">Admin</option>
             </Field>
-          </Label> */}
+          </Label>
 
           <Button
             className="mt-4"
