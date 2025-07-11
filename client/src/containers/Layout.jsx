@@ -26,7 +26,7 @@ function Layout() {
 
   useEffect(() => {
     closeSidebar();
-  }, [location, closeSidebar]);
+  }, [location ]);
 
   if (!user) return null;
 

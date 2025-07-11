@@ -23,6 +23,8 @@ export const Data = ({ formData, setForm, navigation,
   }, [buildingType]);
 
   const languageReducer = "de";
+
+  console.log("====buildingType1", buildingType)
   return (
     <div className="container mx-auto px-4">
       <Label className="mt-4">
