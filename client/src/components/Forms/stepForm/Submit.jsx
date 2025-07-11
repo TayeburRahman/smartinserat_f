@@ -15,7 +15,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { dictionary } from '../../../resources/multiLanguages';
 import 'react-tabs/style/react-tabs.css';
 
-// console.log('=========================',process.env.REACT_APP_STRIPE_PUBLIC_KEY); 
+ 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY); 
 // const stripePromise = loadStripe('pk_test_51QX5j82MtPL2aPEKFGOOrrMZ1BtMjXtqN00FHmQpuvgIsMk6iromQ67GeTJL7hwca9Jzv5xa2efR4yKiXeS6E3pB0076WqrjSM');
 
@@ -174,7 +174,7 @@ export const Submit = ({ listData, setListData, pages }) => {
       openSnackbar(t('Server error, please try again!'));
       return;
     }
-    
+    console.log('=========================',process.env.REACT_APP_STRIPE_PUBLIC_KEY); 
     try {
       const { data } = await axios.post(`${config.api.url}/payment/stripe/create-checkout-session`, {
         packageId,
