@@ -32,13 +32,12 @@ const PricingSection = () => {
     <section className="w-full bg-white mt-16" id='Preise'>
       <div className="max-w-5xl mx-auto flex justify-center items-center flex-col">
         <div className="flex flex-col justify-center items-center px-5">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-700 text-center">
-            {/* Save upto 30% campared to individual Ads */}
-            Bis zu 50% gegenüber Einzelanzeigen sparen
-          </h1>
-          {/* <p className="mt-4 text-lg md:text-xl text-gray-600 text-center">
-            Maybe your questions are already answered.
-          </p> */}
+        <h3 className="text-royalPurple text-1xl sm:text-2xl font-extrabold uppercase mt-14 p-2">
+        PREISE
+      </h3>
+      <h2 className="text-black text-2xl sm:text-3xl font-extrabold p-2">
+      BIS ZU 50% GEGENÜBER EINZELANZEIGEN SPAREN
+      </h2>
         </div>
         <Tabs className="w-full py-12 p-2">
           <TabList className="flex justify-center gap-0 mb-5">
