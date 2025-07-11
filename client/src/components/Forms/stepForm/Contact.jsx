@@ -140,7 +140,7 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
         {fRequired && <span style={{ color: "red" }}>{dictionary["createAds"][languageReducer]["contact"]["pleaseProvideValidPhone"]}</span>}
         <div className="w-full border border-gray-300 rounded-md py-1 bg-white">
         <PhoneInput
-  className="phone-input-container mb-4 mt-1"
+  className="phone-input-container mb-1 mt-1 p-1"
   international
   countryCallingCodeEditable={false}
   defaultCountry="DE"
