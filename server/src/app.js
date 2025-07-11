@@ -14,6 +14,7 @@ app.use(
       'https://www.smartinserat.net', 
       'https://www.dashboard.smartinserat.net', 
       'https://dashboard.smartinserat.net',  
+      "http://16.16.193.42:4173",
       "http://64.23.243.67:4173",
       "http://64.23.243.67:3000",
       "http://64.23.243.67:5174",
