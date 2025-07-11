@@ -56,6 +56,8 @@ const createCheckoutSession = async (req) => {
       ]
     })
 
+    console.log("session", session)
+
     return session;
 
   } catch (error) {
