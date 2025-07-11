@@ -58,6 +58,16 @@ function ActiveAccountOTP() {
                       {dictionary["activeAccountOTP"][languageReducer]["createAcount"]}
                     </Link>
                   </p>
+
+                  <p className="mt-4">
+                  <Link
+                    className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                    to="/auth/login"
+                  >
+                    {dictionary["createAccount"][languageReducer]["alreadyHaveAccount"]}
+                  </Link>
+                </p>
+                
                   <div className="mt-16 flex">
                     <p className="">
                       <Link
