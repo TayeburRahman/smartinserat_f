@@ -49,8 +49,8 @@ const createCheckoutSession = async (req) => {
             product_data: {
               product_data: {
                 name: package.packageName,
-                description: `${package.packageDescription}\n\nListing: ${listingTitle}, ${listingType}\nAddress: ${address}, ${city}, ${state}, ${zip}`,
-                images: imgCollection?.length ? [imgCollection[0]] : undefined // Only one image shown in Stripe Checkout
+                description: `${package.packageDescription}\n\nListing: ${listing?.listingTitle}, ${listing?.listingType}\nAddress: ${listing?.address}, ${listing?.city}, ${listing?.zip}`,
+                images: listing?.imgCollection?.length ? [listing?.imgCollection[0]] : undefined // Only one image shown in Stripe Checkout
               }
             }
           },
