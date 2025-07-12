@@ -16,10 +16,10 @@ import { dictionary } from '../../../resources/multiLanguages';
 import 'react-tabs/style/react-tabs.css';
 
  
-const stripePromise = loadStripe(config.stripe.publicKey); 
+// const stripePromise = loadStripe(config.stripe.publicKey); 
 // const stripePromise = loadStripe('pk_live_51RjhVpE9UtRbGddx49bM4oU9ChopoNnXX3Bvv0HW7x7S9ifRoqeQKFtPzc8Ys9D6naTFLE5Kz12y2XQRG8TnXhFR004Ad13iir');
 
-// const stripePromise = loadStripe('pk_test_51QX5j82MtPL2aPEKFGOOrrMZ1BtMjXtqN00FHmQpuvgIsMk6iromQ67GeTJL7hwca9Jzv5xa2efR4yKiXeS6E3pB0076WqrjSM');
+const stripePromise = loadStripe('pk_live_51RjhVpE9UtRbGddx49bM4oU9ChopoNnXX3BvvOHW7x7S9ifRoqeQKFtPzc8Ys9D6naTFLE5Kzl2y2XQRG8TnXhFR004Ad13iir');
 console.log('listData=================', config.stripe.publicKey)
 
 function Products({ products, listData, enabled, PricingCardCallback, pages, subscriptionDuration }) {
