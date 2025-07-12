@@ -47,8 +47,11 @@ const createCheckoutSession = async (req) => {
             currency: 'usd',
             unit_amount: unitAmount,
             product_data: {
-              name: package.packageName,
-              description: package.packageDescription
+              product_data: {
+                name: package.packageName,
+                description: `${package.packageDescription}\n\nListing: ${listingTitle}, ${listingType}\nAddress: ${address}, ${city}, ${state}, ${zip}`,
+                images: imgCollection?.length ? [imgCollection[0]] : undefined // Only one image shown in Stripe Checkout
+              }
             }
           },
           quantity: 1
