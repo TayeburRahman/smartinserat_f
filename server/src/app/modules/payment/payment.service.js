@@ -55,7 +55,7 @@ const createCheckoutSession = async (req) => {
             unit_amount: unitAmount,
             product_data: {
               name: package.packageName,
-              description: `${package.packageDescription}\n\nListing: ${listing.listingTitle}, ${listing.listingType}\nAddress: ${listing.address}, ${listing.city}, ${listing.zip}`,
+              description: `Listing: ${listing.listingTitle}, ${listing.listingType}\nAddress: ${listing.address}, ${listing.city}, ${listing.zip}`,
               images: listing.imgCollection?.length ? [listing.imgCollection[0]] : undefined,
             },
           },
