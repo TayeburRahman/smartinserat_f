@@ -28,7 +28,7 @@ function Body({ dataTable, onAction }) {
             {dataTable?.map((userList, i) => (
                 <TableRow key={i}>
                     <TableCell>
-                        <span className="text-sm">{userList.uniqId}</span>
+                        <span className="text-sm">{userList.unitsId}</span>
                     </TableCell>
                     <TableCell>
                         <div className="flex items-center text-sm">

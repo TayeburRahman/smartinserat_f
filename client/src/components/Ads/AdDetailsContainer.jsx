@@ -37,7 +37,7 @@ const AdDetailsContainer = () => {
         email,
         telephone,
         message,
-        uniqId: adDetails.uniqId
+        uniqId: adDetails.unitsId
       });
 
       toast.success("Message sent");
