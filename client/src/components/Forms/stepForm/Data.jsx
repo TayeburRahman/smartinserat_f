@@ -23,6 +23,8 @@ export const Data = ({ formData, setForm, navigation,
   }, [buildingType]);
 
   const languageReducer = "de";
+
+  console.log("====buildingType1", buildingType)
   return (
     <div className="container mx-auto px-4">
       <Label className="mt-4">
@@ -73,10 +75,11 @@ export const Data = ({ formData, setForm, navigation,
           autoComplete="off"
           fullWidth
         >
-          <option value="APARTMENT">{t("Wohnung")}</option>
+          
           <option value="SPECIAL_PURPOSE">{t("Land")}</option>
           <option value="TRADE_SITE">{t("Gewerblich")}</option>
           <option value="INVESTMENT">{t("Investition")}</option>
+          <option value="APARTMENT">{t("Wohnung")}</option>
           <option value="HOUSE">{t("Haus")}</option>
         </Select>
 

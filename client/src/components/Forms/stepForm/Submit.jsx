@@ -15,8 +15,12 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { dictionary } from '../../../resources/multiLanguages';
 import 'react-tabs/style/react-tabs.css';
 
-// console.log('=========================',process.env.REACT_APP_STRIPE_PUBLIC_KEY);  
-const stripePromise = loadStripe('pk_test_51O6u3AA05IKdlVAzi99bVrDDueMtwBqM9dddpFnuQ2QuK8qjZFdpLsU4UcBrdY8QvsCFSG0ArvkMHNCRhhbUt4Kx00Qf2icjpW');
+ 
+// const stripePromise = loadStripe(config.stripe.publicKey); 
+// const stripePromise = loadStripe('pk_live_51RjhVpE9UtRbGddx49bM4oU9ChopoNnXX3Bvv0HW7x7S9ifRoqeQKFtPzc8Ys9D6naTFLE5Kz12y2XQRG8TnXhFR004Ad13iir');
+
+const stripePromise = loadStripe('pk_live_51RjhVpE9UtRbGddx49bM4oU9ChopoNnXX3BvvOHW7x7S9ifRoqeQKFtPzc8Ys9D6naTFLE5Kzl2y2XQRG8TnXhFR004Ad13iir');
+console.log('listData=================', config.stripe.publicKey)
 
 function Products({ products, listData, enabled, PricingCardCallback, pages, subscriptionDuration }) {
   const languageReducer= "de";
@@ -173,13 +177,12 @@ export const Submit = ({ listData, setListData, pages }) => {
       openSnackbar(t('Server error, please try again!'));
       return;
     }
-    
+    console.log('=========================',process.env.REACT_APP_STRIPE_PUBLIC_KEY); 
     try {
       const { data } = await axios.post(`${config.api.url}/payment/stripe/create-checkout-session`, {
         packageId,
         listingId: listData?._id,
-      }); 
-      console.log("data===========================================",data) 
+      });  
       const stripe = await stripePromise; 
 
       const { error } = await stripe.redirectToCheckout({

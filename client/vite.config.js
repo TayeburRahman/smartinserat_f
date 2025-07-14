@@ -9,6 +9,10 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000, 
   },
+  preview: {
+    port: 4173,
+    allowedHosts: ['smartinserat.net', 'www.smartinserat.net'],
+  },
 });
 
 // local 10.0.60.118

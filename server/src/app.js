@@ -10,22 +10,19 @@ const app = express();
 app.use(
   cors({
     origin: [
-      'https://321-maklerfrei.vercel.app', 
-      "http://localhost:3000",
-      "http://10.0.60.118:3000",
-      "http://localhost*", 
-      "http://smartinserat.de", 
-      "https://smartinserat.de", 
-      "www.smartinserat.de",
+      'https://smartinserat.net', 
+      'https://www.smartinserat.net', 
+      'https://www.dashboard.smartinserat.net', 
+      'https://dashboard.smartinserat.net',  
+      "http://16.16.193.42:4173",
       "http://64.23.243.67:4173",
       "http://64.23.243.67:3000",
       "http://64.23.243.67:5174",
       "http://64.23.243.67:5173",
       "http://64.226.82.90:3000",
-      "https://64.226.82.90:3000",
-      "https://www.smartinserat.de",
+      "https://64.226.82.90:3000", 
       "http://localhost:5173",
-      "smartinserat.de"  
+      "smartinserat.net"  
   
     ],
     credentials: true,

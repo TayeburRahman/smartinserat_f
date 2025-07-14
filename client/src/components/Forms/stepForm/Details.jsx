@@ -33,6 +33,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
   const buildingTypeProps = { formData, setForm };
   const { t } = useTranslation();
   const languageReducer = "de";
+  console.log("====buildingType2", buildingType)
   return (
     <div className="container mx-auto px-4">
       {buildingType === "HOUSE" && <BuildingTypeHouse {...buildingTypeProps} />}

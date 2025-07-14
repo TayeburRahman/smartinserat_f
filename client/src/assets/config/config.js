@@ -23,7 +23,7 @@ if (error) {
 
 export const config = {
   api: {
-    url: envVars.VITE_API_URL || "http://64.23.243.67:5001",
+    url: envVars.VITE_API_URL || "https://backend.smartinserat.net",
   },
   stripe: {
     publicKey: envVars.VITE_STRIPE_PUBLIC_KEY,

@@ -52,7 +52,7 @@ function Footer() {
               </a>
               <a
                 target="_blank"
-                href="https://www.instagram.com/smartinserat.de"
+                href="https://www.instagram.com/smartinserat.net"
               >
                 <svg
                   role="img"

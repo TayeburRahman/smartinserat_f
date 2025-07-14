@@ -156,11 +156,11 @@ function Faq() {
               </p>
               <p className="mt-2 mb-4 text-sm text-gray-600 dark:text-gray-400">
                 <Mailto
-                  email="info@Smartinserat.de"
+                  email="info@smartinserat.net"
                   subject="Problem mit ..."
                   body={dictionary["faq"][languageReducer]["helloProblem"]}
                 >
-                  info@Smartinserat.de
+                  info@smartinserat.net
                 </Mailto>
               </p>
             </CardBody>

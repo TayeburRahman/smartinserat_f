@@ -51,12 +51,12 @@ const registrationSuccessEmailBody = (userData) => `
     <body>
       <div class="container">
         <p>Hallo ${userData?.user?.name},</p>
-        <p>Vielen Dank, dass Sie sich bei smartinserat.de registriert haben. Um Ihr Konto zu aktivieren, verwenden Sie bitte den folgenden Aktivierungscode:</p>
+        <p>Vielen Dank, dass Sie sich bei smartinserat.net registriert haben. Um Ihr Konto zu aktivieren, verwenden Sie bitte den folgenden Aktivierungscode:</p>
         <h1>${userData?.activationCode}</h1>
         <p>Bitte geben Sie diesen Code innerhalb der nächsten 5 Minuten auf der Aktivierungsseite ein.</p>
-        <p>Wenn Sie sich nicht bei smartinserat.de registriert haben, ignorieren Sie bitte diese E-Mail.</p>
+        <p>Wenn Sie sich nicht bei smartinserat.net registriert haben, ignorieren Sie bitte diese E-Mail.</p>
         <p>Wenn Sie Fragen haben, kontaktieren Sie uns bitte unter<p/>
-        <a href="mailto:kontakt@smartinserat.de">kontakt@smartinserat.de</a>.
+        <a href="mailto:kontakt@smartinserat.net">kontakt@smartinserat.net</a>.
       </div>
     </body>
   </html>

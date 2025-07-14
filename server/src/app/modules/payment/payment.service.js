@@ -13,33 +13,41 @@ const YOUR_DOMAIN = process.env.RESET_PASS_UI_LINK;
 
 const createCheckoutSession = async (req) => {
   try {
-    const { packageId, listingId } = req.body
-    const { userId } = req.user
+    const { packageId, listingId } = req.body;
+    const { userId } = req.user;
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
 
-
-    const package = await Packages.findById(packageId)
+    const package = await Packages.findById(packageId);
     if (!package) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'invalid package ID.');
+      throw new ApiError(httpStatus.NOT_FOUND, 'Invalid package ID.');
     }
 
-    const packagePrice = Number(package.price); // Convert package.price to a number
-    const unitAmount = packagePrice * 100; 
+    const packagePrice = Number(package.price);
+    const unitAmount = packagePrice * 100;
 
-    const listing = await UserList.findById(listingId)
-    if(!listing?._id){
-      throw new ApiError(400, "Server reference error! please try again!");
+    const listing = await UserList.findById(listingId);
+    if (!listing?._id) {
+      throw new ApiError(400, "Server reference error! Please try again.");
     }
 
-    let session = await stripe.checkout.sessions.create({
+    const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       success_url: `${YOUR_DOMAIN}app/payment/stripe-webhooks/{CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}app/userLists?canceled=true`,
-      customer_email: `${user.email}`,
+      customer_email: user.email,
       client_reference_id: listingId,
-      metadata: { packageId: package._id.toString(), listingId, userId },
+      metadata: {
+        packageId: package._id.toString(),
+        listingId,
+        userId,
+        listingTitle: listing.listingTitle,
+        listingType: listing.listingType,
+        address: listing.address,
+        city: listing.city,
+        zip: listing.zip,
+      },
       line_items: [
         {
           price_data: {
@@ -47,13 +55,16 @@ const createCheckoutSession = async (req) => {
             unit_amount: unitAmount,
             product_data: {
               name: package.packageName,
-              description: package.packageDescription
-            }
+              description: `Listing: ${listing.listingTitle}, ${listing.listingType}\nAddress: ${listing.address}, ${listing.city}, ${listing.zip}`,
+              images: listing.imgCollection?.length ? [listing.imgCollection[0]] : undefined,
+            },
           },
-          quantity: 1
-        }
-      ]
-    })
+          quantity: 1,
+        },
+      ],
+    });
+
+    console.log("session", session);
 
     return session;
 
@@ -61,6 +72,7 @@ const createCheckoutSession = async (req) => {
     throw new ApiError(400, error);
   }
 };
+
 
 const checkAndUpdateStatusByWebhook = async (req) => {
  
