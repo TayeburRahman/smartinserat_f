@@ -20,7 +20,7 @@ function Img({ photo, element, file, index, handleChange, t, removeImage }) {
 
         <div className="flex-1">
           <Input
-            className={`text-center my-2 ring-0 ${read && "border-0 bg-transparent"}`}
+            className={`text-center text-black my-2 ring-0 ${read && "border-0 bg-transparent"}`}
             readOnly={read}
             placeholder={t("enter image details")}
             type="text"
@@ -38,13 +38,13 @@ function Img({ photo, element, file, index, handleChange, t, removeImage }) {
             }}
             className={`${
               !read
-                ? "bg-blue-500 hover:bg-blue-600 text-white"
-                : "text-gray hover:bg-gray-300"
-            }  mt-1 w-full px-0`}
+                ? "bg-blue-500 hover:bg-blue-600 text-white text-[5px]"
+                : "  hover:bg-gray-300 text-black text-[5px]"
+            }  text-[10px] mt-1 w-full px-0`}
             size="small"
           >
             {read && <EditIcon className="w-4 mr-1" />}
-            {read ? t("edit title") : t("save title")}
+            {read ? t("Titel ändern") : t("Titel speichern")}
           </Button>
           <Button
             layout=""
@@ -53,7 +53,7 @@ function Img({ photo, element, file, index, handleChange, t, removeImage }) {
             className="w-full mx-auto mt-1 bg-red-600 hover:bg-red-600 text-white hover:text-white"
             size="small"
           >
-            {t("remove")}
+            {t("Entfernen")}
           </Button>
         </div>
       </div>
