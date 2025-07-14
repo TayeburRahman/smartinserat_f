@@ -8,7 +8,7 @@ import { dictionary } from "../../../resources/multiLanguages";
 export const Data = ({ formData, setForm, navigation,
   isReviewMode, my_swiper, fRequired, setFRequired, defaultData }) => {
   const { go } = navigation;
-  const { listingTitle, listingType, buildingType, rentPrice, listingPrice, contactType } =
+  const { listingTitle, listingType, buildingType, rentPrice, listingPrice, contactType, nebenkostenPrice, gesamtmietePrice } =
     formData;
   function numberWithCommas(x) {
     x = x.replace(/\./g, "");
@@ -135,7 +135,52 @@ export const Data = ({ formData, setForm, navigation,
               variant="outlined"
               autoComplete="off"
               fullwidth='true'
+            /> 
+          </div>
+
+          <span>{dictionary["createAds"][languageReducer]["data"]["nebenkostenPrice"]}:</span>
+          <span style={{ color: "red" }}> </span>
+          <div className="relative w-full focus-within:text-blue-400">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+              <EuroIcon className="w-4 h-4" aria-hidden="true" />
+            </div>
+            <Input
+              className="mb-4 mt-1 p-2 pl-3 border border-solid border-gray-300 focus-within:text-gray-700 background_white"
+              label="Nebenkosten Price"
+              placeholder={dictionary["createAds"][languageReducer]["data"]["enterNebenkostenPrice"]}
+              name="nebenkostenPrice"
+              value={numberWithCommas(nebenkostenPrice)}
+              onChange={setForm}
+              onKeyDown={(e) => !/^\d+$/.test(e.key) && e.key !== 'Backspace' ? e.preventDefault() : true}
+              margin="normal"
+              type="String"
+              variant="outlined"
+              autoComplete="off"
+              fullwidth='true'
+            /> 
+          </div>
+
+          <span>{dictionary["createAds"][languageReducer]["data"]["gesamtmietePrice"]}:</span>
+          <span style={{ color: "red" }}> </span>
+          <div className="relative w-full focus-within:text-blue-400">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+              <EuroIcon className="w-4 h-4" aria-hidden="true" />
+            </div>
+            <Input
+              className="mb-4 mt-1 p-2 pl-3 border border-solid border-gray-300 focus-within:text-gray-700 background_white"
+              label="Gesamtmiete Price"
+              placeholder={dictionary["createAds"][languageReducer]["data"]["enterGesamtmietePrice"]}
+              name="gesamtmietePrice"
+              value={numberWithCommas(gesamtmietePrice)}
+              onChange={setForm}
+              onKeyDown={(e) => !/^\d+$/.test(e.key) && e.key !== 'Backspace' ? e.preventDefault() : true}
+              margin="normal"
+              type="String"
+              variant="outlined"
+              autoComplete="off"
+              fullwidth='true'
             />
+            
           </div>
         </Label>
       )}

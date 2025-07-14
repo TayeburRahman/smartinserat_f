@@ -98,12 +98,12 @@ const ProductsSection = ({
           <Tab className="cursor-pointer bg-gray-100 text-gray-700 px-5 py-2 rounded-l-lg text-sm font-normal">
             {dictionary["prices"][languageReducer]["month1"]}
           </Tab>
-          <Tab className="cursor-pointer bg-gray-100 text-gray-700 px-5 py-2 rounded-l-lg text-sm font-normal">
+          {/* <Tab className="cursor-pointer bg-gray-100 text-gray-700 px-5 py-2 rounded-l-lg text-sm font-normal">
             {dictionary["prices"][languageReducer]["month2"]}
           </Tab>
           <Tab className="cursor-pointer bg-gray-100 text-gray-700 px-4 py-2 rounded-r-lg text-sm font-normal">
             {dictionary["prices"][languageReducer]["month3"]}
-          </Tab>
+          </Tab> */}
         </TabList>
 
         <TabPanel>

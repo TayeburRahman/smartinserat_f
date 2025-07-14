@@ -46,6 +46,8 @@ import React, { useState } from "react";
       stateOfDevelopment: "Entwicklungsstand",  
       listingPrice: "Kaufpreis (€)",
       rentPrice: "Mietpreis (€)",
+      nebenkostenPrice:"Nebenkosten (€)",
+      gesamtmietePrice:"Gesamtmiete (€)",
       nickName: "Spitzname",
       address: "Adresse",
       city: "Stadt",

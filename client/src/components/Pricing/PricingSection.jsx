@@ -8,7 +8,9 @@ import { Link } from "react-router-dom";
 
 const PricingSection = () => {
   const listingTypes = ["sale", "rent"];
-  const subscriptionDurations = [1, 2, 3];
+  const subscriptionDurations = [1
+    // , 2, 3
+  ];
   const languageReducer = "de";
 
   const subscriptionKeys = {

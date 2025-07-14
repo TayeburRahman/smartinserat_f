@@ -96,7 +96,7 @@ useEffect(() => {
     <div>
       <div className="flex gap-4 items-center">
         <SetTitleTag />
-        <PageTitle>{t("My Listings")}</PageTitle>
+        <PageTitle>{t("Meine Anzeigen")}</PageTitle>
         <div>
           <Button layout="outline" size="small" onClick={handlePush}>
             {dictionary["userLists"][languageReducer]["createAdBtn"]}

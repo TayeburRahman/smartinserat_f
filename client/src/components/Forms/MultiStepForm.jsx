@@ -189,6 +189,8 @@ export const MultiStepForm = () => {
     additionalDescription: '',
     listingPrice: '',
     rentPrice: '',
+    nebenkostenPrice: '',
+    gesamtmietePrice: '',
     nickName: '',
     address: '',
     city: '',
@@ -221,6 +223,7 @@ export const MultiStepForm = () => {
     leasablearea: '',
     ...JSON.parse(localStorage.getItem('formData')),
   };
+  
   const steps = [
     { id: 'data', Component: Data },
     { id: 'details', Component: Details },

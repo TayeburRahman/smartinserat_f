@@ -60,6 +60,8 @@ export const Review = (props) => {
     additionalDescription,
     listingPrice,
     rentPrice,
+    nebenkostenPrice,
+    gesamtmietePrice,
     nickName,
     address,
     city,
@@ -199,7 +201,7 @@ export const Review = (props) => {
   }
   
   
-
+ console.log("===", nebenkostenPrice)
   const blobUrlToBase64 = async (blobUrl) => {
     const res = await fetch(blobUrl);
     const blob = await res.blob();
@@ -302,6 +304,9 @@ export const Review = (props) => {
       );
     }  
   };
+  console.log('==gesamtmietePrice=', listingType)
+
+
   const languageReducer = "de";
 
   return (
@@ -326,26 +331,40 @@ export const Review = (props) => {
                   ? dictionary["createAds"][languageReducer]["data"][
                       listingType === "For Sale" ? "forSale" : "forRent"
                     ]
-                  : ""
+                  : 'N/A'
               },
               {
                 [dictionary["createAds"][languageReducer]["data"]["buildingType"]]:
                   buildingType
                     ? dictionary["createAds"][languageReducer]["data"][buildingType]
-                    : ""
+                    : 'N/A'
               },
               
-              `${listingType}` === 'For Sale'
-                ? {
-                  listingPrice: listingPrice
-                    ? numberWithCommas(listingPrice) + ' €'
-                    : '',
-                }
-                : {
-                  rentPrice: rentPrice
-                    ? numberWithCommas(rentPrice) + ' €'
-                    : '',
-                },
+            `${listingType}` === 'For Sale'
+  ? {
+      Listenpreis: listingPrice
+        ? numberWithCommas(listingPrice) + ' €'
+        : '',
+    }
+  : {
+      Mietpreis: rentPrice
+        ? numberWithCommas(rentPrice) + ' €'
+        : 'N/A', 
+      
+    },
+ {
+      Nebenkosten: nebenkostenPrice
+          ? numberWithCommas(nebenkostenPrice)  + ' €'
+          : 'N/A',
+      } ,
+       
+     {
+      Gesamtmiete: gesamtmietePrice
+          ? numberWithCommas(gesamtmietePrice) + ' €'
+          : 'N/A',
+        } ,
+
+                
                 {
                   [dictionary["createAds"][languageReducer]["data"]["contactType"]]:
                     contactType
