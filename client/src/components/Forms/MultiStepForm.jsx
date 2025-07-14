@@ -160,7 +160,7 @@ export const MultiStepForm = () => {
   const defaultData = {
     listingTitle: '',
     listingType: 'For Sale',
-    buildingType: 'House',
+    buildingType: 'APARTMENT',
     contactType: 'private person',
     lastName: user?.lastname,
     specificBuildingType: '',

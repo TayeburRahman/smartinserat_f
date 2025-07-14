@@ -600,7 +600,18 @@ testimonials: {
   createAds: {
     en: {
       title: "Create Ad",
-      data: {
+      data: { 
+        APARTMENT: "Wohnung",
+        HOUSE: "Haus",
+        TRADE_SITE: "Gewerbegrundstück",
+        GARAGE: "Garage",
+        SHORT_TERM_ACCOMODATION: "Kurzzeitunterkunft",
+        OFFICE: "Büro",
+        GASTRONOMY: "Gastronomie",
+        INDUSTRY: "Industrie",
+        STORE: "Laden",
+        SPECIAL_PURPOSE: "Sonderzweck",
+        INVESTMENT: "Investition", 
         listingTitle: "Ad title",
         listingType: "Ad type",
         forSale: "For sale",
@@ -720,7 +731,22 @@ testimonials: {
     },
     de: {
       title: "Anzeige erstellen",
-      data: {
+      data: { 
+        APARTMENT: "Wohnung",
+        HOUSE: "Haus",
+        TRADE_SITE: "Gewerbegrundstück",
+        GARAGE: "Garage",
+        SHORT_TERM_ACCOMODATION: "Kurzzeitunterkunft",
+        OFFICE: "Büro",
+        GASTRONOMY: "Gastronomie",
+        INDUSTRY: "Industrie",
+        STORE: "Laden",
+        SPECIAL_PURPOSE: "Sonderzweck",
+        INVESTMENT: "Investition", 
+        istItaPrivateOrBusinessListing: "Kontaktart",
+        contactType: "Kontaktart",
+        privatePerson: "Privatperson",
+        business: "Gewerblich",
         listingTitle: "Anzeigentitel",
         listingType: "Anzeigentyp",
         forSale: "Zu verkaufen",
@@ -746,8 +772,8 @@ testimonials: {
       details: {
         amountOfCommission: "Provisionsbetrag (inkl. Steuer)",
         enterAmountOfCommision: "Provisionsbetrag eingeben",
-        energy: "Energie",
-        noEnergy: "Keine Energie",
+        energy: "Energieausweis",
+        noEnergy: "Kein Energieausweis",
         energyPass: "Energieausweis",
         enterEnergyPass: "Energieausweis eingeben",
         energyEfficiencyClass: "Energieeffizienzklasse",

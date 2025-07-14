@@ -63,27 +63,32 @@ export const Data = ({ formData, setForm, navigation,
         </div>
       </Label>
       <Label className="mt-4">
-        <span>{dictionary["createAds"][languageReducer]["data"]["buildingType"]}:</span>
-        <Select
-          className="mb-4 mt-1"
-          label="Building Type"
-          name="buildingType"
-          value={buildingType}
-          onChange={setForm}
-          margin="normal"
-          variant="outlined"
-          autoComplete="off"
-          fullWidth
-        >
-          
-          <option value="SPECIAL_PURPOSE">{t("Land")}</option>
-          <option value="TRADE_SITE">{t("Gewerblich")}</option>
-          <option value="INVESTMENT">{t("Investition")}</option>
-          <option value="APARTMENT">{t("Wohnung")}</option>
-          <option value="HOUSE">{t("Haus")}</option>
-        </Select>
+  <span>{dictionary["createAds"][languageReducer]["data"]["buildingType"]}:</span>
+  <Select
+    className="mb-4 mt-1"
+    label={dictionary["createAds"][languageReducer]["data"]["buildingType"]}
+    name="buildingType"
+    value={buildingType}
+    onChange={setForm}
+    margin="normal"
+    variant="outlined"
+    autoComplete="off"
+    fullWidth
+  >
+    <option value="APARTMENT">{dictionary["createAds"][languageReducer]["data"]["APARTMENT"]}</option>
+  <option value="HOUSE">{dictionary["createAds"][languageReducer]["data"]["HOUSE"]}</option>
+  <option value="TRADE_SITE">{dictionary["createAds"][languageReducer]["data"]["TRADE_SITE"]}</option>
+  <option value="GARAGE">{dictionary["createAds"][languageReducer]["data"]["GARAGE"]}</option>
+  <option value="SHORT_TERM_ACCOMODATION">{dictionary["createAds"][languageReducer]["data"]["SHORT_TERM_ACCOMODATION"]}</option>
+  <option value="OFFICE">{dictionary["createAds"][languageReducer]["data"]["OFFICE"]}</option>
+  <option value="GASTRONOMY">{dictionary["createAds"][languageReducer]["data"]["GASTRONOMY"]}</option>
+  <option value="INDUSTRY">{dictionary["createAds"][languageReducer]["data"]["INDUSTRY"]}</option>
+  <option value="STORE">{dictionary["createAds"][languageReducer]["data"]["STORE"]}</option>
+  <option value="SPECIAL_PURPOSE">{dictionary["createAds"][languageReducer]["data"]["SPECIAL_PURPOSE"]}</option>
+  <option value="INVESTMENT">{dictionary["createAds"][languageReducer]["data"]["INVESTMENT"]}</option>
+  </Select>
+</Label>
 
-      </Label>
       {listingType === "For Sale" && (
         <Label className="mt-4">
           <span>{dictionary["createAds"][languageReducer]["data"]["listingPrice"]}:</span>
@@ -134,30 +139,36 @@ export const Data = ({ formData, setForm, navigation,
           </div>
         </Label>
       )}
-      <Label className="lg:flex mb-4 mt-1">
-        <span>{dictionary["createAds"][languageReducer]["data"]["istItaPrivateOrBusinessListing"]}</span>
-        <div className="ml-3 mt-3 sm:mt-0 sm:block">
-          <Input
-            readOnly={true}
-            type="radio"
-            value="private person"
-            checked={contactType === "private person"}
-            onClick={setForm}
-            name="contactType"
-          />
-          <span className="ml-2">{dictionary["createAds"][languageReducer]["data"]["privatePerson"]}</span>
-          <Input
-            readOnly={true}
-            className="ml-2"
-            type="radio"
-            value="business"
-            checked={contactType === "business"}
-            onClick={setForm}
-            name="contactType"
-          />
-          <span className="ml-2">{dictionary["createAds"][languageReducer]["data"]["business"]}</span>
-        </div>
-      </Label>
+   <Label className="lg:flex mb-4 mt-1">
+  <span>{dictionary["createAds"][languageReducer]["data"]["istItaPrivateOrBusinessListing"]}</span>
+  <div className="ml-3 mt-3 sm:mt-0 sm:block">
+    <Input
+      readOnly={true}
+      type="radio"
+      value="private person"
+      checked={contactType === "private person"}
+      onClick={setForm}
+      name="contactType"
+    />
+    <span className="ml-2">
+      {dictionary["createAds"][languageReducer]["data"]["privatePerson"]}
+    </span>
+
+    <Input
+      readOnly={true}
+      className="ml-2"
+      type="radio"
+      value="business"
+      checked={contactType === "business"}
+      onClick={setForm}
+      name="contactType"
+    />
+    <span className="ml-2">
+      {dictionary["createAds"][languageReducer]["data"]["business"]}
+    </span>
+  </div>
+</Label>
+
       <>
         {fRequired && <div style={{ color: "red" }}>{dictionary["createAds"][languageReducer]["data"]["pleaseFillInTheRequiredFields"]}</div>}
         <Button

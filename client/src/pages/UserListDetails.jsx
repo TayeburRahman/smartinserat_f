@@ -270,7 +270,7 @@ import React, { useState } from "react";
                     fontWeight: "500",
                   }}
                 >
-                  Pay Now
+                  Jetzt bezahlen
                 </button>
               )}
               <button
@@ -285,7 +285,7 @@ import React, { useState } from "react";
                   fontWeight: "500",
                 }}
               >
-                Delete Listing
+                Anzeige löschen
               </button>
             </div>
   

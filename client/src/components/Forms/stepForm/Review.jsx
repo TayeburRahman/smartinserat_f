@@ -12,6 +12,7 @@ import * as LottiePlayer from '@lottiefiles/lottie-player';
 import Loading from '../../../assets/animation/loading.txt';
 import { Box, LinearProgress, Typography } from '@mui/material';
 import UploadImageToCloudinary from '../../CloudinaryUpload/ImageUpload';
+import { dictionary } from '../../../resources/multiLanguages';
 
 const apiUrl = config.api.url;
 
@@ -301,7 +302,7 @@ export const Review = (props) => {
       );
     }  
   };
- 
+  const languageReducer = "de";
 
   return (
     <div className='container mt-4 mx-auto px-4'>
@@ -313,12 +314,27 @@ export const Review = (props) => {
           <RenderAccordion
             setReviewMode={setReviewMode}
             serial='1'
-            summary='Allgemein'
+            summary='Allgemein' 
+            back= "data"
             go={go}
             details={[
-              { 'Listing Title': listingTitle ? listingTitle : '' },
-              { 'Listing Type': listingType ? t(listingType) : '' },
-              { 'Building Type': buildingType ? t(buildingType) : '' },
+              {
+                [dictionary["createAds"][languageReducer]["data"]["listingTitle"]]: listingTitle || ''
+              },
+              {
+                [dictionary["createAds"][languageReducer]["data"]["listingType"]]: listingType
+                  ? dictionary["createAds"][languageReducer]["data"][
+                      listingType === "For Sale" ? "forSale" : "forRent"
+                    ]
+                  : ""
+              },
+              {
+                [dictionary["createAds"][languageReducer]["data"]["buildingType"]]:
+                  buildingType
+                    ? dictionary["createAds"][languageReducer]["data"][buildingType]
+                    : ""
+              },
+              
               `${listingType}` === 'For Sale'
                 ? {
                   listingPrice: listingPrice
@@ -330,7 +346,14 @@ export const Review = (props) => {
                     ? numberWithCommas(rentPrice) + ' €'
                     : '',
                 },
-              { 'Contact Type': contactType ? t(contactType) : '' },
+                {
+                  [dictionary["createAds"][languageReducer]["data"]["contactType"]]:
+                    contactType
+                      ? dictionary["createAds"][languageReducer]["data"][
+                          contactType === "private person" ? "privatePerson" : "business"
+                        ]
+                      : ""
+                }
             ]}
           />
         </div>
@@ -348,1205 +371,1592 @@ export const Review = (props) => {
             <div className='my-3'>
               <ul>
                 {buildingType === 'HOUSE' && (
-                  <div>
-                    <li className=''>
-                      {t('Haustyp')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (specificBuildingType) {
-                            case '02EFH':
-                              info = 'Detached House';
-                              break;
-                            case '02DHH':
-                              info = 'Semi Detached House';
-                              break;
-                            case '02REH':
-                              info = 'Town House';
-                              break;
-                            case '02MFH':
-                              info = 'Multi Family House';
-                              break;
-                            case '02ZB':
-                              info = 'Holiday House';
-                              break;
-                            case '02BNG':
-                              info = 'Bungalow';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Year Of Building')}: {t(yearOfBuilding)}
-                    </li>
-                    <li>
-                      {t('Special Features')}:{' '}
-                      {newBuilding && t('New Building')}
-                      {monumentProtection && t(', Monument Protection')}
-                    </li>
-                    <li>
-                      {t('Living Area')}: {t(livingArea)}
-                    </li>
-                    <li>
-                      {t('Usable Area')}: {t(usableArea)}
-                    </li>
-                    <li>
-                      {t('Plot Area')}: {t(plotArea)}
-                    </li>
-                    <li>
-                      {t('Number of Floors')}: {t(numberOfFloors)}
-                    </li>
-                    <li>
-                      {t('Number of Rooms')}: {t(numberOfBathrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bedrooms')}: {t(numberOfBedrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bathrooms')}: {t(numberOfBathrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Garages')}: {t(numberOfGarages)}
-                    </li>
-                    <li>
-                      {t('Type Of Parking Space')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (typeOfParkingSpace) {
-                            case '1':
-                              info = 'Not specified';
-                              break;
-                            case '2':
-                              info = 'Garage';
-                              break;
-                            case '3':
-                              info = 'outdoor parking space';
-                              break;
-                            case '4':
-                              info = 'Carport';
-                              break;
-                            case '6':
-                              info = 'parking garage';
-                              break;
-                            case '7':
-                              info = 'underground car park';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Number Of Parking Space')}: {t(numberOfParkingSpaces)}
-                    </li>
-                    {energy === 'true' && (
-                      <>
-                        <li>
-                          {t('Energy Pass Available')}: {t('Energy')}
-                        </li>
-                        <li>
-                          {t('Energy Pass')}: {t(energyPass)}
-                        </li>
-                        <li>
-                          {t('Energy Efficiency Class')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (energyEfficiencyClass) {
-                                case '00':
-                                  info = '--please choose--';
-                                  break;
-                                case '01':
-                                  info = 'A';
-                                  break;
-                                case '02':
-                                  info = 'A+';
-                                  break;
-                                case '03':
-                                  info = 'B';
-                                  break;
-                                case '04':
-                                  info = 'C';
-                                  break;
-                                case '05':
-                                  info = 'D';
-                                  break;
-                                case '06':
-                                  info = 'E';
-                                  break;
-                                case '07':
-                                  info = 'F';
-                                  break;
-                                case '08':
-                                  info = 'G';
-                                  break;
-                                case '09':
-                                  info = 'H';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        <li>
-                          {t('energy Pass Creation Date')}:{' '}
-                          {t(energyPassCreationDate)}
-                        </li>
-                        <li>
-                          {t('Type Of Heating')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfHeating) {
-                                case '02':
-                                  info = t('Furnace heating');
-                                  break;
-                                case '03':
-                                  info = t('Central heating');
-                                  break;
-                                case '01':
-                                  info = t('Floor heating');
-                                  break;
-                                case 'FUS':
-                                  info = t('Underfloor heating');
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        <li>
-                          {t('Type Of Energypass')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfEnergyPass) {
-                                case '1':
-                                  info = '--please choose--';
-                                  break;
-                                case '3':
-                                  info = t('consumption pass');
-                                  break;
-                                case '2':
-                                  info = t('require pass');
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        {listingType === 'For Rent' && (
-                          <>
-                            <li>
-                              {t('additionalCost')}: {t(additionalCost)}
-                            </li>
-                            <li>
-                              {t('heating cost in details')}:{' '}
-                              {t(heatingCostinDetails)}
-                            </li>
-                            <li>
-                              {t('security cost')} {t(secuirityCost)}
-                            </li>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
+                 <div>
+                 <li>{t('Haustyp')}: {t('Haustyp')}</li>
+                 <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                 <li>{t('Besondere Merkmale')}: 
+                   {newBuilding && t('Neubau')}
+                   {monumentProtection && t(', Denkmalschutz')}
+                 </li>
+                 <li>{t('Wohnfläche')}: {t(livingArea)}</li>
+                 <li>{t('Nutzfläche')}: {t(usableArea)}</li>
+                 <li>{t('Grundstücksfläche')}: {t(plotArea)}</li>
+                 <li>{t('Anzahl der Etagen')}: {t(numberOfFloors)}</li>
+                 <li>{t('Anzahl der Zimmer')}: {t(numberOfBathrooms)}</li>
+                 <li>{t('Anzahl der Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                 <li>{t('Anzahl der Badezimmer')}: {t(numberOfBathrooms)}</li>
+                 <li>{t('Anzahl Garagen')}: {t(numberOfGarages)}</li>
+                 <li>{t('Art des Stellplatzes')}: {t(typeOfParkingSpace)}</li>
+                 <li>{t('Anzahl Stellplätze')}: {t(numberOfParkingSpaces)}</li>
+               
+                 {energy === 'true' && (
+                   <>
+                     <li>{t('Energieausweis vorhanden')}: {t('Energie')}</li>
+                     <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                     <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                     <li>{t('Erstellungsdatum des Energieausweises')}: {t(energyPassCreationDate)}</li>
+                     <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                     <li>{t('Art des Energieausweises')}: {t(typeOfEnergyPass)}</li>
+               
+                     {listingType === 'For Rent' && (
+                       <>
+                         <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                         <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                         <li>{t('Sicherheitskosten')}: {t(secuirityCost)}</li>
+                       </>
+                     )}
+                   </>
+                 )}
+               </div>
+               
                 )}
-                {buildingType === 'FLAT' && (
-                  <div>
-                    <li className=''>
-                      {t('Specific Flat Type')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (specificBuildingType) {
-                            case '01ETAG':
-                              info = 'Floor';
-                              break;
-                            case '01SOUT':
-                              info = 'Basement';
-                              break;
-                            case '01GERD':
-                              info = 'Ground Floor';
-                              break;
-                            case '01DACH':
-                              info = 'Top Floor';
-                              break;
-                            case '01PENT':
-                              info = 'Penthouse';
-                              break;
-                            case '01MAIS':
-                              info = 'Maisonette';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Year Of Building')}: {t(yearOfBuilding)}
-                    </li>
-                    <li>
-                      {t('Living Area')}: {t(livingArea)}
-                    </li>
-                    <li>
-                      {t('Special Features')}:{' '}
-                      {newBuilding && t('New Building')}
-                      {monumentProtection && t(', Monument Protection')}
-                    </li>
-                    <li>
-                      {t('Number of Rooms')}: {t(numberOfRooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bathrooms')}: {t(numberOfBathrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bedrooms')}: {t(numberOfBedrooms)}
-                    </li>
-                    <li>
-                      {t('Floor')}: {t(floor)}
-                    </li>
-                    <li>
-                      {t('Monthly Housepayment')}: {t(monthlyHousepayment)}
-                    </li>
-                    <li>
-                      {t('Type Of Parking Space')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (typeOfParkingSpace) {
-                            case '1':
-                              info = 'Not specified';
-                              break;
-                            case '2':
-                              info = 'Garage';
-                              break;
-                            case '3':
-                              info = 'outdoor parking space';
-                              break;
-                            case '4':
-                              info = 'Carport';
-                              break;
-                            case '6':
-                              info = 'parking garage';
-                              break;
-                            case '7':
-                              info = 'underground car park';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Parking Space Price')}: {t(parkingSpacePrice)}
-                    </li>
-                    {energy === 'true' && (
-                      <>
-                        <li>
-                          {t('Energy')}: {t('Energy')}
-                        </li>
-                        <li>
-                          {t('Energy Pass')}: {t(energyPass)}
-                        </li>
-                        <li>
-                          {t('Energy Efficiency Class')}:{' '}
-                          {t(energyEfficiencyClass)}
-                        </li>
-                        <li>
-                          {t('energy Pass Creation Date')}:{' '}
-                          {t(energyPassCreationDate)}
-                        </li>
-                        <li>
-                          {t('Type Of Heating')}: {t(typeOfHeating)}
-                        </li>
-                        <li>
-                          {t('Type Of Energypass')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfEnergyPass) {
-                                case '1':
-                                  info = '--please choose--';
-                                  break;
-                                case '3':
-                                  info = 'consumption pass';
-                                  break;
-                                case '2':
-                                  info = 'require pass';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                      </>
-                    )}
-                    {listingType === 'For Rent' && (
-                      <>
-                        <li>
-                          {t('additionalCost')}: {t(additionalCost)}
-                        </li>
-                        <li>
-                          {t('heating cost in details')}:{' '}
-                          {t(heatingCostinDetails)}
-                        </li>
-                        <li>
-                          {t('security cost')} {t(secuirityCost)}
-                        </li>
-                      </>
-                    )}
-                  </div>
-                )}
-                {buildingType === 'LAND' && (
-                  <div>
-                    <li>
-                      {t('Specific Land Type')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (specificBuildingType) {
-                            case '0':
-                              info = 'Building Land';
-                              break;
-                            case '1':
-                              info = 'Acre Land';
-                              break;
-                            case '2':
-                              info = 'Forrest';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Land Area')}: {t(landArea)}
-                    </li>
-                    <li>
-                      {t('State of Development')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (stateOfDevelopment) {
-                            case 'NE':
-                              info = 'Not developed';
-                              break;
-                            case 'TE':
-                              info = 'Partially developed';
-                              break;
-                            case 'VE':
-                              info = 'Fully developed';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    {energy === 'true' && (
-                      <>
-                        <li>
-                          {t('Energy')}: {t('Energy')}
-                        </li>
-                        <li>
-                          {t('Energy Pass')}: {t(energyPass)}
-                        </li>
-                        <li>
-                          {t('Energy Efficiency Class')}:{' '}
-                          {t(energyEfficiencyClass)}
-                        </li>
-                        <li>
-                          {t('energy Pass Creation Date')}:{' '}
-                          {t(energyPassCreationDate)}
-                        </li>
-                        <li>
-                          {t('Type Of Heating')}: {t(typeOfHeating)}
-                        </li>
-                        <li>
-                          {t('Type Of Energypass')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfEnergyPass) {
-                                case '1':
-                                  info = '--please choose--';
-                                  break;
-                                case '3':
-                                  info = 'consumption pass';
-                                  break;
-                                case '2':
-                                  info = 'require pass';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        {listingType === 'For Rent' && (
-                          <>
-                            <li>
-                              {t('Additional Cost')}: {t(additionalCost)}
-                            </li>
-                            <li>
-                              {t('Heating Cost in Details')}:{' '}
-                              {t(heatingCostinDetails)}
-                            </li>
-                            <li>
-                              {t('Secuirity Cost')}: {t(secuirityCost)}
-                            </li>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-                {buildingType === 'SPECIAL_PURPOSE' && (
-                  <div>
-                    <li>
-                      {t('Estate Type')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (formData.estatetype) {
-                            case '05A':
-                              info = 'Ausstellungsfläche';
-                              break;
-                            case '05E1':
-                              info = 'Einkaufszentrum';
-                              break;
-                            case '05':
-                              info = 'Einzelhandelsfläche';
-                              break;
-                            case '05E2':
-                              info = 'Kaufhaus';
-                              break;
-                            case '05K':
-                              info = 'Kiosk';
-                              break;
-                            case '05L':
-                              info = 'Laden';
-                              break;
-                            case '05E':
-                              info = 'SB-Markt';
-                              break;
-                            case '05LV':
-                              info = 'Verkaufsfläche';
-                              break;
-                            case '05F':
-                              info = 'Verkaufshalle';
-                              break;
-                            case '08B':
-                              info = 'Bar';
-                              break;
-                            case '08C':
-                              info = 'Café';
-                              break;
-                            case '08D':
-                              info = 'Diskothek';
-                              break;
-                            case '08F':
-                              info = 'Ferienimmobilie';
-                              break;
-                            case '08GAHS':
-                              info = 'Gästehaus';
-                              break;
-                            case '08GAE':
-                              info = 'Gaststätte';
-                              break;
-                            case '08HOT':
-                              info = 'Hotel';
-                              break;
-                            case '08PENS':
-                              info = 'Pension';
-                              break;
-                            case '08REST':
-                              info = 'Restaurant';
-                              break;
-                            case '07H':
-                              info = 'Halle';
-                              break;
-                            case '07LKÜ':
-                              info = 'Kühlhaus';
-                              break;
-                            case '07L':
-                              info = 'Lagerfläche';
-                              break;
-                            case '07LH':
-                              info = 'Lagerhalle';
-                              break;
-                            case '07HI':
-                              info = 'Produktionsfläche';
-                              break;
-                            case '07W':
-                              info = 'Werkstattfläche';
-                              break;
-                            case '06A':
-                              info = 'Atelier';
-                              break;
-                            case '06BUGE':
-                              info = 'Büro- / Geschäftsgebäude';
-                              break;
-                            case '06BE':
-                              info = 'Büroetage';
-                              break;
-                            case '06B':
-                              info = 'Bürofläche';
-                              break;
-                            case '06':
-                              info = 'Gewerbefläche';
-                              break;
-                            case '06G':
-                              info = 'Gewerbezentrum';
-                              break;
-                            case '06P':
-                              info = 'Praxis';
-                              break;
-                            case '06WOGE':
-                              info = 'Wohn- / Geschäftsgebäude';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Year Of Building')}: {t(yearOfBuilding)}
-                    </li>
-                    <li>
-                      {t('Special Features')}:{' '}
-                      {newBuilding && t('New Building')}
-                      {monumentProtection && t(', Monument Protection')}
-                    </li>
-                    <li>
-                      {t('Number of Floors')}: {t(numberOfFloors)}
-                    </li>
-                    <li>
-                      {t('Total Area')}: {t(totalarea)}
-                    </li>
-                    <li>
-                      {t('Number of Rooms')}: {t(numberOfBathrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bedrooms')}: {t(numberOfBedrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bathrooms')}: {t(numberOfBathrooms)}
-                    </li>
-                    <li>
-                      {t('Usable Area')}: {t(usableArea)}
-                    </li>
-                    <li>
-                      {t('Plot Area')} : {t(plotArea)}
-                    </li>
-                    <li>
-                      {t('Number of Garages')}: {t(numberOfGarages)}
-                    </li>
-                    <li>
-                      {t('Number of Parking Spaces')}:{' '}
-                      {t(numberOfParkingSpaces)}
-                    </li>
-                    {energy === 'true' && (
-                      <>
-                        <li>
-                          {t('Energy')}: {t('Energy')}
-                        </li>
-                        <li>
-                          {t('Energy Pass')}: {t(energyPass)}
-                        </li>
-                        <li>
-                          {t('Energy Efficiency Class')}:{' '}
-                          {t(energyEfficiencyClass)}
-                        </li>
-                        <li>
-                          {t('energy Pass Creation Date')}:{' '}
-                          {t(energyPassCreationDate)}
-                        </li>
-                        <li>
-                          {t('Type Of Heating')}: {t(typeOfHeating)}
-                        </li>
-                        <li>
-                          {t('Type Of Energypass')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfEnergyPass) {
-                                case '1':
-                                  info = '--please choose--';
-                                  break;
-                                case '3':
-                                  info = 'consumption pass';
-                                  break;
-                                case '2':
-                                  info = 'require pass';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        {listingType === 'For Rent' && (
-                          <>
-                            <li>
-                              {t('Additional Cost')}: {t(additionalCost)}
-                            </li>
-                            <li>
-                              {t('Heating Cost in Details')}:{' '}
-                              {t(heatingCostinDetails)}
-                            </li>
-                            <li>
-                              {t('Secuirity Cost')}: {t(secuirityCost)}
-                            </li>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-                {buildingType === 'INVESTMENT' && (
-                  <div>
-                    <li>
-                      {t('Estate Type')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (formData.estatetype) {
-                            case '04':
-                              info = 'Anlage-/Investmentobjekte';
-                              break;
-                            case '04SIB':
-                              info = 'Betreutes Wohnen (Invest.)';
-                              break;
-                            case '04GWB':
-                              info = 'Bürogebäude (Invest.)';
-                              break;
-                            case '04W01':
-                              info = 'Eigentumswohnung (Invest.)';
-                              break;
-                            case '04W02':
-                              info = 'Einfamilienhaus (Invest.)';
-                              break;
-                            case '04HIE':
-                              info = 'Einkaufszentrum (Invest.)';
-                              break;
-                            case '04HIF':
-                              info = 'Fachmarktzentrum (Invest.)';
-                              break;
-                            case '04ZF':
-                              info = 'Freizeitimmobilie (Invest.)';
-                              break;
-                            case '04GA':
-                              info = 'Gaststätte / Gasthaus (Invest.)';
-                              break;
-                            case '04GWG':
-                              info = 'Geschäftshaus, Handel, Büro (Invest.)';
-                              break;
-                            case '04GWA':
-                              info = 'Gewerbeanwesen (Invest.)';
-                              break;
-                            case '04GWE':
-                              info = 'Gewerbeeinheit (Invest.)';
-                              break;
-                            case '04GWH':
-                              info = 'Halle/Lager (Invest.)';
-                              break;
-                            case '04HI':
-                              info = 'Handelsimmobilien (Invest.)';
-                              break;
-                            case '04GAH':
-                              info = 'Hotel (Invest.)';
-                              break;
-                            case '04GW':
-                              info =
-                                'Industrie- und Gewerbeimmobilien (Invest.)';
-                              break;
-                            case '04GWI':
-                              info = 'Industrieanwesen (Invest.)';
-                              break;
-                            case '04HIK':
-                              info = 'Kaufhaus (Invest.)';
-                              break;
-                            case '04SIK':
-                              info = 'Klinik (Invest.)';
-                              break;
-                            case '04HIL':
-                              info = 'Laden/Verkaufsfläche (Invest.)';
-                              break;
-                            case '04W03':
-                              info = 'Mehrfamilienhaus (Invest.)';
-                              break;
-                            case '04ZP':
-                              info = 'Parkhaus (Invest.)';
-                              break;
-                            case '04SIP':
-                              info = 'Pflegeheim (Invest.)';
-                              break;
-                            case '04GWS':
-                              info = 'Servicecenter (Invest.)';
-                              break;
-                            case '04Z':
-                              info = 'Sonstiges (Invest.)';
-                              break;
-                            case '04SI':
-                              info = 'Sozialimmobilien (Invest.)';
-                              break;
-                            case '04HIS':
-                              info = 'Supermarkt (Invest.)';
-                              break;
-                            case '04W05':
-                              info = 'Wohn-/Geschäftshaus (Invest.)';
-                              break;
-                            case '04W04':
-                              info = 'Wohnanlage (Invest.)';
-                              break;
-                            case '04W':
-                              info = 'Wohnimmobilien (Invest.)';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Year Of Building')}: {t(yearOfBuilding)}
-                    </li>
-                    <li>
-                      {t('Special Features')}:{' '}
-                      {newBuilding && t('New Building')}
-                      {monumentProtection && t(', Monument Protection')}
-                    </li>
-                    <li>
-                      {t('Leasable Area')}: {t(leasablearea)}
-                    </li>
-                    <li>
-                      {t('Number of Floors')}: {t(numberOfFloors)}
-                    </li>
-                    <li>
-                      {t('Number of Rooms')}: {t(numberOfRooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bedrooms')}: {t(numberOfBedrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bathrooms')}: {t(numberOfBathrooms)}
-                    </li>
-                    <li>
-                      {t('Usable Area')}: {t(usableArea)}
-                    </li>
-                    <li>
-                      {t('Plot Area')}: {t(plotArea)}
-                    </li>
-                    <li>
-                      {t('Number of Garages')}: {t(numberOfGarages)}
-                    </li>
-                    <li>
-                      {t('Type Of Parking Space')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (typeOfParkingSpace) {
-                            case '1':
-                              info = 'Not specified';
-                              break;
-                            case '2':
-                              info = 'Garage';
-                              break;
-                            case '3':
-                              info = 'outdoor parking space';
-                              break;
-                            case '4':
-                              info = 'Carport';
-                              break;
-                            case '6':
-                              info = 'parking garage';
-                              break;
-                            case '7':
-                              info = 'underground car park';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Number of Parking Spaces')}:{' '}
-                      {t(numberOfParkingSpaces)}
-                    </li>
-                    {energy === 'true' && (
-                      <>
-                        <li>
-                          {t('Energy')}: {t('Energy')}
-                        </li>
-                        <li>
-                          {t('Energy Pass')}: {t(energyPass)}
-                        </li>
-                        <li>
-                          {t('Energy Efficiency Class')}:{' '}
-                          {t(energyEfficiencyClass)}
-                        </li>
-                        <li>
-                          {t('energy Pass Creation Date')}:{' '}
-                          {t(energyPassCreationDate)}
-                        </li>
-                        <li>
-                          {t('Type Of Heating')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfHeating) {
-                                case '':
-                                  info = '--please choose--';
-                                  break;
-                                case '02':
-                                  info = 'Furnace heating';
-                                  break;
-                                case '03':
-                                  info = 'Central heating';
-                                  break;
-                                case '01':
-                                  info = 'Floor heating';
-                                  break;
-                                case 'FUS':
-                                  info = 'Underfloor heating';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        <li>
-                          {t('Type Of Energypass')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfEnergyPass) {
-                                case '1':
-                                  info = '--please choose--';
-                                  break;
-                                case '3':
-                                  info = 'consumption pass';
-                                  break;
-                                case '2':
-                                  info = 'require pass';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        {listingType === 'For Rent' && (
-                          <>
-                            <li>
-                              {t('Additional Cost')}: {t(additionalCost)}
-                            </li>
-                            <li>
-                              {t('Heating Cost in Details')}:{' '}
-                              {t(heatingCostinDetails)}
-                            </li>
-                            <li>
-                              {t('Secuirity Cost')}: {t(secuirityCost)}
-                            </li>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-                  {buildingType === 'TRADE_SITE' && (
-                  <div>
-                    <li>
-                      {t('Estate Type')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (formData.estatetype) {
-                            case '04':
-                              info = 'Anlage-/Investmentobjekte';
-                              break;
-                            case '04SIB':
-                              info = 'Betreutes Wohnen (Invest.)';
-                              break;
-                            case '04GWB':
-                              info = 'Bürogebäude (Invest.)';
-                              break;
-                            case '04W01':
-                              info = 'Eigentumswohnung (Invest.)';
-                              break;
-                            case '04W02':
-                              info = 'Einfamilienhaus (Invest.)';
-                              break;
-                            case '04HIE':
-                              info = 'Einkaufszentrum (Invest.)';
-                              break;
-                            case '04HIF':
-                              info = 'Fachmarktzentrum (Invest.)';
-                              break;
-                            case '04ZF':
-                              info = 'Freizeitimmobilie (Invest.)';
-                              break;
-                            case '04GA':
-                              info = 'Gaststätte / Gasthaus (Invest.)';
-                              break;
-                            case '04GWG':
-                              info = 'Geschäftshaus, Handel, Büro (Invest.)';
-                              break;
-                            case '04GWA':
-                              info = 'Gewerbeanwesen (Invest.)';
-                              break;
-                            case '04GWE':
-                              info = 'Gewerbeeinheit (Invest.)';
-                              break;
-                            case '04GWH':
-                              info = 'Halle/Lager (Invest.)';
-                              break;
-                            case '04HI':
-                              info = 'Handelsimmobilien (Invest.)';
-                              break;
-                            case '04GAH':
-                              info = 'Hotel (Invest.)';
-                              break;
-                            case '04GW':
-                              info =
-                                'Industrie- und Gewerbeimmobilien (Invest.)';
-                              break;
-                            case '04GWI':
-                              info = 'Industrieanwesen (Invest.)';
-                              break;
-                            case '04HIK':
-                              info = 'Kaufhaus (Invest.)';
-                              break;
-                            case '04SIK':
-                              info = 'Klinik (Invest.)';
-                              break;
-                            case '04HIL':
-                              info = 'Laden/Verkaufsfläche (Invest.)';
-                              break;
-                            case '04W03':
-                              info = 'Mehrfamilienhaus (Invest.)';
-                              break;
-                            case '04ZP':
-                              info = 'Parkhaus (Invest.)';
-                              break;
-                            case '04SIP':
-                              info = 'Pflegeheim (Invest.)';
-                              break;
-                            case '04GWS':
-                              info = 'Servicecenter (Invest.)';
-                              break;
-                            case '04Z':
-                              info = 'Sonstiges (Invest.)';
-                              break;
-                            case '04SI':
-                              info = 'Sozialimmobilien (Invest.)';
-                              break;
-                            case '04HIS':
-                              info = 'Supermarkt (Invest.)';
-                              break;
-                            case '04W05':
-                              info = 'Wohn-/Geschäftshaus (Invest.)';
-                              break;
-                            case '04W04':
-                              info = 'Wohnanlage (Invest.)';
-                              break;
-                            case '04W':
-                              info = 'Wohnimmobilien (Invest.)';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Year Of Building')}: {t(yearOfBuilding)}
-                    </li>
-                    <li>
-                      {t('Special Features')}:{' '}
-                      {newBuilding && t('New Building')}
-                      {monumentProtection && t(', Monument Protection')}
-                    </li>
-                    <li>
-                      {t('Leasable Area')}: {t(leasablearea)}
-                    </li>
-                    <li>
-                      {t('Number of Floors')}: {t(numberOfFloors)}
-                    </li>
-                    <li>
-                      {t('Number of Rooms')}: {t(numberOfRooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bedrooms')}: {t(numberOfBedrooms)}
-                    </li>
-                    <li>
-                      {t('Number of Bathrooms')}: {t(numberOfBathrooms)}
-                    </li>
-                    <li>
-                      {t('Usable Area')}: {t(usableArea)}
-                    </li>
-                    <li>
-                      {t('Plot Area')}: {t(plotArea)}
-                    </li>
-                    <li>
-                      {t('Number of Garages')}: {t(numberOfGarages)}
-                    </li>
-                    <li>
-                      {t('Type Of Parking Space')}:{' '}
-                      {t(
-                        (() => {
-                          let info;
-                          switch (typeOfParkingSpace) {
-                            case '1':
-                              info = 'Not specified';
-                              break;
-                            case '2':
-                              info = 'Garage';
-                              break;
-                            case '3':
-                              info = 'outdoor parking space';
-                              break;
-                            case '4':
-                              info = 'Carport';
-                              break;
-                            case '6':
-                              info = 'parking garage';
-                              break;
-                            case '7':
-                              info = 'underground car park';
-                              break;
-                          }
-                          return info;
-                        })()
-                      )}
-                    </li>
-                    <li>
-                      {t('Number of Parking Spaces')}:{' '}
-                      {t(numberOfParkingSpaces)}
-                    </li>
-                    {energy === 'true' && (
-                      <>
-                        <li>
-                          {t('Energy')}: {t('Energy')}
-                        </li>
-                        <li>
-                          {t('Energy Pass')}: {t(energyPass)}
-                        </li>
-                        <li>
-                          {t('Energy Efficiency Class')}:{' '}
-                          {t(energyEfficiencyClass)}
-                        </li>
-                        <li>
-                          {t('energy Pass Creation Date')}:{' '}
-                          {t(energyPassCreationDate)}
-                        </li>
-                        <li>
-                          {t('Type Of Heating')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfHeating) {
-                                case '':
-                                  info = '--please choose--';
-                                  break;
-                                case '02':
-                                  info = 'Furnace heating';
-                                  break;
-                                case '03':
-                                  info = 'Central heating';
-                                  break;
-                                case '01':
-                                  info = 'Floor heating';
-                                  break;
-                                case 'FUS':
-                                  info = 'Underfloor heating';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        <li>
-                          {t('Type Of Energypass')}:{' '}
-                          {t(
-                            (() => {
-                              let info;
-                              switch (typeOfEnergyPass) {
-                                case '1':
-                                  info = '--please choose--';
-                                  break;
-                                case '3':
-                                  info = 'consumption pass';
-                                  break;
-                                case '2':
-                                  info = 'require pass';
-                                  break;
-                              }
-                              return info;
-                            })()
-                          )}
-                        </li>
-                        {listingType === 'For Rent' && (
-                          <>
-                            <li>
-                              {t('Additional Cost')}: {t(additionalCost)}
-                            </li>
-                            <li>
-                              {t('Heating Cost in Details')}:{' '}
-                              {t(heatingCostinDetails)}
-                            </li>
-                            <li>
-                              {t('Secuirity Cost')}: {t(secuirityCost)}
-                            </li>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-                {(!energy || energy === 'false') && (
-                  <li>
-                    {t('Energy Pass Available')}: {t('No Energy')}
-                  </li>
-                )}
-                <li>
-                  {t('energySource')}:{' '}
+                {buildingType === 'APARTMENT' && (
+                <div>
+                <li className=''>
+                  {t('Wohnungstyp')}:{' '}
                   {t(
                     (() => {
                       let info;
-                      switch (energySource) {
-                        case 'ol':
-                          info = 'oil';
+                      switch (specificBuildingType) {
+                        case '01ETAG':
+                          info = 'Etagenwohnung';
                           break;
-                        case 'ga':
-                          info = 'Gas';
+                        case '01SOUT':
+                          info = 'Souterrainwohnung';
                           break;
-                        case 'er':
-                          info = 'Geothermal energy';
+                        case '01GERD':
+                          info = 'Erdgeschosswohnung';
                           break;
-                        case 'fe':
-                          info = 'District heating';
+                        case '01DACH':
+                          info = 'Dachgeschosswohnung';
                           break;
-                        case 'so':
-                          info = 'Solar';
+                        case '01PENT':
+                          info = 'Penthouse';
                           break;
-                        case 'HO2':
-                          info = 'Wood pellets';
-                          break;
-                        case 'st':
-                          info = 'Strom';
-                          break;
-                        case 'ko':
-                          info = 'money';
-                          break;
-                        case 'HO1':
-                          info = 'wood';
+                        case '01MAIS':
+                          info = 'Maisonette';
                           break;
                       }
                       return info;
                     })()
                   )}
                 </li>
+                <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                <li>{t('Wohnfläche')}: {t(livingArea)}</li>
+                <li>
+                  {t('Besondere Merkmale')}:{' '}
+                  {newBuilding && t('Neubau')}
+                  {monumentProtection && t(', Denkmalschutz')}
+                </li>
+                <li>{t('Zimmeranzahl')}: {t(numberOfRooms)}</li>
+                <li>{t('Anzahl Badezimmer')}: {t(numberOfBathrooms)}</li>
+                <li>{t('Anzahl Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                <li>{t('Etage')}: {t(floor)}</li>
+                <li>{t('Monatliches Hausgeld')}: {t(monthlyHousepayment)}</li>
+                <li>
+                  {t('Art des Stellplatzes')}:{' '}
+                  {t(
+                    (() => {
+                      let info;
+                      switch (typeOfParkingSpace) {
+                        case '1':
+                          info = 'Nicht angegeben';
+                          break;
+                        case '2':
+                          info = 'Garage';
+                          break;
+                        case '3':
+                          info = 'Außenstellplatz';
+                          break;
+                        case '4':
+                          info = 'Carport';
+                          break;
+                        case '6':
+                          info = 'Parkhaus';
+                          break;
+                        case '7':
+                          info = 'Tiefgarage';
+                          break;
+                      }
+                      return info;
+                    })()
+                  )}
+                </li>
+                <li>{t('Stellplatzpreis')}: {t(parkingSpacePrice)}</li>
+              
+                {energy === 'true' && (
+                  <>
+                    <li>{t('Energie')}: {t('Energie')}</li>
+                    <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                    <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                    <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                    <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                    <li>
+                      {t('Art des Energieausweises')}:{' '}
+                      {t(
+                        (() => {
+                          let info;
+                          switch (typeOfEnergyPass) {
+                            case '1':
+                              info = '--bitte wählen--';
+                              break;
+                            case '3':
+                              info = 'Verbrauchsausweis';
+                              break;
+                            case '2':
+                              info = 'Bedarfsausweis';
+                              break;
+                          }
+                          return info;
+                        })()
+                      )}
+                    </li>
+                  </>
+                )}
+              
+                {listingType === 'For Rent' && (
+                  <>
+                    <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                    <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                    <li>{t('Kaution')}: {t(secuirityCost)}</li>
+                  </>
+                )}
+              </div> 
+                )}
+                  {buildingType === 'STORE' && (
+                <div>
+                <li className=''>
+                  {t('Wohnungstyp')}:{' '}
+                  {t(
+                    (() => {
+                      let info;
+                      switch (specificBuildingType) {
+                        case '01ETAG':
+                          info = 'Etagenwohnung';
+                          break;
+                        case '01SOUT':
+                          info = 'Souterrainwohnung';
+                          break;
+                        case '01GERD':
+                          info = 'Erdgeschosswohnung';
+                          break;
+                        case '01DACH':
+                          info = 'Dachgeschosswohnung';
+                          break;
+                        case '01PENT':
+                          info = 'Penthouse';
+                          break;
+                        case '01MAIS':
+                          info = 'Maisonette';
+                          break;
+                      }
+                      return info;
+                    })()
+                  )}
+                </li>
+                <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                <li>{t('Wohnfläche')}: {t(livingArea)}</li>
+                <li>
+                  {t('Besondere Merkmale')}:{' '}
+                  {newBuilding && t('Neubau')}
+                  {monumentProtection && t(', Denkmalschutz')}
+                </li>
+                <li>{t('Zimmeranzahl')}: {t(numberOfRooms)}</li>
+                <li>{t('Anzahl Badezimmer')}: {t(numberOfBathrooms)}</li>
+                <li>{t('Anzahl Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                <li>{t('Etage')}: {t(floor)}</li>
+                <li>{t('Monatliches Hausgeld')}: {t(monthlyHousepayment)}</li>
+                <li>
+                  {t('Art des Stellplatzes')}:{' '}
+                  {t(
+                    (() => {
+                      let info;
+                      switch (typeOfParkingSpace) {
+                        case '1':
+                          info = 'Nicht angegeben';
+                          break;
+                        case '2':
+                          info = 'Garage';
+                          break;
+                        case '3':
+                          info = 'Außenstellplatz';
+                          break;
+                        case '4':
+                          info = 'Carport';
+                          break;
+                        case '6':
+                          info = 'Parkhaus';
+                          break;
+                        case '7':
+                          info = 'Tiefgarage';
+                          break;
+                      }
+                      return info;
+                    })()
+                  )}
+                </li>
+                <li>{t('Stellplatzpreis')}: {t(parkingSpacePrice)}</li>
+              
+                {energy === 'true' && (
+                  <>
+                    <li>{t('Energie')}: {t('Energie')}</li>
+                    <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                    <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                    <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                    <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                    <li>
+                      {t('Art des Energieausweises')}:{' '}
+                      {t(
+                        (() => {
+                          let info;
+                          switch (typeOfEnergyPass) {
+                            case '1':
+                              info = '--bitte wählen--';
+                              break;
+                            case '3':
+                              info = 'Verbrauchsausweis';
+                              break;
+                            case '2':
+                              info = 'Bedarfsausweis';
+                              break;
+                          }
+                          return info;
+                        })()
+                      )}
+                    </li>
+                  </>
+                )}
+              
+                {listingType === 'For Rent' && (
+                  <>
+                    <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                    <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                    <li>{t('Kaution')}: {t(secuirityCost)}</li>
+                  </>
+                )}
+              </div> 
+                )}
+                  {buildingType === 'TRADE_SITE' && (
+                <div>
+                <li className=''>
+                  {t('Wohnungstyp')}:{' '}
+                  {t(
+                    (() => {
+                      let info;
+                      switch (specificBuildingType) {
+                        case '01ETAG':
+                          info = 'Etagenwohnung';
+                          break;
+                        case '01SOUT':
+                          info = 'Souterrainwohnung';
+                          break;
+                        case '01GERD':
+                          info = 'Erdgeschosswohnung';
+                          break;
+                        case '01DACH':
+                          info = 'Dachgeschosswohnung';
+                          break;
+                        case '01PENT':
+                          info = 'Penthouse';
+                          break;
+                        case '01MAIS':
+                          info = 'Maisonette';
+                          break;
+                      }
+                      return info;
+                    })()
+                  )}
+                </li>
+                <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                <li>{t('Wohnfläche')}: {t(livingArea)}</li>
+                <li>
+                  {t('Besondere Merkmale')}:{' '}
+                  {newBuilding && t('Neubau')}
+                  {monumentProtection && t(', Denkmalschutz')}
+                </li>
+                <li>{t('Zimmeranzahl')}: {t(numberOfRooms)}</li>
+                <li>{t('Anzahl Badezimmer')}: {t(numberOfBathrooms)}</li>
+                <li>{t('Anzahl Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                <li>{t('Etage')}: {t(floor)}</li>
+                <li>{t('Monatliches Hausgeld')}: {t(monthlyHousepayment)}</li>
+                <li>
+                  {t('Art des Stellplatzes')}:{' '}
+                  {t(
+                    (() => {
+                      let info;
+                      switch (typeOfParkingSpace) {
+                        case '1':
+                          info = 'Nicht angegeben';
+                          break;
+                        case '2':
+                          info = 'Garage';
+                          break;
+                        case '3':
+                          info = 'Außenstellplatz';
+                          break;
+                        case '4':
+                          info = 'Carport';
+                          break;
+                        case '6':
+                          info = 'Parkhaus';
+                          break;
+                        case '7':
+                          info = 'Tiefgarage';
+                          break;
+                      }
+                      return info;
+                    })()
+                  )}
+                </li>
+                <li>{t('Stellplatzpreis')}: {t(parkingSpacePrice)}</li>
+              
+                {energy === 'true' && (
+                  <>
+                    <li>{t('Energie')}: {t('Energie')}</li>
+                    <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                    <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                    <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                    <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                    <li>
+                      {t('Art des Energieausweises')}:{' '}
+                      {t(
+                        (() => {
+                          let info;
+                          switch (typeOfEnergyPass) {
+                            case '1':
+                              info = '--bitte wählen--';
+                              break;
+                            case '3':
+                              info = 'Verbrauchsausweis';
+                              break;
+                            case '2':
+                              info = 'Bedarfsausweis';
+                              break;
+                          }
+                          return info;
+                        })()
+                      )}
+                    </li>
+                  </>
+                )}
+              
+                {listingType === 'For Rent' && (
+                  <>
+                    <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                    <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                    <li>{t('Kaution')}: {t(secuirityCost)}</li>
+                  </>
+                )}
+              </div> 
+                )}
+                  {buildingType === 'INDUSTRY' && (
+                  <div>
+                  <li>
+                    {t('Spezifischer Grundstückstyp')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (specificBuildingType) {
+                          case '0':
+                            info = 'Baugrundstück';
+                            break;
+                          case '1':
+                            info = 'Ackerland';
+                            break;
+                          case '2':
+                            info = 'Waldgrundstück';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                  <li>{t('Grundstücksfläche')}: {t(landArea)}</li>
+                  <li>
+                    {t('Erschließungszustand')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (stateOfDevelopment) {
+                          case 'NE':
+                            info = 'Nicht erschlossen';
+                            break;
+                          case 'TE':
+                            info = 'Teilerschlossen';
+                            break;
+                          case 'VE':
+                            info = 'Voll erschlossen';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                
+                  {energy === 'true' && (
+                    <>
+                      <li>{t('Energie')}: {t('Energie')}</li>
+                      <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                      <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                      <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                      <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                      <li>
+                        {t('Art des Energieausweises')}:{' '}
+                        {t(
+                          (() => {
+                            let info;
+                            switch (typeOfEnergyPass) {
+                              case '1':
+                                info = '--bitte wählen--';
+                                break;
+                              case '3':
+                                info = 'Verbrauchsausweis';
+                                break;
+                              case '2':
+                                info = 'Bedarfsausweis';
+                                break;
+                            }
+                            return info;
+                          })()
+                        )}
+                      </li>
+                
+                      {listingType === 'For Rent' && (
+                        <>
+                          <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                          <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                          <li>{t('Kaution')}: {t(secuirityCost)}</li>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+                
+                )}
+                  {buildingType === 'GASTRONOMY' && (
+                  <div>
+                  <li>
+                    {t('Spezifischer Grundstückstyp')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (specificBuildingType) {
+                          case '0':
+                            info = 'Baugrundstück';
+                            break;
+                          case '1':
+                            info = 'Ackerland';
+                            break;
+                          case '2':
+                            info = 'Waldgrundstück';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                  <li>{t('Grundstücksfläche')}: {t(landArea)}</li>
+                  <li>
+                    {t('Erschließungszustand')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (stateOfDevelopment) {
+                          case 'NE':
+                            info = 'Nicht erschlossen';
+                            break;
+                          case 'TE':
+                            info = 'Teilerschlossen';
+                            break;
+                          case 'VE':
+                            info = 'Voll erschlossen';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                
+                  {energy === 'true' && (
+                    <>
+                      <li>{t('Energie')}: {t('Energie')}</li>
+                      <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                      <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                      <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                      <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                      <li>
+                        {t('Art des Energieausweises')}:{' '}
+                        {t(
+                          (() => {
+                            let info;
+                            switch (typeOfEnergyPass) {
+                              case '1':
+                                info = '--bitte wählen--';
+                                break;
+                              case '3':
+                                info = 'Verbrauchsausweis';
+                                break;
+                              case '2':
+                                info = 'Bedarfsausweis';
+                                break;
+                            }
+                            return info;
+                          })()
+                        )}
+                      </li>
+                
+                      {listingType === 'For Rent' && (
+                        <>
+                          <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                          <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                          <li>{t('Kaution')}: {t(secuirityCost)}</li>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+                
+                )}
+                {buildingType === 'GARAGE' && (
+                  <div>
+                  <li>
+                    {t('Spezifischer Grundstückstyp')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (specificBuildingType) {
+                          case '0':
+                            info = 'Baugrundstück';
+                            break;
+                          case '1':
+                            info = 'Ackerland';
+                            break;
+                          case '2':
+                            info = 'Waldgrundstück';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                  <li>{t('Grundstücksfläche')}: {t(landArea)}</li>
+                  <li>
+                    {t('Erschließungszustand')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (stateOfDevelopment) {
+                          case 'NE':
+                            info = 'Nicht erschlossen';
+                            break;
+                          case 'TE':
+                            info = 'Teilerschlossen';
+                            break;
+                          case 'VE':
+                            info = 'Voll erschlossen';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                
+                  {energy === 'true' && (
+                    <>
+                      <li>{t('Energie')}: {t('Energie')}</li>
+                      <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                      <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                      <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                      <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                      <li>
+                        {t('Art des Energieausweises')}:{' '}
+                        {t(
+                          (() => {
+                            let info;
+                            switch (typeOfEnergyPass) {
+                              case '1':
+                                info = '--bitte wählen--';
+                                break;
+                              case '3':
+                                info = 'Verbrauchsausweis';
+                                break;
+                              case '2':
+                                info = 'Bedarfsausweis';
+                                break;
+                            }
+                            return info;
+                          })()
+                        )}
+                      </li>
+                
+                      {listingType === 'For Rent' && (
+                        <>
+                          <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                          <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                          <li>{t('Kaution')}: {t(secuirityCost)}</li>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+                
+                )}
+                  {buildingType === 'SHORT_TERM_ACCOMODATION' && (
+                  <div>
+                  <li>
+                    {t('Immobilienart')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (formData.estatetype) {
+                          case '05A':
+                            info = 'Ausstellungsfläche';
+                            break;
+                          case '05E1':
+                            info = 'Einkaufszentrum';
+                            break;
+                          case '05':
+                            info = 'Einzelhandelsfläche';
+                            break;
+                          case '05E2':
+                            info = 'Kaufhaus';
+                            break;
+                          case '05K':
+                            info = 'Kiosk';
+                            break;
+                          case '05L':
+                            info = 'Laden';
+                            break;
+                          case '05E':
+                            info = 'SB-Markt';
+                            break;
+                          case '05LV':
+                            info = 'Verkaufsfläche';
+                            break;
+                          case '05F':
+                            info = 'Verkaufshalle';
+                            break;
+                          case '08B':
+                            info = 'Bar';
+                            break;
+                          case '08C':
+                            info = 'Café';
+                            break;
+                          case '08D':
+                            info = 'Diskothek';
+                            break;
+                          case '08F':
+                            info = 'Ferienimmobilie';
+                            break;
+                          case '08GAHS':
+                            info = 'Gästehaus';
+                            break;
+                          case '08GAE':
+                            info = 'Gaststätte';
+                            break;
+                          case '08HOT':
+                            info = 'Hotel';
+                            break;
+                          case '08PENS':
+                            info = 'Pension';
+                            break;
+                          case '08REST':
+                            info = 'Restaurant';
+                            break;
+                          case '07H':
+                            info = 'Halle';
+                            break;
+                          case '07LKÜ':
+                            info = 'Kühlhaus';
+                            break;
+                          case '07L':
+                            info = 'Lagerfläche';
+                            break;
+                          case '07LH':
+                            info = 'Lagerhalle';
+                            break;
+                          case '07HI':
+                            info = 'Produktionsfläche';
+                            break;
+                          case '07W':
+                            info = 'Werkstattfläche';
+                            break;
+                          case '06A':
+                            info = 'Atelier';
+                            break;
+                          case '06BUGE':
+                            info = 'Büro- / Geschäftsgebäude';
+                            break;
+                          case '06BE':
+                            info = 'Büroetage';
+                            break;
+                          case '06B':
+                            info = 'Bürofläche';
+                            break;
+                          case '06':
+                            info = 'Gewerbefläche';
+                            break;
+                          case '06G':
+                            info = 'Gewerbezentrum';
+                            break;
+                          case '06P':
+                            info = 'Praxis';
+                            break;
+                          case '06WOGE':
+                            info = 'Wohn- / Geschäftsgebäude';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                  <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                  <li>
+                    {t('Besondere Merkmale')}: {newBuilding && t('Neubau')}
+                    {monumentProtection && t(', Denkmalschutz')}
+                  </li>
+                  <li>{t('Anzahl der Stockwerke')}: {t(numberOfFloors)}</li>
+                  <li>{t('Gesamtfläche')}: {t(totalarea)}</li>
+                  <li>{t('Anzahl der Zimmer')}: {t(numberOfBathrooms)}</li>
+                  <li>{t('Anzahl der Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                  <li>{t('Anzahl der Badezimmer')}: {t(numberOfBathrooms)}</li>
+                  <li>{t('Nutzfläche')}: {t(usableArea)}</li>
+                  <li>{t('Grundstücksfläche')}: {t(plotArea)}</li>
+                  <li>{t('Anzahl der Garagen')}: {t(numberOfGarages)}</li>
+                  <li>{t('Anzahl der Parkplätze')}: {t(numberOfParkingSpaces)}</li>
+                
+                  {energy === 'true' && (
+                    <>
+                      <li>{t('Energie')}: {t('Energie')}</li>
+                      <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                      <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                      <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                      <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                      <li>
+                        {t('Art des Energieausweises')}:{' '}
+                        {t(
+                          (() => {
+                            let info;
+                            switch (typeOfEnergyPass) {
+                              case '1':
+                                info = '--bitte wählen--';
+                                break;
+                              case '3':
+                                info = 'Verbrauchsausweis';
+                                break;
+                              case '2':
+                                info = 'Bedarfsausweis';
+                                break;
+                            }
+                            return info;
+                          })()
+                        )}
+                      </li>
+                      {listingType === 'For Rent' && (
+                        <>
+                          <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                          <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                          <li>{t('Sicherheitskosten')}: {t(secuirityCost)}</li>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+                
+                )}
+                  {buildingType === 'OFFICE' && (
+                  <div>
+                  <li>
+                    {t('Immobilienart')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (formData.estatetype) {
+                          case '05A':
+                            info = 'Ausstellungsfläche';
+                            break;
+                          case '05E1':
+                            info = 'Einkaufszentrum';
+                            break;
+                          case '05':
+                            info = 'Einzelhandelsfläche';
+                            break;
+                          case '05E2':
+                            info = 'Kaufhaus';
+                            break;
+                          case '05K':
+                            info = 'Kiosk';
+                            break;
+                          case '05L':
+                            info = 'Laden';
+                            break;
+                          case '05E':
+                            info = 'SB-Markt';
+                            break;
+                          case '05LV':
+                            info = 'Verkaufsfläche';
+                            break;
+                          case '05F':
+                            info = 'Verkaufshalle';
+                            break;
+                          case '08B':
+                            info = 'Bar';
+                            break;
+                          case '08C':
+                            info = 'Café';
+                            break;
+                          case '08D':
+                            info = 'Diskothek';
+                            break;
+                          case '08F':
+                            info = 'Ferienimmobilie';
+                            break;
+                          case '08GAHS':
+                            info = 'Gästehaus';
+                            break;
+                          case '08GAE':
+                            info = 'Gaststätte';
+                            break;
+                          case '08HOT':
+                            info = 'Hotel';
+                            break;
+                          case '08PENS':
+                            info = 'Pension';
+                            break;
+                          case '08REST':
+                            info = 'Restaurant';
+                            break;
+                          case '07H':
+                            info = 'Halle';
+                            break;
+                          case '07LKÜ':
+                            info = 'Kühlhaus';
+                            break;
+                          case '07L':
+                            info = 'Lagerfläche';
+                            break;
+                          case '07LH':
+                            info = 'Lagerhalle';
+                            break;
+                          case '07HI':
+                            info = 'Produktionsfläche';
+                            break;
+                          case '07W':
+                            info = 'Werkstattfläche';
+                            break;
+                          case '06A':
+                            info = 'Atelier';
+                            break;
+                          case '06BUGE':
+                            info = 'Büro- / Geschäftsgebäude';
+                            break;
+                          case '06BE':
+                            info = 'Büroetage';
+                            break;
+                          case '06B':
+                            info = 'Bürofläche';
+                            break;
+                          case '06':
+                            info = 'Gewerbefläche';
+                            break;
+                          case '06G':
+                            info = 'Gewerbezentrum';
+                            break;
+                          case '06P':
+                            info = 'Praxis';
+                            break;
+                          case '06WOGE':
+                            info = 'Wohn- / Geschäftsgebäude';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                  <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                  <li>
+                    {t('Besondere Merkmale')}: {newBuilding && t('Neubau')}
+                    {monumentProtection && t(', Denkmalschutz')}
+                  </li>
+                  <li>{t('Anzahl der Stockwerke')}: {t(numberOfFloors)}</li>
+                  <li>{t('Gesamtfläche')}: {t(totalarea)}</li>
+                  <li>{t('Anzahl der Zimmer')}: {t(numberOfBathrooms)}</li>
+                  <li>{t('Anzahl der Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                  <li>{t('Anzahl der Badezimmer')}: {t(numberOfBathrooms)}</li>
+                  <li>{t('Nutzfläche')}: {t(usableArea)}</li>
+                  <li>{t('Grundstücksfläche')}: {t(plotArea)}</li>
+                  <li>{t('Anzahl der Garagen')}: {t(numberOfGarages)}</li>
+                  <li>{t('Anzahl der Parkplätze')}: {t(numberOfParkingSpaces)}</li>
+                
+                  {energy === 'true' && (
+                    <>
+                      <li>{t('Energie')}: {t('Energie')}</li>
+                      <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                      <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                      <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                      <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                      <li>
+                        {t('Art des Energieausweises')}:{' '}
+                        {t(
+                          (() => {
+                            let info;
+                            switch (typeOfEnergyPass) {
+                              case '1':
+                                info = '--bitte wählen--';
+                                break;
+                              case '3':
+                                info = 'Verbrauchsausweis';
+                                break;
+                              case '2':
+                                info = 'Bedarfsausweis';
+                                break;
+                            }
+                            return info;
+                          })()
+                        )}
+                      </li>
+                      {listingType === 'For Rent' && (
+                        <>
+                          <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                          <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                          <li>{t('Sicherheitskosten')}: {t(secuirityCost)}</li>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+                
+                )}
+                {buildingType === 'SPECIAL_PURPOSE' && (
+                  <div>
+                  <li>
+                    {t('Immobilienart')}:{' '}
+                    {t(
+                      (() => {
+                        let info;
+                        switch (formData.estatetype) {
+                          case '05A':
+                            info = 'Ausstellungsfläche';
+                            break;
+                          case '05E1':
+                            info = 'Einkaufszentrum';
+                            break;
+                          case '05':
+                            info = 'Einzelhandelsfläche';
+                            break;
+                          case '05E2':
+                            info = 'Kaufhaus';
+                            break;
+                          case '05K':
+                            info = 'Kiosk';
+                            break;
+                          case '05L':
+                            info = 'Laden';
+                            break;
+                          case '05E':
+                            info = 'SB-Markt';
+                            break;
+                          case '05LV':
+                            info = 'Verkaufsfläche';
+                            break;
+                          case '05F':
+                            info = 'Verkaufshalle';
+                            break;
+                          case '08B':
+                            info = 'Bar';
+                            break;
+                          case '08C':
+                            info = 'Café';
+                            break;
+                          case '08D':
+                            info = 'Diskothek';
+                            break;
+                          case '08F':
+                            info = 'Ferienimmobilie';
+                            break;
+                          case '08GAHS':
+                            info = 'Gästehaus';
+                            break;
+                          case '08GAE':
+                            info = 'Gaststätte';
+                            break;
+                          case '08HOT':
+                            info = 'Hotel';
+                            break;
+                          case '08PENS':
+                            info = 'Pension';
+                            break;
+                          case '08REST':
+                            info = 'Restaurant';
+                            break;
+                          case '07H':
+                            info = 'Halle';
+                            break;
+                          case '07LKÜ':
+                            info = 'Kühlhaus';
+                            break;
+                          case '07L':
+                            info = 'Lagerfläche';
+                            break;
+                          case '07LH':
+                            info = 'Lagerhalle';
+                            break;
+                          case '07HI':
+                            info = 'Produktionsfläche';
+                            break;
+                          case '07W':
+                            info = 'Werkstattfläche';
+                            break;
+                          case '06A':
+                            info = 'Atelier';
+                            break;
+                          case '06BUGE':
+                            info = 'Büro- / Geschäftsgebäude';
+                            break;
+                          case '06BE':
+                            info = 'Büroetage';
+                            break;
+                          case '06B':
+                            info = 'Bürofläche';
+                            break;
+                          case '06':
+                            info = 'Gewerbefläche';
+                            break;
+                          case '06G':
+                            info = 'Gewerbezentrum';
+                            break;
+                          case '06P':
+                            info = 'Praxis';
+                            break;
+                          case '06WOGE':
+                            info = 'Wohn- / Geschäftsgebäude';
+                            break;
+                        }
+                        return info;
+                      })()
+                    )}
+                  </li>
+                  <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                  <li>
+                    {t('Besondere Merkmale')}: {newBuilding && t('Neubau')}
+                    {monumentProtection && t(', Denkmalschutz')}
+                  </li>
+                  <li>{t('Anzahl der Stockwerke')}: {t(numberOfFloors)}</li>
+                  <li>{t('Gesamtfläche')}: {t(totalarea)}</li>
+                  <li>{t('Anzahl der Zimmer')}: {t(numberOfBathrooms)}</li>
+                  <li>{t('Anzahl der Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                  <li>{t('Anzahl der Badezimmer')}: {t(numberOfBathrooms)}</li>
+                  <li>{t('Nutzfläche')}: {t(usableArea)}</li>
+                  <li>{t('Grundstücksfläche')}: {t(plotArea)}</li>
+                  <li>{t('Anzahl der Garagen')}: {t(numberOfGarages)}</li>
+                  <li>{t('Anzahl der Parkplätze')}: {t(numberOfParkingSpaces)}</li>
+                
+                  {energy === 'true' && (
+                    <>
+                      <li>{t('Energie')}: {t('Energie')}</li>
+                      <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                      <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                      <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                      <li>{t('Heizungsart')}: {t(typeOfHeating)}</li>
+                      <li>
+                        {t('Art des Energieausweises')}:{' '}
+                        {t(
+                          (() => {
+                            let info;
+                            switch (typeOfEnergyPass) {
+                              case '1':
+                                info = '--bitte wählen--';
+                                break;
+                              case '3':
+                                info = 'Verbrauchsausweis';
+                                break;
+                              case '2':
+                                info = 'Bedarfsausweis';
+                                break;
+                            }
+                            return info;
+                          })()
+                        )}
+                      </li>
+                      {listingType === 'For Rent' && (
+                        <>
+                          <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                          <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                          <li>{t('Sicherheitskosten')}: {t(secuirityCost)}</li>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+                
+                )}
+                {buildingType === 'INVESTMENT' && (
+                <div>
+                <li>
+                  {t('Immobilienart')}:{' '}
+                  {t(
+                    (() => {
+                      let info;
+                      switch (formData.estatetype) {
+                        case '04':
+                          info = 'Anlage-/Investmentobjekte';
+                          break;
+                        case '04SIB':
+                          info = 'Betreutes Wohnen (Invest.)';
+                          break;
+                        case '04GWB':
+                          info = 'Bürogebäude (Invest.)';
+                          break;
+                        case '04W01':
+                          info = 'Eigentumswohnung (Invest.)';
+                          break;
+                        case '04W02':
+                          info = 'Einfamilienhaus (Invest.)';
+                          break;
+                        case '04HIE':
+                          info = 'Einkaufszentrum (Invest.)';
+                          break;
+                        case '04HIF':
+                          info = 'Fachmarktzentrum (Invest.)';
+                          break;
+                        case '04ZF':
+                          info = 'Freizeitimmobilie (Invest.)';
+                          break;
+                        case '04GA':
+                          info = 'Gaststätte / Gasthaus (Invest.)';
+                          break;
+                        case '04GWG':
+                          info = 'Geschäftshaus, Handel, Büro (Invest.)';
+                          break;
+                        case '04GWA':
+                          info = 'Gewerbeanwesen (Invest.)';
+                          break;
+                        case '04GWE':
+                          info = 'Gewerbeeinheit (Invest.)';
+                          break;
+                        case '04GWH':
+                          info = 'Halle/Lager (Invest.)';
+                          break;
+                        case '04HI':
+                          info = 'Handelsimmobilien (Invest.)';
+                          break;
+                        case '04GAH':
+                          info = 'Hotel (Invest.)';
+                          break;
+                        case '04GW':
+                          info = 'Industrie- und Gewerbeimmobilien (Invest.)';
+                          break;
+                        case '04GWI':
+                          info = 'Industrieanwesen (Invest.)';
+                          break;
+                        case '04HIK':
+                          info = 'Kaufhaus (Invest.)';
+                          break;
+                        case '04SIK':
+                          info = 'Klinik (Invest.)';
+                          break;
+                        case '04HIL':
+                          info = 'Laden/Verkaufsfläche (Invest.)';
+                          break;
+                        case '04W03':
+                          info = 'Mehrfamilienhaus (Invest.)';
+                          break;
+                        case '04ZP':
+                          info = 'Parkhaus (Invest.)';
+                          break;
+                        case '04SIP':
+                          info = 'Pflegeheim (Invest.)';
+                          break;
+                        case '04GWS':
+                          info = 'Servicecenter (Invest.)';
+                          break;
+                        case '04Z':
+                          info = 'Sonstiges (Invest.)';
+                          break;
+                        case '04SI':
+                          info = 'Sozialimmobilien (Invest.)';
+                          break;
+                        case '04HIS':
+                          info = 'Supermarkt (Invest.)';
+                          break;
+                        case '04W05':
+                          info = 'Wohn-/Geschäftshaus (Invest.)';
+                          break;
+                        case '04W04':
+                          info = 'Wohnanlage (Invest.)';
+                          break;
+                        case '04W':
+                          info = 'Wohnimmobilien (Invest.)';
+                          break;
+                      }
+                      return info;
+                    })()
+                  )}
+                </li>
+                <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                <li>
+                  {t('Besondere Merkmale')}: {newBuilding && t('Neubau')}
+                  {monumentProtection && t(', Denkmalschutz')}
+                </li>
+                <li>{t('Vermietbare Fläche')}: {t(leasablearea)}</li>
+                <li>{t('Anzahl der Stockwerke')}: {t(numberOfFloors)}</li>
+                <li>{t('Anzahl der Zimmer')}: {t(numberOfRooms)}</li>
+                <li>{t('Anzahl der Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                <li>{t('Anzahl der Badezimmer')}: {t(numberOfBathrooms)}</li>
+                <li>{t('Nutzfläche')}: {t(usableArea)}</li>
+                <li>{t('Grundstücksfläche')}: {t(plotArea)}</li>
+                <li>{t('Anzahl der Garagen')}: {t(numberOfGarages)}</li>
+                <li>
+                  {t('Art des Parkplatzes')}:{' '}
+                  {t(
+                    (() => {
+                      let info;
+                      switch (typeOfParkingSpace) {
+                        case '1':
+                          info = 'Nicht angegeben';
+                          break;
+                        case '2':
+                          info = 'Garage';
+                          break;
+                        case '3':
+                          info = 'Außenstellplatz';
+                          break;
+                        case '4':
+                          info = 'Carport';
+                          break;
+                        case '6':
+                          info = 'Parkgarage';
+                          break;
+                        case '7':
+                          info = 'Tiefgarage';
+                          break;
+                      }
+                      return info;
+                    })()
+                  )}
+                </li>
+                <li>{t('Anzahl der Parkplätze')}: {t(numberOfParkingSpaces)}</li>
+              
+                {energy === 'true' && (
+                  <>
+                    <li>{t('Energie')}: {t('Energie')}</li>
+                    <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                    <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                    <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                    <li>{t('Heizungsart')}:{' '}
+                      {t(
+                        (() => {
+                          let info;
+                          switch (typeOfHeating) {
+                            case '':
+                              info = '--bitte wählen--';
+                              break;
+                            case '02':
+                              info = 'Ofenheizung';
+                              break;
+                            case '03':
+                              info = 'Zentralheizung';
+                              break;
+                            case '01':
+                              info = 'Fußbodenheizung';
+                              break;
+                            case 'FUS':
+                              info = 'Fußbodenheizung (alt)';
+                              break;
+                          }
+                          return info;
+                        })()
+                      )}
+                    </li>
+                    <li>
+                      {t('Art des Energieausweises')}:{' '}
+                      {t(
+                        (() => {
+                          let info;
+                          switch (typeOfEnergyPass) {
+                            case '1':
+                              info = '--bitte wählen--';
+                              break;
+                            case '3':
+                              info = 'Verbrauchsausweis';
+                              break;
+                            case '2':
+                              info = 'Bedarfsausweis';
+                              break;
+                          }
+                          return info;
+                        })()
+                      )}
+                    </li>
+                    {listingType === 'For Rent' && (
+                      <>
+                        <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                        <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                        <li>{t('Sicherheitskosten')}: {t(secuirityCost)}</li>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+              
+                )}
+                  {buildingType === 'TRADE_SITE' && (
+                 <div>
+                 <li>
+                   {t('Immobilienart')}:{' '}
+                   {t(
+                     (() => {
+                       let info;
+                       switch (formData.estatetype) {
+                         case '04':
+                           info = 'Anlage-/Investmentobjekte';
+                           break;
+                         case '04SIB':
+                           info = 'Betreutes Wohnen (Invest.)';
+                           break;
+                         case '04GWB':
+                           info = 'Bürogebäude (Invest.)';
+                           break;
+                         case '04W01':
+                           info = 'Eigentumswohnung (Invest.)';
+                           break;
+                         case '04W02':
+                           info = 'Einfamilienhaus (Invest.)';
+                           break;
+                         case '04HIE':
+                           info = 'Einkaufszentrum (Invest.)';
+                           break;
+                         case '04HIF':
+                           info = 'Fachmarktzentrum (Invest.)';
+                           break;
+                         case '04ZF':
+                           info = 'Freizeitimmobilie (Invest.)';
+                           break;
+                         case '04GA':
+                           info = 'Gaststätte / Gasthaus (Invest.)';
+                           break;
+                         case '04GWG':
+                           info = 'Geschäftshaus, Handel, Büro (Invest.)';
+                           break;
+                         case '04GWA':
+                           info = 'Gewerbeanwesen (Invest.)';
+                           break;
+                         case '04GWE':
+                           info = 'Gewerbeeinheit (Invest.)';
+                           break;
+                         case '04GWH':
+                           info = 'Halle/Lager (Invest.)';
+                           break;
+                         case '04HI':
+                           info = 'Handelsimmobilien (Invest.)';
+                           break;
+                         case '04GAH':
+                           info = 'Hotel (Invest.)';
+                           break;
+                         case '04GW':
+                           info = 'Industrie- und Gewerbeimmobilien (Invest.)';
+                           break;
+                         case '04GWI':
+                           info = 'Industrieanwesen (Invest.)';
+                           break;
+                         case '04HIK':
+                           info = 'Kaufhaus (Invest.)';
+                           break;
+                         case '04SIK':
+                           info = 'Klinik (Invest.)';
+                           break;
+                         case '04HIL':
+                           info = 'Laden/Verkaufsfläche (Invest.)';
+                           break;
+                         case '04W03':
+                           info = 'Mehrfamilienhaus (Invest.)';
+                           break;
+                         case '04ZP':
+                           info = 'Parkhaus (Invest.)';
+                           break;
+                         case '04SIP':
+                           info = 'Pflegeheim (Invest.)';
+                           break;
+                         case '04GWS':
+                           info = 'Servicecenter (Invest.)';
+                           break;
+                         case '04Z':
+                           info = 'Sonstiges (Invest.)';
+                           break;
+                         case '04SI':
+                           info = 'Sozialimmobilien (Invest.)';
+                           break;
+                         case '04HIS':
+                           info = 'Supermarkt (Invest.)';
+                           break;
+                         case '04W05':
+                           info = 'Wohn-/Geschäftshaus (Invest.)';
+                           break;
+                         case '04W04':
+                           info = 'Wohnanlage (Invest.)';
+                           break;
+                         case '04W':
+                           info = 'Wohnimmobilien (Invest.)';
+                           break;
+                       }
+                       return info;
+                     })()
+                   )}
+                 </li>
+                 <li>{t('Baujahr')}: {t(yearOfBuilding)}</li>
+                 <li>
+                   {t('Besondere Merkmale')}: {newBuilding && t('Neubau')}
+                   {monumentProtection && t(', Denkmalschutz')}
+                 </li>
+                 <li>{t('Vermietbare Fläche')}: {t(leasablearea)}</li>
+                 <li>{t('Anzahl der Stockwerke')}: {t(numberOfFloors)}</li>
+                 <li>{t('Anzahl der Zimmer')}: {t(numberOfRooms)}</li>
+                 <li>{t('Anzahl der Schlafzimmer')}: {t(numberOfBedrooms)}</li>
+                 <li>{t('Anzahl der Badezimmer')}: {t(numberOfBathrooms)}</li>
+                 <li>{t('Nutzfläche')}: {t(usableArea)}</li>
+                 <li>{t('Grundstücksfläche')}: {t(plotArea)}</li>
+                 <li>{t('Anzahl der Garagen')}: {t(numberOfGarages)}</li>
+                 <li>
+                   {t('Art des Parkplatzes')}:{' '}
+                   {t(
+                     (() => {
+                       let info;
+                       switch (typeOfParkingSpace) {
+                         case '1':
+                           info = 'Nicht angegeben';
+                           break;
+                         case '2':
+                           info = 'Garage';
+                           break;
+                         case '3':
+                           info = 'Außenstellplatz';
+                           break;
+                         case '4':
+                           info = 'Carport';
+                           break;
+                         case '6':
+                           info = 'Parkgarage';
+                           break;
+                         case '7':
+                           info = 'Tiefgarage';
+                           break;
+                       }
+                       return info;
+                     })()
+                   )}
+                 </li>
+                 <li>{t('Anzahl der Parkplätze')}: {t(numberOfParkingSpaces)}</li>
+               
+                 {energy === 'true' && (
+                   <>
+                     <li>{t('Energie')}: {t('Energie')}</li>
+                     <li>{t('Energieausweis')}: {t(energyPass)}</li>
+                     <li>{t('Energieeffizienzklasse')}: {t(energyEfficiencyClass)}</li>
+                     <li>{t('Erstellungsdatum Energieausweis')}: {t(energyPassCreationDate)}</li>
+                     <li>{t('Heizungsart')}:{' '}
+                       {t(
+                         (() => {
+                           let info;
+                           switch (typeOfHeating) {
+                             case '':
+                               info = '--bitte wählen--';
+                               break;
+                             case '02':
+                               info = 'Ofenheizung';
+                               break;
+                             case '03':
+                               info = 'Zentralheizung';
+                               break;
+                             case '01':
+                               info = 'Fußbodenheizung';
+                               break;
+                             case 'FUS':
+                               info = 'Fußbodenheizung (alt)';
+                               break;
+                           }
+                           return info;
+                         })()
+                       )}
+                     </li>
+                     <li>
+                       {t('Art des Energieausweises')}:{' '}
+                       {t(
+                         (() => {
+                           let info;
+                           switch (typeOfEnergyPass) {
+                             case '1':
+                               info = '--bitte wählen--';
+                               break;
+                             case '3':
+                               info = 'Verbrauchsausweis';
+                               break;
+                             case '2':
+                               info = 'Bedarfsausweis';
+                               break;
+                           }
+                           return info;
+                         })()
+                       )}
+                     </li>
+                     {listingType === 'For Rent' && (
+                       <>
+                         <li>{t('Nebenkosten')}: {t(additionalCost)}</li>
+                         <li>{t('Heizkosten im Detail')}: {t(heatingCostinDetails)}</li>
+                         <li>{t('Sicherheitskosten')}: {t(secuirityCost)}</li>
+                       </>
+                     )}
+                   </>
+                 )}
+               </div>
+               
+                )}
+               {(!energy || energy === 'false') && (
+  <li>
+    {t('Energieausweis vorhanden')}: {t('Kein Energieausweis')}
+  </li>
+)}
+
+<li>
+  {t('Energiequelle')}:{' '}
+  {t(
+    (() => {
+      let info;
+      switch (energySource) {
+        case 'ol':
+          info = 'Öl';
+          break;
+        case 'ga':
+          info = 'Gas';
+          break;
+        case 'er':
+          info = 'Geothermie';
+          break;
+        case 'fe':
+          info = 'Fernwärme';
+          break;
+        case 'so':
+          info = 'Solar';
+          break;
+        case 'HO2':
+          info = 'Holzpellets';
+          break;
+        case 'st':
+          info = 'Strom';
+          break;
+        case 'ko':
+          info = 'Kohle';
+          break;
+        case 'HO1':
+          info = 'Holz';
+          break;
+        default:
+          info = 'Unbekannt';
+      }
+      return info;
+    })()
+  )}
+</li>
+
               </ul>
               <Button
                 layout='outline'
@@ -1559,26 +1969,27 @@ export const Review = (props) => {
                   setReviewMode(true);
                 }}
               >
-                {t('click to edit')}
+                {t('Zum Bearbeiten klicken')}
               </Button>
               <div></div>
             </div>
           )}
         </div>
         <div className='block mb-4'>
-          <RenderAccordion
-            setReviewMode={setReviewMode}
-            serial='3'
-            summary='Beschreibung'
-            go={go}
-            details={[
-              { Description: description },
-              { Features: features },
-              { Loaction: location },
-              { 'additional Description': additionalDescription },
-            ]}
-          />
-        </div>
+  <RenderAccordion
+    setReviewMode={setReviewMode}
+    serial='3'
+    summary='Beschreibung'  
+    back="description" 
+    go={go}
+    details={[
+      { Beschreibung: description },                
+      { Merkmale: features },                       
+      { Standort: location },                      
+      { 'Zusätzliche Beschreibung': additionalDescription },  
+    ]}
+  />
+</div>
         <div className='block mb-4'>
           <Button
             layout='link'
@@ -1614,41 +2025,45 @@ export const Review = (props) => {
                   setReviewMode(true);
                 }}
               >
-                {t('click to edit')}
+                {t('Zum Bearbeiten klicken')}
               </Button>
             </div>
           )}
         </div>
         <div className='block mb-4'>
-          <RenderAccordion
-            setReviewMode={setReviewMode}
-            serial='5'
-            summary='Ansprechpartner'
-            go={go}
-            details={[
-              { 'Contact Name': contactName },
-              { 'Last Name': lastName },
-              { 'Name Hide': nameHide },
-              { Email: formEmail },
-              { Phone: phone },
-            ]}
-          />
-        </div>
+  <RenderAccordion
+    setReviewMode={setReviewMode}
+    serial='5'
+    summary='Kontakt' 
+    back="contact" 
+    go={go}
+    details={[
+      { 'Vorname': contactName },      
+      { 'Nachname': lastName },         
+      { 'Name verbergen': nameHide },    
+      { 'E-Mail': formEmail },           
+      { 'Telefon': phone },            
+    ]}
+  />
+</div>
+
         <div className='block'>
-          <RenderAccordion
-            setReviewMode={setReviewMode}
-            serial='6'
-            summary='Adresse'
-            go={go}
-            details={[
-              { Address: address },
-              { Zip: zip },
-              { City: city },
-              { HideAddress: hideAddress },
-            ]}
-          />
-        </div>
-        <div className='mt-2'>
+  <RenderAccordion
+    setReviewMode={setReviewMode}
+    serial='6'
+    summary='Adresse'
+    back="address"
+    go={go}
+    details={[
+      { 'Adresse': address },
+      { 'Postleitzahl': zip },
+      { 'Stadt': city },
+      { 'Adresse verbergen': hideAddress },
+    ]}
+  />
+</div>
+
+<div className='mt-2'>
           {maxCharacters && (
             <div style={{ color: 'red' }}>
               Max 3800 characters on every field
@@ -1704,7 +2119,7 @@ export const Review = (props) => {
   );
 };
 
-const RenderAccordion = ({ summary, details, go, setReviewMode, serial }) => {
+const RenderAccordion = ({ summary, back, details, go, setReviewMode, serial }) => {
   const [accordion, setAccordion] = useState(false);
   const { t } = useTranslation();
   return (
@@ -1734,11 +2149,11 @@ const RenderAccordion = ({ summary, details, go, setReviewMode, serial }) => {
             className=''
             component='span'
             onClick={() => {
-              go(`${summary.toLowerCase()}`);
+              go(`${back.toLowerCase()}`);
               setReviewMode(true);
             }}
           >
-            {t('click to edit')}
+            {t('Zum Bearbeiten klicken')}
           </Button>
         </div>
       )}

@@ -35,7 +35,7 @@ export default function DeleteUserListModal({isOpen, onClose, onAction, m_list})
 
   return (
     <SimpleModal isOpen={isOpen}
-      title="Delete Listing"
+      title="Anzeige löschen"
       neg_text="Cancel" 
       pos_text="Delete"
       onClose={handleModalClose}

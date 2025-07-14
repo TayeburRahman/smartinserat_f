@@ -51,8 +51,8 @@ const createCheckoutSession = async (req) => {
       line_items: [
         {
           price_data: {
-            currency: 'usd',
-            unit_amount: unitAmount,
+            currency: 'eur', 
+            unit_amount: unitAmount, 
             product_data: {
               name: package.packageName,
               description: `Listing: ${listing.listingTitle}, ${listing.listingType}\nAddress: ${listing.address}, ${listing.city}, ${listing.zip}`,
@@ -155,7 +155,7 @@ const checkAndUpdateStatusByWebhook = async (req) => {
           paymentMethod: 'card',
           user: session.metadata.userId,  
           listingId: listingId,
-          amount: session.amount_total / 100,  
+          amount: session.amount_total / 100,
           transactionId: session.payment_intent,
           status: 'completed',
           note: `Payment successful for package: ${package.subscriptionType}`,

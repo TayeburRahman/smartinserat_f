@@ -160,7 +160,7 @@ const AdDetailsContainer = () => {
                   {adDetails?.numberOfRooms && (
                     <div className="flex flex-row justify-between gap-2  items-center w-full">
                       <h1 className="lg:text-md text-gray-600">
-                        Anzahl Zimmer:{" "}
+                        Zimmer:{" "}
                       </h1>
                       <p className="lg:text-md text-gray-900 font-semibold">
                         {adDetails.numberOfRooms}

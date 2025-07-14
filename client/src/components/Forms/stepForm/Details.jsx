@@ -33,7 +33,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
   const buildingTypeProps = { formData, setForm };
   const { t } = useTranslation();
   const languageReducer = "de";
-  console.log("====buildingType2", buildingType)
+  console.log("====buildingType2", energyPassCreationDate)
   return (
     <div className="container mx-auto px-4">
       {buildingType === "HOUSE" && <BuildingTypeHouse {...buildingTypeProps} />}
@@ -225,7 +225,7 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
           fullwidth='true'
           readOnly={true}
         >
-          <option value="">{dictionary["createAds"][languageReducer]["details"]["choose"]}</option>
+          <option value="">{dictionary["createAds"][languageReducer]["details"]["chooseAnOption"]}</option>
 
           <option value="ol">{dictionary["createAds"][languageReducer]["details"]["oil"]}</option>
           <option value="ga">{dictionary["createAds"][languageReducer]["details"]["gas"]}</option>
@@ -358,10 +358,20 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
             style={{ marginTop: "1rem" }}
             onClick={() => {
               // Regex test for date dd.mm.yyyy (with escaped dot)
-              if (energy && !/\d{2}\.\d{2}\.\d{4}/.test(formData.energyPassCreationDate)) {
+              if (
+                energy &&
+                (!/^\d{2}\.\d{2}\.\d{4}$/.test(formData.energyPassCreationDate) ||
+                  isNaN(
+                    new Date(
+                      formData.energyPassCreationDate.split('.').reverse().join('-')
+                    ).getTime()
+                  ))
+              ) {
                 setFRequired(true);
+                console.log("====energyPassCreationDate")
                 return;
               }
+              
 
               if (
                 (formData.yearOfBuilding === "" ||
@@ -370,28 +380,31 @@ export const Details = ({ formData, setForm, navigation, isReviewMode,
                 buildingType !== "SPECIAL_PURPOSE" &&
                 buildingType !== "TRADE_SITE"
               ) {
+                console.log("====yearOfBuilding")
                 setFRequired(true);
                 return;
               }
 
-              if (
-                formData.numberOfRooms === "" &&
-                buildingType !== "SPECIAL_PURPOSE" &&
-                buildingType !== "TRADE_SITE" &&
-                buildingType !== "INVESTMENT"
-              ) {
-                setFRequired(true);
-                return;
-              }
+              // if (
+              //   formData.numberOfRooms === "" &&
+              //   buildingType !== "SPECIAL_PURPOSE" &&
+              //   buildingType !== "TRADE_SITE" &&
+              //   buildingType !== "INVESTMENT"
+              // ) {
+              //   console.log("====numberOfRooms")
+              //   setFRequired(true);
+              //   return;
+              // }
 
-              if (
-                formData.specificBuildingType === "" &&
-                buildingType !== "TRADE_SITE" &&
-                buildingType !== "INVESTMENT"
-              ) {
-                setFRequired(true);
-                return;
-              }
+              // if (
+              //   formData.specificBuildingType === "" &&
+              //   buildingType !== "TRADE_SITE" &&
+              //   buildingType !== "INVESTMENT"
+              // ) {
+              //   console.log("====specificBuildingType")
+              //   setFRequired(true);
+              //   return;
+              // }
 
               if (formData.buildingphase === "" && buildingType === "HOUSE") {
                 setFRequired(true);
