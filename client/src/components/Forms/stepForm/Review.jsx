@@ -2084,7 +2084,7 @@ export const Review = (props) => {
               my_swiper.slidePrev(-1);
             }}
           >
-            {t('back')}
+            {t('Zurück')}
           </Button>
           
           <Button
@@ -2092,7 +2092,7 @@ export const Review = (props) => {
             style={{ marginTop: '1.5rem' }}
             onClick={handleSubmit}
           >
-            {t('save and proceed')}
+           {t("Speichern und fortfahren")}
           </Button>
 
 

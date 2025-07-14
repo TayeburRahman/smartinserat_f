@@ -165,7 +165,7 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
                 return navigation.previous()
               }}
             >
-              {t("back")}
+              {t("Zurück")}
             </Button>
             <Button
               variant="contained"
@@ -174,7 +174,7 @@ export const Contact = ({ formData, setForm, navigation, isReviewMode, my_swiper
               style={{ marginTop: "1rem" }}
               onClick={handleContactNext}
             >
-              {t("next")}
+              {t("Weiter")}
             </Button>
           </>
         </>

@@ -136,8 +136,8 @@ function PricingCardSale({
                 disabled={active || !enabled}
                 onClick={handlePaymentClick}
               >
-                {active && <span>{t("Active plan")}</span>}
-                {!active && <span>{t("Choose")}</span>}
+                {active && <span>{t("Aktiver Plan")}</span>}
+                {!active && <span>{t("Auswählen")}</span>}
               </Button>
               <p className="text-xs text-gray-400 text-center mt-2">
                 <small>* Inkl. 19% MwSt. + immer kündbar.</small>
@@ -367,8 +367,8 @@ function PricingCardRent({
                   callback(type, uniqId);
                 }}
               >
-                {active && <span>{t("Active plan")}</span>}
-                {!active && <span>{t("Choose")}</span>}
+                {active && <span>{t("Aktiver Plan")}</span>}
+                {!active && <span>{t("Auswählen")}</span>}
               </Button>
               <p className="text-xs text-gray-400 text-center mt-2">
                 <small>* Inkl. 19% MwSt. + immer kündbar.</small>
@@ -444,8 +444,8 @@ function PricingCardRent({
                   callback(type, uniqId);
                 }}
               >
-                {active && <span>{t("Active plan")}</span>}
-                {!active && <span>{t("Choose")}</span>}
+                {active && <span>{t("Aktiver Plan")}</span>}
+                {!active && <span>{t("Auswählen")}</span>}
               </Button>
               <p className="text-xs text-gray-400 text-center mt-2">
                 <small>* Inkl. 19% MwSt. + immer kündbar.</small>
@@ -513,8 +513,8 @@ function PricingCardRent({
                   callback(type, uniqId);
                 }}
               >
-                {active && <span>{t("Active plan")}</span>}
-                {!active && <span>{t("Choose")}</span>}
+                {active && <span>{t("Aktiver Plan")}</span>}
+                {!active && <span>{t("Auswählen")}</span>}
               </Button>
               <p className="text-xs text-gray-400 text-center mt-2">
                 <small>* Inkl. 19% MwSt. + immer kündbar.</small>

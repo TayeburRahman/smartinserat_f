@@ -11,7 +11,7 @@ function PageError({message}) {
       <p className="text-gray-700 dark:text-gray-300">
         {message && message}{' '}
         <Link className="text-purple-600 hover:underline dark:text-purple-300" to="/app">
-          Go back
+        zurückgehen
         </Link>
         .
       </p>

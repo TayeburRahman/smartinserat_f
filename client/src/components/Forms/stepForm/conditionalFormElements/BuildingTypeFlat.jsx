@@ -36,7 +36,7 @@ const BuildingTypeFlat = ({ formData, setForm }) => {
           fullwidth="true"
         >
           <option value="">{t("Wählen Sie eine Option")}</option>
-          <option value="01ETAG">{t("Stockwerk")}</option>
+          <option value="01ETAG">{t("Etagenwohnung")}</option>
           <option value="01SOUT">{t("Keller")}</option>
           <option value="01GERD">{t("Erdgeschoss")}</option>
           <option value="01DACH">{t("Dachgeschoss")}</option>
@@ -131,11 +131,11 @@ const BuildingTypeFlat = ({ formData, setForm }) => {
         />
       </Label>
       <Label className="mt-4">
-        <span>{t("Stockwerk")}:</span>
+        <span>{t("Etage")}:</span>
         <Input
           className="mb-4 mt-1"
           label="Floor"
-          placeholder={t("Stockwerk...")}
+          placeholder={t("Etage...")}
           name="floor"
           value={floor}
           onChange={setForm}

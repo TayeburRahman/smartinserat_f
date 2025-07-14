@@ -47,7 +47,7 @@ export const Description = ({
                 return navigation.previous()
               }}
             >
-              {t("back")}
+              {t("Zurück")}
             </Button>
             <Button
               variant="contained"
@@ -59,7 +59,7 @@ export const Description = ({
                 return navigation.next()
               }}
             >
-              {t("next")}
+              {t("Weiter")}
             </Button>
           </>
       </div>
