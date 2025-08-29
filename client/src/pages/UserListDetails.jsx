@@ -61,7 +61,7 @@ import React, { useState } from "react";
       nameHide: "Name verbergen",
       phoneNumberHide: "Telefonnummer verbergen",
       emailHide: "E-Mail verbergen",
-      additionalCost: "Nebenkosten",
+      additionalCost: "Nebenkosten ",
       secuirityCost: "Kaution",
       heatingCostinDetails: "Heizkosten im Detail",
       energySource: "Energiequelle",

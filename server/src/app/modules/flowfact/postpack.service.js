@@ -38,12 +38,29 @@ const createPropstackProperties = async (userData) => {
         living_space: toFloat(userData.livingArea),
         plot_area: toFloat(userData.plotArea),
         floor: toInt(userData.floor),
-        price: toFloat(userData.listingPrice),
+        
+        price: userData.listingPrice
+        ? toFloat(userData.listingPrice)
+        : userData.rentPrice
+        ? toFloat(userData.rentPrice)
+        : undefined,
+
         base_rent: toFloat(userData.rentPrice),
-        total_rent:
-          userData.rentPrice && userData.additionalCost
-            ? toFloat(userData.rentPrice) + toFloat(userData.additionalCost)
-            : undefined,
+        // total_rent:
+        //   userData.rentPrice && userData.additionalCost
+        //     ? toFloat(userData.rentPrice) + toFloat(userData.additionalCost)
+        //     : undefined,
+        total_rent: userData.gesamtmietePrice
+        ? toFloat(userData.gesamtmietePrice)
+        : userData.rentPrice && userData.additionalCost
+        ? toFloat(userData.rentPrice) + toFloat(userData.additionalCost)
+        : undefined,
+  
+      additional_costs: userData.nebenkostenPrice
+        ? toFloat(userData.nebenkostenPrice)
+        : userData.additionalCost
+        ? toFloat(userData.additionalCost)
+        : undefined,
         construction_year: toInt(userData.yearOfBuilding),
 
         description_note: userData.description,

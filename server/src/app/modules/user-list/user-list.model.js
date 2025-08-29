@@ -124,6 +124,8 @@ const UserListSchema = new Schema(
         commission: { type: String },
         buildingphase: { type: String },
         energyEfficiencyClass: { type: String },
+        gesamtmietePrice:{ type: String },
+        nebenkostenPrice:{ type: String },
         leasablearea: { type: String },
         totalarea: { type: String },
         description: { type: String },
