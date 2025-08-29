@@ -9,7 +9,7 @@ const HeroWithNav = () => {
           <HomeNavbar />
       <div className="max-w-7xl mt-10 w-full px-5 xl:px-0">
      
-        <div className="banner-text w-full flex flex-col items-center text-center py-16 px-5 md:px-10 lg:px-20 md:mb-10 md:mt-15 pb-52">
+        <div className="banner-text w-full flex flex-col items-center text-center py-10 px-5 md:px-10 lg:px-20 md:mb-10 md:mt-15 pb-40 md:pb-60 ">
           <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-extrabold text-black">
             IMMOBILIEN
           </h1>

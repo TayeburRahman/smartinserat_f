@@ -193,6 +193,14 @@ html {
   color: black !important; 
   border-radius: 0.375rem !important;
 }
+
+.bg-cover {
+  background-image: url('./assets/new/herobootom.png');  
+  background-size: cover; 
+  background-position: bottom center;  
+  background-repeat: no-repeat; 
+  background-color: white;
+}
 @keyframes slideFadeIn {
   to {
     opacity: 1;
