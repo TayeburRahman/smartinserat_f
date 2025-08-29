@@ -29,7 +29,7 @@ const HomeFilters = () => {
   };
 
   return (
-    <div className="z-10 absolute -bottom-12 hidden sm:flex w-full">
+    <div className="hidden sm:flex w-full pt-10">
       <div className="max-w-xl md:max-w-3xl lg:max-w-4xl mx-auto flex flex-row justify-between items-center gap-5 bg-white rounded-md w-full px-5 py-5 shadow-lg">
         <span className="bg-green-300 text-green-800 px-4 py-1 rounded-full text-sm font-semibold">
            Online

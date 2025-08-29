@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import { Link } from "react-router-dom";
 import AdCard from "./Ads/AdCard";
 import { config } from "../assets/config/config";
+import HomeFilters from "../pages/LandingPage/components/HomeFilters";
 
 const PropertySlider = ({ title, topMargin = false }) => {
   const [recentImmobilien, setRecentImmobilien] = useState([]);
@@ -36,13 +37,15 @@ const PropertySlider = ({ title, topMargin = false }) => {
   }, []);
 
   return (
+    
     <div
       className="flex justify-center items-center bg-white w-full pb-5"
       id="Leistungen"
     >
+   
       <div
-        className={`w-full max-w-7xl px-5 xl:px-0 ${
-          topMargin ? "pb-4 pt-8 sm:pt-20" : "py-8"
+        className={`w-full max-w-7xl ${
+          topMargin ? "pb-4 pt-8 sm:pt-10" : "py-8"
         }`}
       >
         <div className="w-full flex flex-row justify-between text-center items-center pb-6">

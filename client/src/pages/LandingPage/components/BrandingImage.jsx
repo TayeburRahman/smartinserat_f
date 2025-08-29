@@ -5,7 +5,7 @@
 
 const BrandingImage = () => {
   return (
-    <section className="w-full flex flex-col items-center bg-custom-bg bg-cover bg-center bg-blend-overlay bg-white">
+    <section className="w-full flex flex-col items-center bg-custom-bg bg-center bg-blend-overlay bg-white">
      
     </section>
   );

@@ -3,9 +3,9 @@
     to right,
     #7605f8,
     #6b13f8,
-    #6300ff,
-    #6b16f3,
-    #7a0ef7
+    #7605f8,
+    #7605f8,
+    #7605f8 
   );
 }
 
@@ -60,9 +60,13 @@ li {
 .background_white {
   background: white !important;
 }
-/* .h_custom_300{
-  height: 88% !important;
-} */
+.bg-cover {
+  background-image: url('./assets/new/herobootom.png');  
+  background-size: cover; 
+  background-position: bottom center;  
+  background-repeat: no-repeat; 
+  background-color: white;
+}
 /* button.inline-flex.items-center.justify-center.w-6.h-6.text-gray-400.transition-colors.duration-150.rounded.dark\:hover\:text-gray-200.hover\:.hover\:text-gray-700 {
   background: darkgrey;
 } */

@@ -5,10 +5,11 @@ import { dictionary } from "../../../resources/multiLanguages";
 const HeroWithNav = () => {
   const languageReducer = "de";
   return (
-    <section className="w-full flex flex-col items-center bg-custom-bg bg-cover bg-center bg-blend-overlay bg-white">
+    <section className="w-full flex flex-col items-center bg-custom-bg bg-center bg-blend-overlay bgwhite">
+          <HomeNavbar />
       <div className="max-w-7xl mt-10 w-full px-5 xl:px-0">
-        <HomeNavbar />
-        <div className="banner-text w-full flex flex-col items-center text-center bg-white py-20 px-5 md:px-10 lg:px-20 md:mb-10 md:mt-14">
+     
+        <div className="banner-text w-full flex flex-col items-center text-center py-16 px-5 md:px-10 lg:px-20 md:mb-10 md:mt-15 pb-52">
           <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-extrabold text-black">
             IMMOBILIEN
           </h1>
